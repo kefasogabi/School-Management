@@ -79,14 +79,7 @@ namespace PROJECT
                 };
             });
 
-            // services.AddIdentity<IdentityUser, IdentityRole<int>>(x =>
-            // {
-            //     x.Password.RequireDigit = false;
-            //     x.Password.RequiredLength = 6;
-            //     x.Password.RequireLowercase = false;
-            //     x.Password.RequireUppercase = false;
-            //     x.Password.RequireNonAlphanumeric = false;
-            // });
+            
 
             services.AddScoped<IStudentService, StudentService>();
 

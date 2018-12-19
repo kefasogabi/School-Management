@@ -16,3 +16,8 @@ export class ChangePassword{
     newPassword: string;
 }
 
+export class upload{
+    id: any;
+    fileName: string;
+}
+

@@ -1,14 +1,15 @@
 
 
-<div style="margin-top: 80px;" class="row">
+<div style="margin-top: 110px;" class="row">
   <div class="col-md-2  col-2">
     <ul class="nav nav-pills nav-stacked">
       <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/staff-profile"]' > {{staff.firstName}} {{staff.lastName}}  </a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/change-password"]' >Change Password</a></li>
       <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/staffs"]'>Staffs</a></li>
       <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/students"]'>Students</a></li>
       <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/staff-register"]'>Register Staff</a></li>
       <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/student-register"]'>Register Student</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/upload-photo"]'>Upload Image</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/change-password"]' >Change Password</a></li>
     </ul>
   </div>
   <div class="col-md-10">

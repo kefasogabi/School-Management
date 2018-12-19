@@ -94,6 +94,7 @@ import { StudentChangepasswordComponent } from './student-area/student-changepas
       { path: 'about', component: AboutUsComponent},
       { path: 'contact', component: ContactUsComponent},
       { path: 'services', component: ServiceComponent},
+      { path: 'login', component: MainLoginComponent},
       
 ///////////////////////////////
       { path: 'staff-login', component: MainLoginComponent,

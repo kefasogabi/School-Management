@@ -1,4 +1,4 @@
-import { User, ChangePassword } from './user.model';
+import { User, ChangePassword, upload } from './user.model';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions,  Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -21,11 +21,11 @@ export class UserService {
     return this.http.put('/Account/Update/'+ user.id, user, this.jwt());
   }
 
-  uploadImage(user, photo: File){
+  uploadImage( photo: File){
     var formData = new FormData();
     formData.append('file', photo);
 
-    return this.http.put('/Account/UploadImage/' + user.id , formData, this.jwt());
+    return this.http.post('/api/upload', formData, this.jwt());
   }
 
   create(user: User){

@@ -27,7 +27,7 @@ namespace PROJECT.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly string[] Accepted_file = new[] {".jpg", "jpeg", ".png"};
+        private readonly string[] Accepted_file = new[] {".jpg", ".jpeg", ".png"};
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
@@ -141,19 +141,21 @@ namespace PROJECT.Controllers
                 return Ok();
             }
 
-            [HttpPut("{id}")]
-            public async Task<IActionResult> UploadImage([FromBody] UploadImage model, IFormFile file)
+            [HttpPost("/api/upload")]
+            public async Task<IActionResult> UploadImage( IFormFile file)
             {
 
-                var user = await userManager.FindByIdAsync(model.Id);
+                var userId = caller.Claims.Single(c => c.Type == ClaimTypes.Name);
+                var user = await userManager.Users.SingleOrDefaultAsync( c => c.Id == userId.Value);
 
                 if(user == null)
                 {
                      return NotFound();             
                 }
 
-                if(file.Length > 10 * 1024) return BadRequest("Max File Size exceeded");
-                if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
+
+                // if(file.Length > 10 * 1024) return BadRequest("Max File Size exceeded");
+                // if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
 
                 var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
                 if(!Directory.Exists(uploadsFolderPath))
@@ -171,7 +173,7 @@ namespace PROJECT.Controllers
                  await userManager.UpdateAsync(user);
 
 
-                return Ok();
+                return Ok(user);
             }
 
 
@@ -284,19 +286,6 @@ namespace PROJECT.Controllers
            }
 
 
-        //    [HttpGet("/api/getPassword")]
-        //     public IActionResult ChangePassword()
-        //     {
-        //         var claimIdentity = this.User.Identity as ClaimsIdentity;
-        //         IEnumerable<Claim> claims = claimIdentity.Claims;
-        //          var model = new IndexViewModel
-        //         {
-        //             Id = claimIdentity.FindFirst(ClaimTypes.Name).Value              
-        //         };
-        //         return View(model);
-        //     }
-
-    
            [HttpPost("/api/changePassword")]
            public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
            {
@@ -308,10 +297,7 @@ namespace PROJECT.Controllers
                 
                 var userId = caller.Claims.Single(c => c.Type == ClaimTypes.Name);
                 var user = await userManager.Users.SingleOrDefaultAsync( c => c.Id == userId.Value);
-                // var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == userId.Value);
-                // var user = await userManager.GetUserAsync(User);
                 
-      
                 
 
                 if (user == null)
