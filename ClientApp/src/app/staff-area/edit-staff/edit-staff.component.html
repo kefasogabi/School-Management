@@ -1,0 +1,71 @@
+
+<div style="margin-top: 40px;" class="col-md-4 col-md-offset-4">
+
+
+    <!-- {{model | json}} -->
+         
+  <h2 style="font-weight: bolder; color: #4189C7; font-size: 25px;" align="center" >EDIT STAFF</h2>
+  <form name="form" (ngSubmit)="update(f)" #f="ngForm" novalidate>
+
+      <input  type="hidden" name="id" #id="ngModel" [(ngModel)]="model.id" class="form-control inp "   >
+
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+          <!-- <label for="username">Username</label> -->
+          <input type="text" class="form-control inp" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" placeholder="FirstName" required />
+          <div *ngIf="f.submitted && !firstName.valid"  class="help-block">FirstName is required</div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+        <!-- <label for="username">Username</label> -->
+        <input type="text" class="form-control inp" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" placeholder="LastName" required />
+        <div *ngIf="f.submitted && !lastName.valid"  class="help-block">LastName is required</div>
+    </div> 
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+      <!-- <label for="username">Username</label> -->
+      <input type="text" class="form-control inp" name="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email" required />
+      <div *ngIf="f.submitted && !email.valid"  class="help-block">Email is required</div>
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !dateOfBirth.valid }">
+    <!-- <label for="">PassWord</label> -->
+    <input type="date"   name="dateOfBirth" #dateOfBirth="ngModel" [(ngModel)]="model.dateOfBirth" class="form-control"    />
+    <div *ngIf="f.submitted && !dateOfBirth.valid"  class="help-block">Date Of Birth is required</div>
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
+    <!-- <label for="username">Username</label> -->
+    <input type="text" class="form-control inp" name="address" [(ngModel)]="model.address" #address="ngModel" placeholder="Address" required />
+    <div *ngIf="f.submitted && !address.valid"  class="help-block">Address is required</div>
+</div>
+      
+
+
+<!-- <div class="form-group" >
+        <select class="form-control" [(ngModel)]="model.role" name="role" required #role="ngModel" >
+            <option >Select Class</option>
+            <option *ngFor="let r of role" value="{{r.name}}">{{r.name}}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="role.touched && !role.valid">Please Select Role</div>
+    </div> -->
+
+
+
+      <!-- <div class="row" *ngIf="roles">
+        <ul>
+            <li style=" list-style-type: none; " *ngFor="let item of roles; let i = index">
+                <input type="checkbox" [id]="'roles-' +i" value="{{item.id}}" [checked]="item.selected" (change)="updateSelectedRoles(i)" >
+                <label [for]="'roles-'+i" >{{item.name}}</label>
+            </li>
+        </ul>
+      </div> -->
+      <div class="form-group">
+          <button [disabled]="!f.valid || loading" style="font-weight:bolder;"  class="btn btn-primary inp but form-control">Update</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+         
+      </div>
+      
+  </form>
+  
+
+
+</div>
+
+

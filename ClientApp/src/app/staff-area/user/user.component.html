@@ -1,0 +1,45 @@
+
+
+<div style="margin-top: 0px;">
+<table datatable class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>Full Name</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users; let i = index">
+      <td>{{i+1}}</td>
+      <td><a [routerLink]="['/view-staff', user.id]" >{{user.lastName  +  '   '  +   user.firstName}}</a></td>
+      <td><a [routerLink]="['/edit-staff', user.id]" class="btn btn-primary" >Edit</a></td>
+      <td><a (click)="delete(user.id)" class="btn btn-danger">Delete</a></td>
+    </tr>
+   
+  </tbody>
+</table>
+
+</div>
+
+
+
+  <!-- <table class="table table-responsive table bordered table-hover">
+    <thead>
+      <tr>
+        <th>S/N</th>
+        <th>FullName</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+          <td>{{i + 1}}</td>
+        <td><a [routerLink]="['/view-staff', user.id]" >{{user.lastName  +  '   '  +   user.firstName}}</a></td>
+        <td>Edit</td>
+        <td>Delete<td>
+      </tr>
+    </tbody>
+  </table> -->

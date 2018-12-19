@@ -1,0 +1,68 @@
+<div  style="margin-top: 0px;  " class="form-group col-md-offset-4 col-md-4" >
+
+  
+    <!-- <label for="">Please select class</label> -->
+    <select class="form-control" (change)="onGradeChange()" name="grade" [(ngModel)]="grade" >
+        <option  value="0">Please select class</option>
+        <option *ngFor="let c of grades;"   value="{{c.id}}">{{c.name}}</option>
+    </select>
+
+</div>
+
+
+
+
+<div style="margin-top: 50px;">
+    <table  datatable="ng" class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr>
+          <th>S/N</th>
+          <th>Full Name</th>
+          <th>Class</th>
+          <th>Sex</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students; let i = index">
+          <td>{{i+1}}</td>
+          <td><a [routerLink]="['/view-student', student.id]" >{{student.lastName  +  '   '  +   student.firstName}}</a></td>
+          <td>{{student.grade.name}}</td>
+          <td>{{student.sex.name}}</td>
+          <td><a [routerLink]="['/edit-student', student.id]" class="btn btn-primary" >Edit</a></td>
+          <td><a (click)="delete(student.id)" class="btn btn-danger">Delete</a></td>
+        </tr>
+       
+      </tbody>
+    </table>
+    
+    </div>
+
+    <!-- <div style="margin-top:50px;" >
+      <table class="table table-hover table-responsive">
+        <thead>
+          <tr>
+              <th>S/N</th>
+              <th>Full Name</th>
+              <th>Class</th>
+              <th>Sex</th>
+              <th>Edit</th>
+              <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of students | paginate: {itemsPerPage: 5, currentPage: p}; let i = index">
+                <td>{{i+1}}</td>
+                <td><a [routerLink]="['/view-student', student.id]" >{{student.lastName  +  '   '  +   student.firstName}}</a></td>
+                <td>{{student.grade.name}}</td>
+                <td>{{student.sex.name}}</td>
+                <td><a [routerLink]="['/edit-student', student.id]" class="btn btn-primary" >Edit</a></td>
+                <td><a (click)="delete(student.id)" class="btn btn-danger">Delete</a></td>
+              </tr>
+        </tbody>
+      </table>
+
+      <pagination-controls *ngIf="students" (pageChange)="p = $event"></pagination-controls>
+    
+    </div> -->

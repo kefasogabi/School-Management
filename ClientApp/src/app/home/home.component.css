@@ -1,0 +1,23 @@
+.img{
+        height: 100% !important;
+        width: 100% !important;
+        background-image:url(../image/featured_slide_bg.gif)  !important;
+        background-repeat: repeat-x !important;
+    
+ }
+ 
+ .carousel{
+    width:80%;
+    height: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   
+}
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    
+  }
