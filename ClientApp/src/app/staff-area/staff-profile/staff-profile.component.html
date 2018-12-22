@@ -12,12 +12,12 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-3 center">
                     <span class="profile-picture">
-                      <img class="editable img-responsive" alt=" Avatar" id="avatar2" src="http://bootdey.com/img/Content/avatar/avatar6.png">
+                      <img class="editable img-responsive" style="width:190px; height: 200px" src="/uploads/{{staff.fileName}}">
                     </span>
-                    <h4 class="blue">
+                    <!-- <h4 class="blue">
                       <input class="btn btn-primary" type="button" value="Edit Profile" >
       
-                    </h4>
+                    </h4> -->
                     <div class="space space-4"></div>
       
                    
@@ -32,6 +32,20 @@
       
                         <div class="profile-info-value">
                           <span>{{staff.firstName}}  {{staff.lastName}}</span>
+                        </div>
+                      </div>
+                      <div class="profile-info-row">
+                        <div class="profile-info-name"> First Name</div>
+      
+                        <div class="profile-info-value">
+                          <span>{{staff.firstName}}</span>
+                        </div>
+                      </div>
+                      <div class="profile-info-row">
+                        <div class="profile-info-name"> Last Name</div>
+      
+                        <div class="profile-info-value">
+                          <span>{{staff.lastName}}</span>
                         </div>
                       </div>
       
@@ -54,63 +68,24 @@
                       </div>
       
                       <div class="profile-info-row">
-                        <div class="profile-info-name"> Joined </div>
+                        <div class="profile-info-name"> Email </div>
       
                         <div class="profile-info-value">
-                          <span>2010/06/20</span>
+                          <span>{{staff.email}}</span>
                         </div>
                       </div>
       
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Last Online </div>
-      
-                        <div class="profile-info-value">
-                          <span>3 hours ago</span>
-                        </div>
-                      </div>
-                    </div>
-      
-                    <div class="hr hr-8 dotted"></div>
-      
-                    <div class="profile-user-info">
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Website </div>
-      
-                        <div class="profile-info-value">
-                          <a href="#" target="_blank">www.alexdoe.com</a>
-                        </div>
-                      </div>
-      
-                      <div class="profile-info-row">
-                        <div class="profile-info-name">
-                          <i class="middle ace-icon fa fa-facebook-square bigger-150 blue"></i>
-                        </div>
-      
-                        <div class="profile-info-value">
-                          <a href="#">Find me on Facebook</a>
-                        </div>
-                      </div>
-      
-                      <div class="profile-info-row">
-                        <div class="profile-info-name">
-                          <i class="middle ace-icon fa fa-twitter-square bigger-150 light-blue"></i>
-                        </div>
-      
-                        <div class="profile-info-value">
-                          <a href="#">Follow me on Twitter</a>
-                        </div>
-                      </div>
                     </div>
                   </div><!-- /.col -->
                 </div><!-- /.row -->
       
-                <div class="space-20"></div>
+                <!-- <div class="space-20"></div> -->
       
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
                     <div class="widget-box transparent">
-                      <div class="widget-header widget-header-small">
-                        <h4 class="widget-title smaller">
+                      <div class=" widget-header widget-header-small">
+                        <h4 class="  widget-title smaller">
                           <i class="ace-icon fa fa-check-square-o bigger-110"></i>
                           Little About Me
                         </h4>

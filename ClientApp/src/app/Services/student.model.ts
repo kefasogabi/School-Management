@@ -19,3 +19,14 @@ export class changePassword{
     id: any;
     password: string;
 }
+
+export class EditStudent{
+    id:any;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    dateOfBirth: string;
+    address: string;
+    sex :{id:any, name:string};
+    grade :{id:any, name:string};
+}

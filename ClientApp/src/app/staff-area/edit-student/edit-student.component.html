@@ -38,7 +38,7 @@
     <!-- <label for="username">Sex</label> -->
     <select class="form-control" [(ngModel)]="student.sexId" name="sexId" required #sexId="ngModel" >
         <option >Select Sex</option>
-        <option *ngFor="let s of sex" value="{{s.id}}">{{s.name}}</option>
+        <option *ngFor="let s of student.sex" value="{{s.id}}">{{s.name}}</option>
     </select>
     <div class="alert alert-danger" *ngIf="sexId.touched && !sexId.valid">Please Select the Sex</div>
 </div>

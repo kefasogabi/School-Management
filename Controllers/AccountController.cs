@@ -91,6 +91,7 @@ namespace PROJECT.Controllers
                         LastName = model.LastName,
                         Address = model.Address,
                         DateOfBirth = model.DateOfBirth,
+                        FileName = "avatar.jpg",
                         };
 
                     IdentityResult result = await userManager.CreateAsync(user, model.Password);
@@ -213,6 +214,7 @@ namespace PROJECT.Controllers
                         new Claim(ClaimTypes.UserData, user.LastName.ToString()),
                         new Claim(ClaimTypes.StreetAddress, user.Address.ToString()),
                         new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString()),
+                        new Claim(ClaimTypes.Rsa, user.FileName.ToString()),
                         
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
@@ -249,20 +251,21 @@ namespace PROJECT.Controllers
            [HttpGet("/api/profile")]
            public IActionResult Index()
            {
-            
-            var claimIdentity = this.User.Identity as ClaimsIdentity;
-            IEnumerable<Claim> claims = claimIdentity.Claims;
-
-            var model = new IndexViewModel
-            {
-                Id = claimIdentity.FindFirst(ClaimTypes.Name).Value,
-                Email = claimIdentity.FindFirst(ClaimTypes.Email).Value,
-                FirstName = claimIdentity.FindFirst(ClaimTypes.GivenName).Value,
-                LastName = claimIdentity.FindFirst(ClaimTypes.UserData).Value,
-                Address = claimIdentity.FindFirst(ClaimTypes.StreetAddress).Value,
-                DateOfBirth = claimIdentity.FindFirst(ClaimTypes.DateOfBirth).Value,
                
-            };
+                var claimIdentity = this.User.Identity as ClaimsIdentity;
+                IEnumerable<Claim> claims = claimIdentity.Claims;
+
+                var model = new IndexViewModel
+                {
+                    Id = claimIdentity.FindFirst(ClaimTypes.Name).Value,
+                    Email = claimIdentity.FindFirst(ClaimTypes.Email).Value,
+                    FirstName = claimIdentity.FindFirst(ClaimTypes.GivenName).Value,
+                    LastName = claimIdentity.FindFirst(ClaimTypes.UserData).Value,
+                    Address = claimIdentity.FindFirst(ClaimTypes.StreetAddress).Value,
+                    DateOfBirth = claimIdentity.FindFirst(ClaimTypes.DateOfBirth).Value,
+                    FileName = claimIdentity.FindFirst(ClaimTypes.Rsa)?.Value,
+                
+                };
            
 
                 return Ok(model);

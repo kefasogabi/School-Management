@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../Services/user.service';
@@ -17,13 +17,13 @@ export class UploadImageComponent implements OnInit {
   imageUrl: string ="/img/avatar.jpg";
   fileToUpload: File = null;
 
-  constructor(private userService: UserService, private route:ActivatedRoute, private toastr: ToastrService) {}
+  constructor(private userService: UserService,
+              private route:ActivatedRoute, 
+              private toastr: ToastrService,
+              private router:Router
+              ) {}
 
   ngOnInit() {
-    this.userService.getUserProfile().subscribe((data:any) => {
-      this.staff = data;
-      console.log(data);
-    });
   }
 
   handleFileInput(file: FileList){
@@ -44,7 +44,7 @@ export class UploadImageComponent implements OnInit {
     this.userService.uploadImage(nativeElemet.files[0]).subscribe((data:any) => {
       console.log(data);
       this.toastr.success('Image Uploaded successful', 'Success');
-      // this.router.navigate(['/staff-login']);
+      this.router.navigate(['/staff-profile']);
     },
     error => {
       if(error)
