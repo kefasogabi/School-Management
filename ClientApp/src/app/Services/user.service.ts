@@ -1,4 +1,4 @@
-import { User, ChangePassword, upload } from './user.model';
+import { User, ChangePassword, upload, Session, Term } from './user.model';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions,  Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -7,6 +7,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 @Injectable()
 export class UserService {
   
+  selectedSession: Session;
+  sessionList: Session[];
 
   constructor(private http: Http) { }
 
@@ -29,7 +31,7 @@ export class UserService {
   }
 
   create(user: User){
-    return  this.http.post('/Account/Register', user, this.jwt());
+    return this.http.post('/Account/Register', user, this.jwt());
   }
 
   delete(id){
@@ -38,6 +40,41 @@ export class UserService {
   getUserProfile(){
     return this.http.get('/api/profile', this.jwt()).map((response: Response) => response.json());
   }
+
+  postSession(session: Session){
+    return this.http.post('/api/postSession', session, this.jwt());
+  }
+
+  getSessions(){
+    return this.http.get('/api/sessions', this.jwt()).map((res: Response) => res.json());
+  }
+  getSession(id){
+    return this.http.get('/api/getSession/' + id, this.jwt()).map((response: Response) => response.json());
+  }
+  deleteSession(id){
+    return this.http.delete('/api/deleteSession/' + id, this.jwt());
+  }
+  updateSession(session: Session){
+    return this.http.put('/api/updateSession/' + session.id, session, this.jwt());
+  }
+  postTerm(term: Term){
+    return this.http.post('/api/postTerm', term, this.jwt());
+  }
+  getTerms(){
+    return this.http.get('/api/terms', this.jwt()).map((res: Response) => res.json());
+  }
+  getTerm(id){
+    return this.http.get('/api/term/' + id, this.jwt()).map((response: Response) => response.json());
+  }
+
+  updateTerm(term: Term){
+    return this.http.put('/api/updateTerm/' + term.id, term, this.jwt());
+  }
+
+  deleteTerm(id){
+    return this.http.delete('/api/deleteTerm/' + id, this.jwt());
+  }
+
 
   changePassword(user:ChangePassword){
     return this.http.post('/api/changePassword', user, this.jwt());

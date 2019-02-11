@@ -39,13 +39,9 @@ export class StudentRegisterComponent implements OnInit {
 
       register(form: NgForm) {
         this.loading = true;
-        this.studentService.create(form.value)
-            .subscribe(
-                (data: any) => {
+        this.studentService.create(form.value).subscribe((data:any) => {
                     this.resetForm(form);
-                    
                     this.toastr.success('Registration successful', 'Success');
-                    this.router.navigate(['/staff-login']);
                 },
                 error => {
                     if(error.status == 400)
@@ -65,6 +61,14 @@ export class StudentRegisterComponent implements OnInit {
       userName: '',
       address: '',
       dateOfBirth: '',
+      sex: {
+        id: null,
+        name: ""
+      },
+      grade: {
+        id: null,
+        name: ""
+      },
       password: '',
       }
   }

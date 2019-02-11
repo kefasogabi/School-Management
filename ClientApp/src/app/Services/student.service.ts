@@ -37,6 +37,14 @@ getGrade(){
     return this.http.get('/api/grade', this.jwt()).map((response: Response) => response.json());
 }
 
+uploadImage(id, photo: File){
+    var formData = new FormData();
+    formData.append('file', photo);
+
+    return this.http.post('/api/StudentUpload/' + id, formData, this.jwt());
+  }
+
+
 changePassword(student: Student){
     return this.http.put('/api/changepassword/' +  student.id, student, this.jwt());
 }

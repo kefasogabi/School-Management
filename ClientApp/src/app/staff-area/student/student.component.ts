@@ -7,6 +7,7 @@ import { StudentService } from '../../Services/student.service';
 
 
 
+
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
@@ -25,7 +26,8 @@ export class StudentComponent implements OnInit {
  p: number = 1;
   students: any[];
   grades: any[];
-  constructor(private studentService: StudentService, private spinner: NgxSpinnerService) { }
+  public id = '';
+  constructor(private studentService: StudentService, private spinner: NgxSpinnerService ) { }
 
   ngOnInit() {
     
@@ -35,6 +37,7 @@ export class StudentComponent implements OnInit {
       responsive: true,
       
     };
+    this.loadAllStudents();
 
 
 
@@ -49,6 +52,10 @@ export class StudentComponent implements OnInit {
 
   }
 
+  setId(id) {
+    this.id = id
+  }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -58,37 +65,47 @@ export class StudentComponent implements OnInit {
     this.dtTrigger.next();
   }
 
- 
 
 
-  onGradeChange(){
+
+ // onGradeChange(){
   
-    var selectedGrade = this.grades.find(m => m.id == this.grade);
-    this.students = selectedGrade ? selectedGrade.students  : [];
+   // var selectedGrade = this.grades.find(m => m.id == this.grade);
+   // this.students = selectedGrade ? selectedGrade.students  : [];
    
     
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    //this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
-      dtInstance.destroy();
+      //dtInstance.destroy();
       // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
+      //this.dtTrigger.next();
+   // });
 
-  }
+ // }
 
   delete(id){
     this.studentService.delete(id).subscribe(() => {
       this.students.splice(id, 1);
+    this.loadAllStudents();
+    });
+  }
+
+  private loadAllStudents(){
+    this.studentService.getAll().subscribe( data =>{
+      this.students = data;
+
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         // Destroy the table first
         dtInstance.destroy();
         // Call the dtTrigger to rerender again
         this.dtTrigger.next();
       });
-    });
-  }
-
- 
+      
+  });
 
 }
 
+
+
+
+}

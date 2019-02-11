@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PROJECT.Models
@@ -17,5 +19,16 @@ namespace PROJECT.Models
         public Sex  Sex { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public int SessionId { get; set; }
+        public Sessions Session { get; set; }
+        public int TermId { get; set; }
+        public Term Term { get; set; }
+        public string FileName { get; set; }
+        // public ICollection<Term> Terms { get; set; }
+        // public Student()
+        // {
+        //     Terms = new Collection<Term>();
+        // }
+        
     }
 }

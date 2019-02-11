@@ -1,3 +1,150 @@
-<p>
-  view-student works!
-</p>
+
+
+
+        <div id="user-profile-2" class=" row user-profile">
+          
+         
+                <div class="tabbable">
+                 
+            
+                  <div class="tab-content no-border padding-24">
+                    <div id="home" class="tab-pane in active">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+                          <span class="profile-picture">
+                            <img class="editable img-responsive" style="width:190px; height: 200px" src="/uploads/{{student.fileName}}">
+                          </span>
+                          <br>
+                          <div style="width:200px; height: 40px" class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" (change)="uploadPhoto(student.id)" #fileInput name="file"/>
+                            </div>
+                          
+            
+                         
+                        </div><!-- /.col -->
+            
+                        <div class="col-xs-12 col-sm-9">
+                         
+            
+                          <div class="profile-user-info">
+                            <div  class="profile-info-row">
+                              <div class="profile-info-name"> Username </div>
+            
+                              <div class="profile-info-value">
+                                <span>{{student.userName}}</span>
+                              </div>
+                            </div>
+                            <div class="profile-info-row">
+                              <div class="profile-info-name"> First Name</div>
+            
+                              <div class="profile-info-value">
+                                <span>{{student.firstName}}</span>
+                              </div>
+                            </div>
+                            <div class="profile-info-row">
+                              <div class="profile-info-name"> Last Name</div>
+            
+                              <div class="profile-info-value">
+                                <span>{{student.lastName}}</span>
+                              </div>
+                            </div>
+            
+                            <div class="profile-info-row">
+                              <div class="profile-info-name"> Address </div>
+            
+                              <div class="profile-info-value">
+                                <i class="fa fa-map-marker light-orange bigger-110"></i>
+                                
+                                <span>{{student.address}}</span>
+                              </div>
+                            </div>
+            
+                            <div class="profile-info-row">
+                              <div class="profile-info-name"> Date of Birth</div>
+            
+                              <div class="profile-info-value">
+                                <span>{{student.dateOfBirth}}</span>
+                              </div>
+                            </div>
+                            <div class="profile-info-row">
+                                    <div class="profile-info-name"> Sex</div>
+                  
+                                    <div class="profile-info-value">
+                                      <span>{{student.sex.name}}</span>
+                                    </div>
+                                  </div>
+
+                            <div class="profile-info-row">
+                                    <div class="profile-info-name"> Class</div>
+                  
+                                    <div class="profile-info-value">
+                                      <span>{{student.grade.name}}</span>
+                                    </div>
+                                  </div>
+                                  <div class="profile-info-row">
+                                        <div class="profile-info-name"> Entry Session</div>
+                      
+                                        <div class="profile-info-value">
+                                          <span>{{student.session.name}}</span>
+                                        </div>
+                                      </div>
+
+                                      <div class="profile-info-row">
+                                            <div class="profile-info-name"> Entry Term</div>
+                          
+                                            <div class="profile-info-value">
+                                              <span>{{student.term.name}}</span>
+                                            </div>
+                                          </div>
+            
+                           
+                          </div>
+                        </div><!-- /.col -->
+                      </div><!-- /.row -->
+            <br>
+                      <!-- <div class="space-20"></div> -->
+            
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                          <div class="widget-box transparent">
+
+                                <div>
+
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                                          <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">View Result</a></li>
+                                          <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Upload Result</a></li>
+                                          <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">Change Password</a></li>
+                                        </ul>
+                                      
+                                        <!-- Tab panes -->
+                                        <div class="tab-content" >
+                                          <!-- View Result tab -->
+                                          <div role="tabpanel" class="tab-pane active" id="basic">
+                                            <h2>Basics</h2>
+                                            
+                                          </div>
+                                          <!-- Upload Result tab -->
+                                          <div role="tabpanel" class="tab-pane" id="photos">
+                                            <h2>Photos</h2>
+                                            
+                                          </div>
+
+                                          <!-- Change Password tab -->
+                                          <div role="tabpanel" class="tab-pane" id="password">
+                                            <h2>Change Password</h2>
+                                            
+                                          </div>
+                                        </div>
+                                      </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- /#home -->
+            
+                    
+                  </div>
+                </div>
+              </div>

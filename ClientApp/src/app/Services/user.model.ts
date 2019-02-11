@@ -1,3 +1,4 @@
+
 export class User {
     id: any;
     firstName: string;
@@ -19,5 +20,16 @@ export class ChangePassword{
 export class upload{
     id: any;
     fileName: string;
+}
+
+export class Term{
+    id: any;
+    name: string;
+}
+
+
+export class Session{
+    id: any;
+    name: string;
 }
 

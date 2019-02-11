@@ -20,7 +20,13 @@ namespace PROJECT.Helper
 
             CreateMap<ChangePassword, ChangePasswordDto>();
             CreateMap<ChangePasswordDto, ChangePassword>();
+            
 
+            CreateMap<Sessions, SessionDto>();
+            CreateMap<SessionDto, Sessions>();
+
+            CreateMap<Term, TermDto>();
+            CreateMap<TermDto, Term>();
 
             
         }

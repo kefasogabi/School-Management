@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PROJECT.Dto
@@ -16,6 +18,11 @@ namespace PROJECT.Dto
         [ForeignKey("SexId")]
         public SexDto Sex { get; set; }
         public string Password { get; set; }
+        public int SessionId { get; set; }
+        public Pair Session { get; set; }
+        public int TermId { get; set; }
+        public Pair Term { get; set; }
+        public string FileName { get; set; }
       
     }
 }

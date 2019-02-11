@@ -54,7 +54,6 @@ export class StaffRegisterComponent implements OnInit {
                 // this.resetForm(form);
                 console.log(data);
                 this.toastr.success('Registration successful', 'Success');
-                this.router.navigate(['/staff-login']);
             },
             error => {
                 if(error.status == 400)

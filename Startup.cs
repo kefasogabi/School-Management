@@ -82,6 +82,9 @@ namespace PROJECT
             
 
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITermService, TermService>();
 
 
 

@@ -26,6 +26,10 @@ namespace PROJECT.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<Sex> Sex { get; set; }
         public DbSet<Grade> Grade { get; set; }
+        public DbSet<Sessions> Session { get; set; }
+        public DbSet<Term> Terms { get; set; }
+        public DbSet<Result> Results { get; set; }
+        
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)

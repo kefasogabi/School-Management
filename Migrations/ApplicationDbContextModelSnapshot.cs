@@ -203,6 +203,19 @@ namespace PROJECT.Migrations
                     b.ToTable("Grade");
                 });
 
+            modelBuilder.Entity("PROJECT.Models.Sessions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Session");
+                });
+
             modelBuilder.Entity("PROJECT.Models.Sex", b =>
                 {
                     b.Property<int>("Id")
@@ -226,6 +239,8 @@ namespace PROJECT.Migrations
 
                     b.Property<string>("DateOfBirth");
 
+                    b.Property<string>("FileName");
+
                     b.Property<string>("FirstName");
 
                     b.Property<int>("GradeId");
@@ -236,7 +251,11 @@ namespace PROJECT.Migrations
 
                     b.Property<byte[]>("PasswordSalt");
 
+                    b.Property<int>("SessionId");
+
                     b.Property<int>("SexId");
+
+                    b.Property<int>("TermId");
 
                     b.Property<string>("UserName");
 
@@ -244,9 +263,26 @@ namespace PROJECT.Migrations
 
                     b.HasIndex("GradeId");
 
+                    b.HasIndex("SessionId");
+
                     b.HasIndex("SexId");
 
+                    b.HasIndex("TermId");
+
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.Term", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Terms");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -301,9 +337,19 @@ namespace PROJECT.Migrations
                         .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("PROJECT.Models.Sessions", "Session")
+                        .WithMany("Students")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("PROJECT.Models.Sex", "Sex")
                         .WithMany()
                         .HasForeignKey("SexId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PROJECT.Models.Term", "Term")
+                        .WithMany("Students")
+                        .HasForeignKey("TermId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

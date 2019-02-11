@@ -22,10 +22,6 @@ import { MainLoginComponent } from './main-login/main-login.component';
 import { StaffLoginComponent } from './main-login/staff-login/staff-login.component';
 import { StudentLoginComponent } from './main-login/student-login/student-login.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { HomeComponent } from './home/home.component';
-import { AboutUsComponent } from './about-us/about-us.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-import { ServiceComponent } from './service/service.component';
 import { StaffProfileComponent } from './staff-area/staff-profile/staff-profile.component';
 import { ChangePasswordComponent } from './staff-area/change-password/change-password.component';
 import { StudentAreaComponent } from './student-area/student-area.component';
@@ -40,6 +36,9 @@ import { EditStaffComponent } from './staff-area/edit-staff/edit-staff.component
 import { ViewStudentComponent } from './staff-area/view-student/view-student.component';
 import { UploadImageComponent } from './staff-area/upload-image/upload-image.component';
 import { StudentChangepasswordComponent } from './student-area/student-changepassword/student-changepassword.component';
+import { SessionComponent } from './staff-area/session/session.component';
+import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
+
 
 
 
@@ -50,7 +49,6 @@ import { StudentChangepasswordComponent } from './student-area/student-changepas
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     UserComponent,
     StaffLoginComponent,
     StaffRegisterComponent,
@@ -65,14 +63,13 @@ import { StudentChangepasswordComponent } from './student-area/student-changepas
     StaffProfileComponent,
     StaffAreaComponent,
     NavBarComponent,
-    AboutUsComponent,
-    ContactUsComponent,
-    ServiceComponent,
     MainLoginComponent,
     ChangePasswordComponent,
     UploadImageComponent,
     StudentAreaComponent,
     StudentChangepasswordComponent,
+    SessionComponent,
+    NavMenuComponent,
 
    
     
@@ -88,13 +85,9 @@ import { StudentChangepasswordComponent } from './student-area/student-changepas
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent,
-        children: [{ path: '', component: HomeComponent, pathMatch: 'full'}]
+      { path: '', component: MainLoginComponent,
+        children: [{ path: '', component: StudentLoginComponent, pathMatch: 'full'}]
       },
-      { path: 'about', component: AboutUsComponent},
-      { path: 'contact', component: ContactUsComponent},
-      { path: 'services', component: ServiceComponent},
-      { path: 'login', component: MainLoginComponent},
       
 ///////////////////////////////
       { path: 'staff-login', component: MainLoginComponent,
@@ -131,6 +124,12 @@ import { StudentChangepasswordComponent } from './student-area/student-changepas
 
       { path: 'staff-profile', component: StaffAreaComponent,
         children: [{ path: '', component: StaffProfileComponent}]
+      },
+      { path: 'session', component: StaffAreaComponent,
+        children: [{ path: '', component: SessionComponent}]
+      },
+      { path: 'edit-session/:id', component: StaffAreaComponent,
+        children: [{ path: '', component: SessionComponent}]
       },
 
       { path: 'staffs', component: StaffAreaComponent,

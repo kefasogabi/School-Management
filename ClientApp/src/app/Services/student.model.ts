@@ -7,6 +7,8 @@ export class Student {
     userName: string;
     dateOfBirth: string;
     address: string;
+    sex :{id:any, name:string};
+    grade :{id:any, name:string};
     password:any;
 }
 
@@ -27,6 +29,7 @@ export class EditStudent{
     userName: string;
     dateOfBirth: string;
     address: string;
+    fileName: string;
     sex :{id:any, name:string};
     grade :{id:any, name:string};
 }

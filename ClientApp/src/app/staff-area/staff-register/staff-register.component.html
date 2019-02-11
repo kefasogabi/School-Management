@@ -1,5 +1,5 @@
 
-<div style="margin-top: 20px;" class="col-md-4 col-md-offset-4">
+<div style="margin-top: 20px;" class="col-md-6 col-md-offset-2">
 
 
     
@@ -7,62 +7,50 @@
   <h2 style="font-weight: bolder; color: #4189C7; font-size: 25px;" align="center" >REGISTER STAFF</h2>
   <form name="form" (ngSubmit)="register(f)" #f="ngForm" novalidate>
 
-    
 
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-          <!-- <label for="username">Username</label> -->
+      <div class="form-group col-md-6" >
           <input type="text" class="form-control inp" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" placeholder="FirstName" required />
-          <div *ngIf="f.submitted && !firstName.valid"  class="help-block">FirstName is required</div>
+          <div *ngIf="firstName.touched && firstName.invalid"  class="validation-error">FirstName is required</div>
       </div>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-        <!-- <label for="username">Username</label> -->
+      <div class="form-group col-md-6" >
         <input type="text" class="form-control inp" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" placeholder="LastName" required />
-        <div *ngIf="f.submitted && !lastName.valid"  class="help-block">LastName is required</div>
+        <div *ngIf="lastName.touched && lastName.invalid"  class="validation-error">LastName is required</div>
     </div> 
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-      <!-- <label for="username">Username</label> -->
+    <div class="form-group col-md-12" >
       <input type="text" class="form-control inp" name="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email" required />
-      <div *ngIf="f.submitted && !email.valid"  class="help-block">Email is required</div>
+      <div *ngIf="email.touched && email.invalid"  class="validation-error">Email is required</div>
   </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !dateOfBirth.valid }">
-    <!-- <label for="">PassWord</label> -->
+  <div class="form-group col-md-12" >
     <input type="date"   name="dateOfBirth" #dateOfBirth="ngModel" [(ngModel)]="model.dateOfBirth" class="form-control"    />
-    <div *ngIf="f.submitted && !dateOfBirth.valid"  class="help-block">Date Of Birth is required</div>
+    <div *ngIf="dateOfBirth.touched && dateOfBirth.invalid"  class="validation-error">Date Of Birth is required</div>
   </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
-    <!-- <label for="username">Username</label> -->
+  <div class="form-group col-md-12" >
     <input type="text" class="form-control inp" name="address" [(ngModel)]="model.address" #address="ngModel" placeholder="Address" required />
-    <div *ngIf="f.submitted && !address.valid"  class="help-block">Address is required</div>
+    <div *ngIf="address.touched && address.invalid"  class="validation-error">Address is required</div>
 </div>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-          <!-- <label for="password">Password</label> -->
+      <div class="form-group col-md-6" >
           <input type="password" class="form-control inp" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password" />
-          <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+          <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
       </div>
 
-
-      <!-- <div *ngFor="let r of roles"  class="checkbox">
-        <label for="role{{r.id}}" >
-            <input type="checkbox" id="role{{r.id}}"  (change)="onRoleToggle(r.id, $event)" />
-            {{ r.name }}
-        </label>
-      </div> -->
-
-      <div class="form-group" >
-        <!-- <label for="username">Sex</label> -->
+      <div class="form-group col-md-6" >
         <select class="form-control" [(ngModel)]="model.role" name="role" required #role="ngModel" >
-            <option >Select Class</option>
+            <option >Select Role</option>
             <option *ngFor="let r of roles" value="{{r.name}}">{{r.name}}</option>
         </select>
-        <div class="alert alert-danger" *ngIf="role.touched && !role.valid">Please Select Role</div>
+        <div class="validation-error" *ngIf="role.touched && role.invalid">Please Select Role</div>
     </div>
 
-     
-      <div class="form-group">
-          <button [disabled]="!f.valid || loading" style="font-weight:bolder;"  class="btn btn-primary inp but form-control">Register</button>
+     <div class="form-row">
+      <div class="form-group col-md-8">
+          <button [disabled]="!f.valid || loading" style="font-weight:bolder;"  class="btn btn-primary btn-block ">Register</button>
           <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
          
       </div>
+      <div class="form-group col-md-4">
+            <button type="button" (click)="resetForm(f)" class="btn btn-secondary btn-block"> <i class="fa fa-repeat"></i> reset</button>
+        </div>
+    </div>
       
   </form>
   

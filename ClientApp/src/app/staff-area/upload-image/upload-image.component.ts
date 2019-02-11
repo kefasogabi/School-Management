@@ -43,6 +43,7 @@ export class UploadImageComponent implements OnInit {
 
     this.userService.uploadImage(nativeElemet.files[0]).subscribe((data:any) => {
       console.log(data);
+      this.userService.getUserProfile();
       this.toastr.success('Image Uploaded successful', 'Success');
       this.router.navigate(['/staff-profile']);
     },

@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -20,15 +24,21 @@ namespace PROJECT.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentService studentService;
-        private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IHostingEnvironment host;
         private readonly AppSettings appSettings;
 
-        public StudentController(IStudentService studentService, ApplicationDbContext context, IOptions<AppSettings> appSettings, IMapper mapper)
+        public StudentController(IStudentService studentService,
+                                 IOptions<AppSettings> appSettings, 
+                                 IMapper mapper,
+                                 IUnitOfWork unitOfWork,
+                                 IHostingEnvironment host)
         {
             this.studentService = studentService;
-            this.context = context;
             this.mapper = mapper;
+            this.unitOfWork = unitOfWork;
+            this.host = host;
             this.appSettings = appSettings.Value;
         }
 
@@ -70,7 +80,7 @@ namespace PROJECT.Controllers
 
         [AllowAnonymous]
         [HttpPost("/api/Register")]
-        public IActionResult Register([FromBody]StudentDto studentDto)
+        public async Task<IActionResult> Register([FromBody]StudentDto studentDto)
         {
             // map dto to entity
             var student = mapper.Map<Student>(studentDto);
@@ -80,6 +90,7 @@ namespace PROJECT.Controllers
                
                 // save 
                 studentService.Create(student, studentDto.Password  );
+                await unitOfWork.CompleteAsync();
                 return Ok(student);
             } 
             catch(AppException ex)
@@ -92,24 +103,24 @@ namespace PROJECT.Controllers
 
 
         [HttpGet("/api/students")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var student =  studentService.GetAll();
+            var student = await studentService.GetAllAsync();
             var studentDto = mapper.Map<IList<StudentDto>>(student);
             return Ok(studentDto);
         }
 
         [HttpGet("/api/student/{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var student =  studentService.GetById(id);
+            var student = await studentService.GetByIdAsync(id);
             var studentDto = mapper.Map<StudentDto>(student);
             return Ok(studentDto);
         }
 
 
         [HttpPut("/api/student/{id}")]
-        public IActionResult Update(int id, [FromBody]StudentDto studentDto)
+        public async Task<IActionResult> Update(int id, [FromBody]StudentDto studentDto)
         {
             // map dto to entity and set id
             var student = mapper.Map<Student>(studentDto);
@@ -119,6 +130,7 @@ namespace PROJECT.Controllers
             {
                 // save 
                 studentService.Update(student, studentDto.Password);
+                await unitOfWork.CompleteAsync();
                 return Ok();
             } 
             catch(AppException ex)
@@ -130,9 +142,10 @@ namespace PROJECT.Controllers
 
 
         [HttpDelete("/api/student/{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             studentService.Delete(id);
+            await unitOfWork.CompleteAsync();
             return Ok();
         }
 
@@ -155,6 +168,20 @@ namespace PROJECT.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("/api/StudentUpload/{id}")]
+        public async Task<IActionResult> UploadImage( int id, IFormFile file)
+        {
+            var student = await studentService.GetByIdAsync(id);
+
+                studentService.UploadImage(student.Id, file);
+
+                await unitOfWork.CompleteAsync();
+
+                    return Ok();
+        }
+
+        
        
         // public string GeneratePassword()
         // {

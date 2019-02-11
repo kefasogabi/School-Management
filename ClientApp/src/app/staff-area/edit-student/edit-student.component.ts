@@ -21,10 +21,17 @@ student = {
     userName: "",
     dateOfBirth: "",
     address: "",
-    sexId: 0,
-    gradeId: 0
+    sex: {
+      id: 0,
+      name: ""
+    },
+    grade: {
+      id: 0,
+      name: ""
+    }
 };
-
+sex: any[];
+  grade: any[];
 
 
   constructor(private studentService: StudentService, private route: ActivatedRoute, private toastr: ToastrService) {
@@ -33,7 +40,19 @@ student = {
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
-    if (id) this.studentService.getById(id).take(1).subscribe(data => this.student = data );
+    if (id) this.studentService.getById(id).take(1).subscribe(data => {
+      
+      this.student = data; console.log(this.student)
+    });
+
+
+    this.studentService.getSex().subscribe( sex => {
+      this.sex = sex;
+    });
+
+    this.studentService.getGrade().subscribe( data => {
+      this.grade = data;
+    });
   }
 
   update(form: NgForm){
@@ -43,15 +62,15 @@ student = {
     });
   }
 
-  private setStudent(s: EditStudent){
-    this.student.id = s.id;
-    this.student.firstName = s.firstName;
-    this.student.lastName = s.lastName;
-    this.student.userName = s.userName;
-    this.student.dateOfBirth = s.dateOfBirth;
-    this.student.address = s.address;
-    this.student.sexId = s.sex.id;
-    this.student.gradeId = s.grade.id;
-  }
+  // private setStudent(s: EditStudent){
+  //   this.student.id = s.id;
+  //   this.student.firstName = s.firstName;
+  //   this.student.lastName = s.lastName;
+  //   this.student.userName = s.userName;
+  //   this.student.dateOfBirth = s.dateOfBirth;
+  //   this.student.address = s.address;
+  //   this.student.sexId = s.sex.id;
+  //   this.student.gradeId = s.grade.id;
+  // }
 
 }

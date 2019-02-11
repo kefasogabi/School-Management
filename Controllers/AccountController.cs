@@ -192,16 +192,16 @@ namespace PROJECT.Controllers
                 if (result.Succeeded)
                 {
                     var user = userManager.Users.SingleOrDefault(c => c.Email == model.Email);
-                    return  GenerateJwtToken(model.Email, user);
+                    return    GenerateJwtToken(model.Email, user);
                 }
                 
                 throw new ApplicationException("Unknown Error"); 
             }
 
             [AllowAnonymous]
-            private  IActionResult GenerateJwtToken(string email, ApplicationUser user)
+            private IActionResult GenerateJwtToken(string email, ApplicationUser user)
             {
-            
+                
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -216,10 +216,21 @@ namespace PROJECT.Controllers
                         new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString()),
                         new Claim(ClaimTypes.Rsa, user.FileName.ToString()),
                         
+                        
                     }),
+                    
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
+                // claimsIdentity.AddClaims(user.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+                
+                // var roles = await userManager.GetRolesAsync(user);
+                // foreach(string roleName in roles)
+                // {
+                //     tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, roleName));
+                // };
+                
+
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
             

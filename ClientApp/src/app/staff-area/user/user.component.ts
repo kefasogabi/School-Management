@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   users: User[] = [];
   staff = {};
+  public id = '';
   
 
 
@@ -39,11 +40,12 @@ export class UserComponent implements OnInit {
     // };
     this.spinner.show();
     this.loadAllUsers();
-  //   setTimeout(() => {
-  //     /** spinner ends after 5 seconds */
-     this.spinner.hide();
-  // }, 5000);
-    
+  
+     this.spinner.hide();  
+  }
+
+  setId(id) {
+    this.id = id;
   }
 
   delete(id){
