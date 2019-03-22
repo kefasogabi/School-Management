@@ -1,3 +1,4 @@
+import { UniversalService } from './../../Services/universal.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -17,21 +18,49 @@ export class StudentRegisterComponent implements OnInit {
   student: Student;
   sex: any[];
   grade: any[];
+  bloodGroups: any[];
+  genoTypes: any[];
+  religions: any[];
+  nextKin: any[];
+
+  sexId: string ="Select Sex";
+  gradeId: string ="Select Class"; 
 
   constructor(private studentService: StudentService,
+              private universalService: UniversalService,
                private toastr: ToastrService,
                 private router: Router) { }
 
   ngOnInit() {
     this.resetForm();
 
-    this.studentService.getSex().subscribe( sex => {
+    this.universalService.getSex().subscribe( sex => {
       this.sex = sex;
     });
 
     this.studentService.getGrade().subscribe( data => {
       this.grade = data;
     });
+
+    this.universalService.getSex().subscribe( sex => {
+      this.sex = sex;
+    });
+
+    this.universalService.getBloodGroup().subscribe( data => {
+      this.bloodGroups = data;
+    });
+
+    this.universalService.getGenoType().subscribe( data => {
+      this.genoTypes = data;
+    });
+
+    this.universalService.getReligion().subscribe( data => {
+      this.religions = data;
+    });
+
+    this.universalService.getNextKin().subscribe(data => {
+      this.nextKin = data;
+    })
 
   }
 
@@ -45,7 +74,7 @@ export class StudentRegisterComponent implements OnInit {
                 },
                 error => {
                     if(error.status == 400)
-                    this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
+                    this.toastr.error(error.message, 'Error');
                     this.loading = false;
                   });
     }
@@ -61,6 +90,9 @@ export class StudentRegisterComponent implements OnInit {
       userName: '',
       address: '',
       dateOfBirth: '',
+      country:'',
+      state: '',
+      lGA:'',
       sex: {
         id: null,
         name: ""
@@ -68,6 +100,26 @@ export class StudentRegisterComponent implements OnInit {
       grade: {
         id: null,
         name: ""
+      },
+      genoType: {
+        id: null,
+        name: ""
+      },
+      bloodGroup:{
+        id:null,
+        name:""
+      },
+      religion:{
+        id:null,
+        name:""
+      },
+      nkName:'',
+      nkAddress:'',
+      nkPhone:'',
+      hairColor:'',
+      nkRelationship:{
+        id:null,
+        name:""
       },
       password: '',
       }

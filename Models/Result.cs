@@ -6,7 +6,7 @@ namespace PROJECT.Models
     public class Result
     {
         public int Id { get; set; }
-         public string Name { get; set; }
+        public string Name { get; set; }
         public string CA1 { get; set; }
         public string CA2 { get; set; }
         public string Exam { get; set; }

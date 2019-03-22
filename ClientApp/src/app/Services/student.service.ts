@@ -29,9 +29,10 @@ delete(id: number) {
     return this.http.delete( '/api/student/' + id, this.jwt());
 }
 
-getSex(){
-    return this.http.get('/api/sex', this.jwt()).map((response: Response) => response.json());
-}
+getProfile(){
+    return this.http.get('/api/studentProfile', this.jwt()).map((response: Response) => response.json());
+  }
+
 
 getGrade(){
     return this.http.get('/api/grade', this.jwt()).map((response: Response) => response.json());

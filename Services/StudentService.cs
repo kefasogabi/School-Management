@@ -59,7 +59,7 @@ namespace PROJECT.Repository
             student.PasswordHash = passwordHash;
             student.PasswordSalt = passwordSalt;
             student.Session = context.Session.Last();
-            student.Term = context.Terms.FirstOrDefault();
+            // student.Term = context.Terms.FirstOrDefault();
             student.FileName = "avatar.jpg";
             context.Students.Add(student);
 
@@ -79,11 +79,12 @@ namespace PROJECT.Repository
             }
         }
 
+        
+
         public async Task<IEnumerable<Student>> GetAllAsync()
         {
             return await context.Students.Include(c => c.Sex)
                                     .Include(c => c.Grade)
-                                    .Include(c => c.Term)
                                     .Include(c => c.Session).ToListAsync();
         }
 
@@ -91,7 +92,10 @@ namespace PROJECT.Repository
         {
             return await context.Students.Include(c => c.Sex)
                                     .Include(c => c.Grade)
-                                    .Include(c => c.Term)
+                                    .Include(b => b.BloodGroup)
+                                    .Include(g => g.GenoType)
+                                    .Include(n => n.NKRelationship)
+                                    .Include(r => r.Religion)
                                     .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -117,8 +121,8 @@ namespace PROJECT.Repository
             students.FirstName = student.FirstName;
             students.LastName = student.LastName;
             students.DateOfBirth = student.DateOfBirth;
-            // students.Sex.Id = student.Sex.Id;
-            // students.GradeId = student.GradeId;
+            students.SexId = student.SexId;
+            students.GradeId = student.GradeId;
 
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
@@ -134,30 +138,13 @@ namespace PROJECT.Repository
 
         }
 
-        public void ChangePassword(Student student, string password = null)
+        public void ChangePassword(ChangePassword changePassword, string password = null)
         {
-            var students = context.Students.Find(student.Id);
+            var students = context.Students.Find(changePassword.Id);
 
             if (students == null)
                 throw new AppException("User not found");
 
-            if (student.UserName != students.UserName)
-            {
-                // username has changed so check if the new username is already taken
-                if (context.Students.Any(x => x.UserName == student.UserName))
-                    throw new AppException("UserName " + student.UserName + " is already taken");
-            }
-
-            // update user properties
-
-
-            students.UserName = student.UserName;
-            students.Address = student.Address;
-            students.FirstName = student.FirstName;
-            students.LastName = student.LastName;
-            students.DateOfBirth = student.DateOfBirth;
-            // students.Sex.Id = student.Sex.Id;
-            // students.GradeId = student.GradeId;
 
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
@@ -170,7 +157,7 @@ namespace PROJECT.Repository
             }
 
             context.Students.Update(students);
-            context.SaveChanges();
+            
         }
 
         // private helper methods
@@ -227,6 +214,18 @@ namespace PROJECT.Repository
                     student.FileName = fileName;
 
                     context.Students.Update(student);
+        }
+
+        public async Task<Student> GetProfile(int id)
+        {
+           return await context.Students.Include(c => c.Sex)
+                                    .Include(c => c.Grade)
+                                    .Include(b => b.BloodGroup)
+                                    .Include(g => g.GenoType)
+                                    .Include(n => n.NKRelationship)
+                                    .Include(r => r.Religion)
+                                    // .Include(c => c.Term)
+                                    .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
         }
     }
 }

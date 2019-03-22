@@ -1,20 +1,23 @@
 
 <div class='container-fluid'>
 <div style="margin-top: 60px;" class="row">
-  <div class="col-sm-2">
-    <ul class="nav nav-pills nav-stacked">
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a style="font-weight:bolder;" [routerLink]='["/staff-profile"]' > {{staff.firstName}} {{staff.lastName}}  </a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/staffs"]'>Staffs</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/students"]'>Students</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/staff-register"]'>Register Staff</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/student-register"]'>Register Student</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/upload-photo"]'>Upload Image</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/session"]'>Session</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a [routerLink]='["/change-password"]' >Change Password</a></li>
+  <div class="col-sm-2  dash">
+    <ul class="nav  nav-pills nav-stacked">
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/staff-profile"]' ><i class="fa fa-user"></i> MY PROFILE  </a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik "  [routerLink]='["/staffs"]'><i class="fa fa-briefcase"></i> STAFFS</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/students"]'><i class="fa fa-graduation-cap"></i> STUDENTS</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/staff-register"]'><i class="fa fa-plus"></i> REGISTER STAFF</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/student-register"]'><i class="fa fa-plus"></i> REGISTER STUDENT</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/upload-photo"]'><i class="fa fa-hand-o-right"></i> UPLOAD IMAGE</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/session"]'><i class="fa fa-hand-o-right"></i> SESSION</a></li>
+      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/change-password"]' ><i class="fa fa-lock"></i> CHANGE PASSWORD</a></li>
     </ul>
   </div>
-  <div class="col-sm-10">
+  <div class="col-sm-10 main ">
+    <div class="">
+      <app-nav-bar></app-nav-bar>
     <router-outlet></router-outlet>
+  </div>
   </div>
 </div>
 </div>

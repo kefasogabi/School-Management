@@ -28,6 +28,16 @@
 }
 
 
+.panel{
+    margin: 20px;
+}
+.panel-title{
+    font-weight: bold;
+}
+
+.tabble{
+    background-color: rgba(95, 94, 94, 0.486) !important;
+}
 
 
 

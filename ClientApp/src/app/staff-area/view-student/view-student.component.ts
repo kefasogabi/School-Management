@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/take';
 import { StudentService } from '../../Services/student.service';
+import { NgForm } from '@angular/forms';
 
 
 
@@ -21,6 +22,13 @@ export class ViewStudentComponent implements OnInit {
       dateOfBirth: "",
       address: "",
       fileName:"",
+      country:"",
+      state: "",
+      lGA:"",
+      nkName:"",
+      nkAddress:"",
+      nkPhone:"",
+      hairColor:"",
       sex: {
         id: 0,
         name: ""
@@ -29,14 +37,26 @@ export class ViewStudentComponent implements OnInit {
         id: 0,
         name: ""
       },
-      term:{
-        id:0,
-        name:""
-      },
       session:{
         id:0,
         name:""
-      }
+      },
+      genoType: {
+        id: 0,
+        name: ""
+      },
+      bloodGroup:{
+        id:0,
+        name:""
+      },
+      religion:{
+        id:0,
+        name:""
+      },
+      nkRelationship:{
+        id:0,
+        name:""
+      },
   };
 
 
@@ -47,9 +67,7 @@ export class ViewStudentComponent implements OnInit {
   constructor(private studentService: StudentService, private route: ActivatedRoute, private toastr: ToastrService) {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) this.studentService.getById(id).take(1).subscribe( (data:any) => {
-        
     this.student = data;
-    console.log(data);
     });
     
    }
@@ -61,9 +79,7 @@ export class ViewStudentComponent implements OnInit {
   getStudent(){
     let id = this.route.snapshot.paramMap.get('id');
     this.studentService.getById(id).take(1).subscribe( (data:any) => {
-        
       this.student = data;
-      console.log(data);
       });
   }
 
@@ -73,6 +89,18 @@ uploadPhoto(id){
   this.studentService.uploadImage(id, nativeElemet.files[0]).subscribe( data => {
     this.getStudent();
     this.toastr.success('Image Uploaded successful', 'Success');
+  });
+}
+
+changePassword(form: NgForm){
+  this.loading = true;
+  this.studentService.changePassword(form.value).subscribe(data => {
+    this.toastr.success('Updated Successfully', 'Password');
+    this.loading = false;
+  },error => {
+    if(error.status == 400)
+    this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
+    this.loading = false;
   });
 }
 

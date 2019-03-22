@@ -1,25 +1,27 @@
+.profile-picture .file {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+
+.profile-picture .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+
 .profile-img{
     text-align: center;
 }
 .profile-img img{
     width: 70%;
     height: 100%;
-}
-.profile-img .file {
-    position: relative;
-    overflow: hidden;
-    margin-top: -20%;
-    width: 70%;
-    border: none;
-    border-radius: 0;
-    font-size: 15px;
-    background: #212529b8;
-}
-.profile-img .file input {
-    position: absolute;
-    opacity: 0;
-    right: 0;
-    top: 0;
 }
 
 .img-div{
@@ -28,7 +30,16 @@
 }
 
 
+.panel{
+    margin: 20px;
+}
+.panel-title{
+    font-weight: bold;
+}
 
+.tabble{
+    background-color: rgba(95, 94, 94, 0.486) !important;
+}
 
 
 

@@ -15,14 +15,26 @@ namespace PROJECT.Dto
         public int GradeId { get; set; }
         public Pair Grade { get; set; }
         public int SexId { get; set; }
-        [ForeignKey("SexId")]
         public SexDto Sex { get; set; }
         public string Password { get; set; }
         public int SessionId { get; set; }
         public Pair Session { get; set; }
-        public int TermId { get; set; }
-        public Pair Term { get; set; }
         public string FileName { get; set; }
+        public string Country { get; set; }
+        public string state { get; set; }
+        public string LGA { get; set; }
+        public int GenoTypeId { get; set; }
+        public Pair GenoType { get; set; }
+        public int BloodGroupId { get; set; }
+        public Pair BloodGroup { get; set; }
+        public int ReligionId { get; set; }
+        public Pair Religion { get; set; }
+        public string HairColor { get; set; }
+        public string NKName { get; set; }
+        public string NKPhoneNumber { get; set; }
+        public int NKRelationshipId { get; set; }   
+        public Pair NKRelationship { get; set; }
+        public string NKAddress { get; set; }
       
     }
 }

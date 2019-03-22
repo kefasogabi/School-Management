@@ -12,9 +12,10 @@ namespace PROJECT.Interface
         Task<Student> GetByIdAsync(int id);
         Student Create(Student student, string password);
         void Update(Student student, string password = null);
-        void ChangePassword( Student student, string password = null);
+        void ChangePassword( ChangePassword changePassword, string password = null);
         void Delete(int id);
 
+        Task<Student> GetProfile(int id);
         void UploadImage(int id, IFormFile file);
 
        

@@ -21,9 +21,8 @@ export class StudentComponent implements OnInit {
    dtTrigger: Subject<any> = new Subject();
   // students : Student[] = [];
   // grades: Grade[] = [];
-  school: any = {}
+  
    grade:any = 0;
- p: number = 1;
   students: any[];
   grades: any[];
   public id = '';
@@ -41,14 +40,11 @@ export class StudentComponent implements OnInit {
 
 
 
-    this.spinner.show();
-    // this.loadAllStudent();
-    this.studentService.getGrade().subscribe( grades => {
-      this.grades = grades;
-    });
-
-   
-      this.spinner.hide();
+    // this.spinner.show();
+    // this.studentService.getGrade().subscribe( grades => {
+    //   this.grades = grades;
+    // });
+    //   this.spinner.hide();
 
   }
 

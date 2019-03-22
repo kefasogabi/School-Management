@@ -1,3 +1,4 @@
+import { UniversalService } from './../../Services/universal.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/take';
@@ -34,7 +35,10 @@ sex: any[];
   grade: any[];
 
 
-  constructor(private studentService: StudentService, private route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(private studentService: StudentService,
+              private universalService: UniversalService,
+              private route: ActivatedRoute,
+              private toastr: ToastrService) {
     
    }
 
@@ -46,7 +50,7 @@ sex: any[];
     });
 
 
-    this.studentService.getSex().subscribe( sex => {
+    this.universalService.getSex().subscribe( sex => {
       this.sex = sex;
     });
 

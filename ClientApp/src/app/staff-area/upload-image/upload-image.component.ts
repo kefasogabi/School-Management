@@ -40,12 +40,10 @@ export class UploadImageComponent implements OnInit {
   upload(){
     this.loading = true;
     var nativeElemet: HTMLInputElement = this.fileInput.nativeElement;
-
     this.userService.uploadImage(nativeElemet.files[0]).subscribe((data:any) => {
       console.log(data);
       this.userService.getUserProfile();
       this.toastr.success('Image Uploaded successful', 'Success');
-      this.router.navigate(['/staff-profile']);
     },
     error => {
       if(error)

@@ -80,7 +80,7 @@ namespace PROJECT
             });
 
             
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

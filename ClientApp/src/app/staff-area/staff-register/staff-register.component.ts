@@ -1,9 +1,12 @@
+import { Observable } from 'rxjs';
+import { UniversalService } from './../../Services/universal.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { User } from '../../Services/user.model';
 import { UserService } from '../../Services/user.service';
+
 
 
 
@@ -14,27 +17,74 @@ import { UserService } from '../../Services/user.service';
 })
 export class StaffRegisterComponent implements OnInit {
 
-  model: User = {
-    id: 0,
-    firstName: '',
-    lastName: '',
-    email: '',
-    dateOfBirth: '',
-    address: '',
-    password:'',
-    role:0,
-    fileName: '',
-  };
+  // model: User = {
+  //   id: 0,
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   dateOfBirth: '',
+  //   address: '',
+  //   password:'',
+  //   role:0,
+  //   fileName: '',
+  // };
+
+  model = {};
  
   loading = false;
   roles : any[];
   user: User;
+  sex: any[];
+  bloodGroups: any[];
+  genoTypes: any[];
+  religions: any[];
+  nextKin: any[];
 
 
-  constructor( private userService: UserService, private router: Router, private toastr: ToastrService) { }
+  constructor( private userService: UserService,
+               private universalService: UniversalService,
+               private router: Router,
+               private toastr: ToastrService) { }
 
   ngOnInit() {
     // this.resetForm();
+
+    this.universalService.getSex().subscribe( sex => {
+      this.sex = sex;
+    });
+
+    this.universalService.getBloodGroup().subscribe( data => {
+      this.bloodGroups = data;
+    });
+
+    this.universalService.getGenoType().subscribe( data => {
+      this.genoTypes = data;
+    });
+
+    this.universalService.getReligion().subscribe( data => {
+      this.religions = data;
+    });
+
+    this.universalService.getNextKin().subscribe(data => {
+      this.nextKin = data;
+    })
+
+
+    // Observable.forkJoin([
+    //   this.universalService.getSex(),
+    //   this.universalService.getBloodGroup(),
+    //   this.universalService.getGenoType(),
+    //   this.universalService.getReligion()
+    // ]).subscribe( data => {
+    //   this.sex = data[0];
+    //   this.bloodGroups = data[1];
+    //   this.genoTypes = data[2];
+    //   this.religion = data[3]
+    // }, err => {
+    //   if(err.status == 404)
+    //   this.toastr.error('Not Found', 'Error');
+    // });
+
 
       this.userService.getAllRoles().subscribe(
         (data: any) => {

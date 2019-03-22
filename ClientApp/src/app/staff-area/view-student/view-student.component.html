@@ -1,150 +1,210 @@
 
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3  class="panel-title">Student Profile</h3>
+  </div>
+  <div class="panel-body">
+   
+  
 
-        <div id="user-profile-2" class=" row user-profile">
-          
+      <div id="user-profile-2" class=" row user-profile">
+        
+       
+        <div class="tabbable">
          
-                <div class="tabbable">
+    
+          <div class="tab-content no-border padding-24">
+            <div id="home" class="tab-pane in active">
+              <div class="row">
+                <div class="col-xs-12 col-sm-3 center">
+                  <span class="profile-picture">
+                    <img class="editable img-responsive" style="width:190px; height: 200px" src="/uploads/{{student.fileName}}">
+                    <div class="file btn btn-lg btn-primary">
+                      Change Photo
+                      <input type="file" (change)="uploadPhoto(student.id)" #fileInput name="file"/>
+                  </div>
+                  </span>
+                </div><!-- /.col -->
+    
+                <div class="col-xs-12 col-sm-9">
                  
-            
-                  <div class="tab-content no-border padding-24">
-                    <div id="home" class="tab-pane in active">
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-3 center">
-                          <span class="profile-picture">
-                            <img class="editable img-responsive" style="width:190px; height: 200px" src="/uploads/{{student.fileName}}">
-                          </span>
-                          <br>
-                          <div style="width:200px; height: 40px" class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" (change)="uploadPhoto(student.id)" #fileInput name="file"/>
-                            </div>
+    
+                  <table class="table table-striped table-hover table-bordered ">
+                    <thead>
+                      <tr>
+                        <th class="tabble" colspan="2">Personal Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td>{{student.firstName}}  {{student.lastName}}</td>
+                      </tr>
+                      <tr>
+                          <td>Email</td>
+                          <td>{{student.userName}}</td>
+                        </tr>
+                        <tr>
+                      <tr>
+                          <td>Date Of Birth</td>
+                          <td>{{student.dateOfBirth}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td><i class="fa fa-map-marker light-orange bigger-110"></i> {{student.address}}</td>
+                          </tr>
+                          <tr>
+                              <td>Country</td>
+                              <td>{{student.country}}</td>
+                            </tr>
+                            <tr>
+                                <td>State</td>
+                                <td>{{student.state}}</td>
+                              </tr>
+                              <tr>
+                                  <td>LGA</td>
+                                  <td>{{student.lga}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Gender</td>
+                                  <td>{{student.sex.name}}</td>
+                                </tr>
+                    </tbody>
+                  </table>
+
+
+                 
+              </div><!-- /.row -->
+    
+              <!-- <div class="space-20"></div> -->
+    
+              <!-- <div class="row"> -->
+                <div class="col-xs-12 col-sm-12">
+                  <div class="widget-box transparent">
+                      <table class="table table-striped table-hover table-bordered ">
+                          <thead>
+                            <tr>
+                              <th class="tabble" colspan="2">Next of Kin Details</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Name</td>
+                              <td>{{student.nkName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td>{{student.nkPhoneNumber}}</td>
+                              </tr>
+                              <tr>
+                                <td>Next of Kin Relationship</td>
+                                <td>{{student.nkRelationship.name}}</td>
+                              </tr>
+                              <tr>
+                                  <td>Address</td>
+                                  <td>{{student.nkAddress}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-striped table-hover table-bordered ">
+                            <thead>
+                              <tr>
+                                <th class="tabble" colspan="2">Other Details</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Hair Colour</td>
+                                <td>{{student.hairColor}}</td>
+                              </tr>
+                              <tr>
+                                <td>Blood Group</td>
+                                <td>{{student.bloodGroup.name}}</td>
+                              </tr>
+                              <tr>
+                                <td>GenoType</td>
+                                <td>{{student.genoType.name}}</td>
+                              </tr>
+                              <tr>
+                                <td>Religion</td>
+                                <td>{{student.religion.name}}</td>
+                              </tr>
+                              
+                              </tbody>
+                          </table>
+
+                          <div>
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-justified" role="tablist">
+                              <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">View Result</a></li>
+                              <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Upload Result</a></li>
+                              <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">Change Password</a></li>
+                            </ul>
                           
-            
-                         
-                        </div><!-- /.col -->
-            
-                        <div class="col-xs-12 col-sm-9">
-                         
-            
-                          <div class="profile-user-info">
-                            <div  class="profile-info-row">
-                              <div class="profile-info-name"> Username </div>
-            
-                              <div class="profile-info-value">
-                                <span>{{student.userName}}</span>
-                              </div>
-                            </div>
-                            <div class="profile-info-row">
-                              <div class="profile-info-name"> First Name</div>
-            
-                              <div class="profile-info-value">
-                                <span>{{student.firstName}}</span>
-                              </div>
-                            </div>
-                            <div class="profile-info-row">
-                              <div class="profile-info-name"> Last Name</div>
-            
-                              <div class="profile-info-value">
-                                <span>{{student.lastName}}</span>
-                              </div>
-                            </div>
-            
-                            <div class="profile-info-row">
-                              <div class="profile-info-name"> Address </div>
-            
-                              <div class="profile-info-value">
-                                <i class="fa fa-map-marker light-orange bigger-110"></i>
+                            <!-- Tab panes -->
+                            <div class="tab-content" >
+                              <!-- View Result tab -->
+                              <div role="tabpanel" class="tab-pane active" id="basic">
+                                <h2>Basics</h2>
                                 
-                                <span>{{student.address}}</span>
                               </div>
-                            </div>
-            
-                            <div class="profile-info-row">
-                              <div class="profile-info-name"> Date of Birth</div>
-            
-                              <div class="profile-info-value">
-                                <span>{{student.dateOfBirth}}</span>
+                              <!-- Upload Result tab -->
+                              <div role="tabpanel" class="tab-pane" id="photos">
+                                <h2>Photos</h2>
+                                
                               </div>
-                            </div>
-                            <div class="profile-info-row">
-                                    <div class="profile-info-name"> Sex</div>
-                  
-                                    <div class="profile-info-value">
-                                      <span>{{student.sex.name}}</span>
+
+                              <!-- Change Password tab -->
+                              <div role="tabpanel" class="tab-pane" id="password">
+                                <h2 align="center">Change Password</h2>
+                                <div class="row">
+                                  <div style="margin-top:20px;" class="col-md-4 col-md-offset-4" >
+                                      <form name="form" (ngSubmit)="changePassword(f)" #f="ngForm" novalidate>
+                                        <input  type="hidden" name="id" #id="ngModel" [(ngModel)]="student.id"   >
+                                        <div class="form-row">
+                                      <div class="form-group ">
+                                          <!-- <label for="password">Password</label> -->
+                                          <input type="password" class="form-control inp" name="password" [(ngModel)]="student.password" #password="ngModel" required placeholder="Password" />
+                                          <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
+                                      </div>
+                                      <!-- <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !newPassword.valid }">
+                                          <label for="password">Password</label>
+                                          <input type="password" class="form-control inp" name="ConfirmPassword"   required placeholder="Confirm Password" />
+                                          <div *ngIf="f.submitted && !ConfirmPassword.valid" class="help-block">Password is required</div>
+                                      </div> -->
+                                    
+                                      <div class="form-group">
+                                          <button [disabled]="!f.valid || loading" style="font-weight:bolder;"  class="btn btn-primary inp but form-control">Change Password</button>
+                                          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                         
+                                      </div>
+                                    </div>
+                                      </form>
                                     </div>
                                   </div>
-
-                            <div class="profile-info-row">
-                                    <div class="profile-info-name"> Class</div>
-                  
-                                    <div class="profile-info-value">
-                                      <span>{{student.grade.name}}</span>
-                                    </div>
-                                  </div>
-                                  <div class="profile-info-row">
-                                        <div class="profile-info-name"> Entry Session</div>
-                      
-                                        <div class="profile-info-value">
-                                          <span>{{student.session.name}}</span>
-                                        </div>
-                                      </div>
-
-                                      <div class="profile-info-row">
-                                            <div class="profile-info-name"> Entry Term</div>
-                          
-                                            <div class="profile-info-value">
-                                              <span>{{student.term.name}}</span>
-                                            </div>
-                                          </div>
-            
-                           
+                                
+                                
+                                
+                              </div>
+                            </div>
                           </div>
-                        </div><!-- /.col -->
-                      </div><!-- /.row -->
-            <br>
-                      <!-- <div class="space-20"></div> -->
-            
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-12">
-                          <div class="widget-box transparent">
-
-                                <div>
-
-                                        <!-- Nav tabs -->
-                                        <ul class="nav nav-tabs nav-justified" role="tablist">
-                                          <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">View Result</a></li>
-                                          <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Upload Result</a></li>
-                                          <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">Change Password</a></li>
-                                        </ul>
-                                      
-                                        <!-- Tab panes -->
-                                        <div class="tab-content" >
-                                          <!-- View Result tab -->
-                                          <div role="tabpanel" class="tab-pane active" id="basic">
-                                            <h2>Basics</h2>
-                                            
-                                          </div>
-                                          <!-- Upload Result tab -->
-                                          <div role="tabpanel" class="tab-pane" id="photos">
-                                            <h2>Photos</h2>
-                                            
-                                          </div>
-
-                                          <!-- Change Password tab -->
-                                          <div role="tabpanel" class="tab-pane" id="password">
-                                            <h2>Change Password</h2>
-                                            
-                                          </div>
-                                        </div>
-                                      </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div><!-- /#home -->
-            
                     
                   </div>
                 </div>
-              </div>
+              <!-- </div> -->
+            </div><!-- /#home -->
+    
+            
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div><!-- /panel body end -->
+  </div><!-- /panel end -->
+
+
+        

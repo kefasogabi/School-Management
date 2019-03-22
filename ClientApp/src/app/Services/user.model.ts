@@ -9,6 +9,19 @@ export class User {
     password:any;
     role:any;
     fileName: string;
+    sex :{id:any, name:string};
+    country:string;
+    state:string;
+    lGA:string;
+    genoType:{id:any, name:string};
+    bloodGroup:{id:any, name:string};
+    religion:{id:any, name:string};
+    hairColor:string;
+    nkName:string;
+    nkPhone: string;
+    nkRelationship:{id:any, name:string};
+    nkAddress:string;
+   
 }
 
 export class ChangePassword{

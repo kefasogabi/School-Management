@@ -1,5 +1,11 @@
 
-
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3  class="panel-title">My Profile</h3>
+    </div>
+    <div class="panel-body">
+     
+    
 
         <div id="user-profile-2" class=" row user-profile">
           
@@ -13,106 +19,132 @@
                   <div class="col-xs-12 col-sm-3 center">
                     <span class="profile-picture">
                       <img class="editable img-responsive" style="width:190px; height: 200px" src="/uploads/{{staff.fileName}}">
+                      <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" (change)="upload()" #fileInput name="file"/>
+                    </div>
                     </span>
-                    <!-- <h4 class="blue">
-                      <input class="btn btn-primary" type="button" value="Edit Profile" >
-      
-                    </h4> -->
-                    <div class="space space-4"></div>
-      
                    
                   </div><!-- /.col -->
       
                   <div class="col-xs-12 col-sm-9">
                    
       
-                    <div class="profile-user-info">
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Username </div>
-      
-                        <div class="profile-info-value">
-                          <span>{{staff.firstName}}  {{staff.lastName}}</span>
-                        </div>
-                      </div>
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> First Name</div>
-      
-                        <div class="profile-info-value">
-                          <span>{{staff.firstName}}</span>
-                        </div>
-                      </div>
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Last Name</div>
-      
-                        <div class="profile-info-value">
-                          <span>{{staff.lastName}}</span>
-                        </div>
-                      </div>
-      
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Address </div>
-      
-                        <div class="profile-info-value">
-                          <i class="fa fa-map-marker light-orange bigger-110"></i>
-                          
-                          <span>{{staff.address}}</span>
-                        </div>
-                      </div>
-      
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Date of Birth</div>
-      
-                        <div class="profile-info-value">
-                          <span>{{staff.dateOfBirth}}</span>
-                        </div>
-                      </div>
-      
-                      <div class="profile-info-row">
-                        <div class="profile-info-name"> Email </div>
-      
-                        <div class="profile-info-value">
-                          <span>{{staff.email}}</span>
-                        </div>
-                      </div>
-      
-                    </div>
-                  </div><!-- /.col -->
+                    <table class="table table-striped table-hover table-bordered ">
+                      <thead>
+                        <tr>
+                          <th class="tabble" colspan="2">Personal Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Name</td>
+                          <td>{{staff.firstName}}  {{staff.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{staff.email}}</td>
+                          </tr>
+                          <tr>
+                        <tr>
+                            <td>Date Of Birth</td>
+                            <td>{{staff.dateOfBirth}}</td>
+                          </tr>
+                          <tr>
+                              <td>Address</td>
+                              <td><i class="fa fa-map-marker light-orange bigger-110"></i> {{staff.address}}</td>
+                            </tr>
+                            <tr>
+                                <td>Country</td>
+                                <td>{{staff.country}}</td>
+                              </tr>
+                              <tr>
+                                  <td>State</td>
+                                  <td>{{staff.state}}</td>
+                                </tr>
+                                <tr>
+                                    <td>LGA</td>
+                                    <td>{{staff.lga}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Gender</td>
+                                    <td>{{staff.sex.name}}</td>
+                                  </tr>
+                      </tbody>
+                    </table>
+
+
+                   
                 </div><!-- /.row -->
       
                 <!-- <div class="space-20"></div> -->
       
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                <!-- <div class="row"> -->
+                  <div class="col-xs-12 col-sm-12">
                     <div class="widget-box transparent">
-                      <div class=" widget-header widget-header-small">
-                        <h4 class="  widget-title smaller">
-                          <i class="ace-icon fa fa-check-square-o bigger-110"></i>
-                          Little About Me
-                        </h4>
-                      </div>
-      
-                      <div class="widget-body">
-                        <div class="widget-main">
-                          <p>
-                            My job is mostly lorem ipsuming and dolor sit ameting as long as consectetur adipiscing elit.
-                          </p>
-                          <p>
-                            Sometimes quisque commodo massa gets in the way and sed ipsum porttitor facilisis.
-                          </p>
-                          <p>
-                            The best thing about my job is that vestibulum id ligula porta felis euismod and nullam quis risus eget urna mollis ornare.
-                          </p>
-                          <p>
-                            Thanks for visiting my profile.
-                          </p>
-                        </div>
-                      </div>
+                        <table class="table table-striped table-hover table-bordered ">
+                            <thead>
+                              <tr>
+                                <th class="tabble" colspan="2">Next of Kin Details</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Name</td>
+                                <td>{{staff.nkName}}</td>
+                              </tr>
+                              <tr>
+                                  <td>Phone Number</td>
+                                  <td>{{staff.nkPhoneNumber}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Next of Kin Relationship</td>
+                                  <td>{{staff.nkRelationship.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{{staff.nkAddress}}</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+
+                          <table class="table table-striped table-hover table-bordered ">
+                              <thead>
+                                <tr>
+                                  <th class="tabble" colspan="2">Other Details</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Hair Colour</td>
+                                  <td>{{staff.hairColor}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Blood Group</td>
+                                  <td>{{staff.bloodGroup.name}}</td>
+                                </tr>
+                                <tr>
+                                  <td>GenoType</td>
+                                  <td>{{staff.genoType.name}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Religion</td>
+                                  <td>{{staff.religion.name}}</td>
+                                </tr>
+                                
+                                </tbody>
+                            </table>
+                      
                     </div>
                   </div>
-                </div>
+                <!-- </div> -->
               </div><!-- /#home -->
       
               
             </div>
           </div>
         </div>
+        </div>
+
+      </div><!-- /panel body end -->
+    </div><!-- /panel end -->

@@ -10,6 +10,17 @@ export class Student {
     sex :{id:any, name:string};
     grade :{id:any, name:string};
     password:any;
+    country:string;
+    state:string;
+    lGA:string;
+    genoType:{id:any, name:string};
+    bloodGroup:{id:any, name:string};
+    religion:{id:any, name:string};
+    hairColor:string;
+    nkName:string;
+    nkPhone: string;
+    nkRelationship:{id:any, name:string};
+    nkAddress:string;
 }
 
 export class Grade {

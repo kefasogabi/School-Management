@@ -19,10 +19,18 @@ h2, .h2 {
 }
 
 .navbar-inverse {
-    background-color: #072C53;
-    border-color: rgb(96, 160, 216);
-    color: #fff;
-    
+    background: #111111;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(17, 17, 17);
+    font-size: 12px;
+    line-height: 30px;
+    font-weight: 700;
    
 }
 
@@ -40,6 +48,7 @@ li.link-active a:focus {
     padding-bottom: 20px;
     padding-top:20px;
     font-weight:bold;
+    display: block;
 }
 
 .bit{

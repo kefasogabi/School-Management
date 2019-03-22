@@ -18,9 +18,9 @@ export class UserComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
 
-  //  dtOptions: DataTables.Settings = {};
+   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  users: User[] = [];
+  users: any[];
   staff = {};
   public id = '';
   
@@ -32,20 +32,29 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.dtOptions = {
-    //   pagingType: 'full_numbers',
-    //   pageLength: 10,
-    //   responsive: true,
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      responsive: true,
       
-    // };
-    this.spinner.show();
+    };
+   
     this.loadAllUsers();
   
-     this.spinner.hide();  
+    
   }
 
   setId(id) {
     this.id = id;
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
   }
 
   delete(id){
@@ -55,19 +64,9 @@ export class UserComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dtTrigger.next();
-  }
-
-
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
-
   private loadAllUsers(){
-    this.userService.getAll().subscribe( users =>{
-      this.users = users;
+    this.userService.getAll().subscribe( data =>{
+      this.users = data;
      
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         // Destroy the table first

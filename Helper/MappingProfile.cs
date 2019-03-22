@@ -28,6 +28,11 @@ namespace PROJECT.Helper
             CreateMap<Term, TermDto>();
             CreateMap<TermDto, Term>();
 
+            CreateMap<BloodGroup, BloodGroupDto>();
+            CreateMap<GenoType, GenoTypeDto>();
+            CreateMap<Religion, ReligionDto>();
+            CreateMap<NextKinRelationship, NextKinRelationshipDto>();
+
             
         }
         

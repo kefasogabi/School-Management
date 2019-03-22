@@ -1,3 +1,4 @@
+import { UniversalService } from './Services/universal.service';
 import { AuthenticationService } from './Services/authentication.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Component } from '@angular/core';
@@ -165,6 +166,7 @@ import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
     StaffAuthGuard,
     StudentService,
     LoaderService,
+    UniversalService,
     { provide: ErrorHandler, useClass:AppErrorHandler },
   ],
   bootstrap: [AppComponent]

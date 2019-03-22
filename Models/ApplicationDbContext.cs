@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,34 @@ namespace PROJECT.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         public string DateOfBirth { get; set; }
-
+        public int? SexId { get; set; }
+        [ForeignKey("SexId")]
+        public Sex  Sex { get; set; }
+        public string Country { get; set; }
+        public string state { get; set; }
+        public string LGA { get; set; }
         public string FileName { get; set; }
+        public int? GenoTypeId { get; set; }
+        [ForeignKey("GenoTypeId")]
+        public GenoType GenoType { get; set; }
+        public int? BloodGroupId { get; set; }
+        [ForeignKey("BloodGroupId")]
+        public BloodGroup BloodGroup { get; set; }
+        public int? ReligionId { get; set; }
+        [ForeignKey("ReligionId")]
+        public Religion Religion { get; set; }
+        public string HairColor { get; set; }
+        public string NKName { get; set; }
+        public string NKPhoneNumber { get; set; }
+        public int? NKRelationshipId { get; set; } 
+        [ForeignKey("NKRelationshipId")]  
+        public NextKinRelationship NKRelationship { get; set; }
+        public string NKAddress { get; set; }
+        
+        
+
+
+
    
 
     }
@@ -29,30 +56,41 @@ namespace PROJECT.Models
         public DbSet<Sessions> Session { get; set; }
         public DbSet<Term> Terms { get; set; }
         public DbSet<Result> Results { get; set; }
+        public DbSet<BloodGroup> BloodGroups { get; set; }
+        public DbSet<GenoType> GenoTypes { get; set; }
+        public DbSet<Religion> Religions { get; set; }
+        public DbSet<NextKinRelationship> NextKinRelationship { get; set; }
         
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
-            {
-            }
+        {
+               
+        }
 
-            // protected override void OnModelCreating(ModelBuilder builder)
-            // {
-            //     base.OnModelCreating(builder);
-            //     builder.Entity<ApplicationUser>()
-            //     .ToTable("User");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+             modelBuilder.Entity<StudentTerm>().HasKey(st => new 
+            { st.StudentId, st.TermId });
 
-            //     builder.Entity<IdentityRole>()
-            //     .ToTable("Role");
+            base.OnModelCreating(modelBuilder);  
+  
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
 
-            //     builder.Entity<IdentityUserRole>()
-            //     .ToTable("UserRole");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
 
-            //     builder.Entity<IdentityUserClaim>()
-            //     .ToTable("UserClaim");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
 
-            //     builder.Entity<IdentityUserLogin>()
-            //     .ToTable("UserLogin");
-            // }
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
+
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+            
+        }
+
+        
     }
 }

@@ -30,6 +30,13 @@ export class UserService {
     return this.http.post('/api/upload', formData, this.jwt());
   }
 
+  uploadimage(id, photo: File){
+    var formData = new FormData();
+    formData.append('file', photo);
+
+    return this.http.post('/api/staffUpload/' + id, formData, this.jwt());
+  }
+
   create(user: User){
     return this.http.post('/Account/Register', user, this.jwt());
   }

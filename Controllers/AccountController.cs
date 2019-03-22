@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Threading;
+using Newtonsoft.Json;
 
 namespace PROJECT.Controllers
 {
@@ -92,6 +94,20 @@ namespace PROJECT.Controllers
                         Address = model.Address,
                         DateOfBirth = model.DateOfBirth,
                         FileName = "avatar.jpg",
+                        SexId = model.SexId,
+                        Country = model.Country,
+                        state = model.state,
+                        LGA = model.LGA,
+                        HairColor = model.HairColor,
+                        BloodGroupId = model.BloodGroupId,
+                        GenoTypeId = model.GenoTypeId,
+                        ReligionId = model.ReligionId,
+                        NKName = model.NKName,
+                        NKPhoneNumber = model.NKPhoneNumber,
+                        NKRelationshipId = model.NKRelationshipId,
+                        NKAddress = model.NKAddress,
+                        
+                        
                         };
 
                     IdentityResult result = await userManager.CreateAsync(user, model.Password);
@@ -177,6 +193,37 @@ namespace PROJECT.Controllers
                 return Ok(user);
             }
 
+            [HttpPost("/api/staffUpload/{id}")]
+            public async Task<IActionResult> UploadImage(string id, IFormFile file)
+            {
+                var user = await userManager.FindByIdAsync(id);
+                if(user == null)
+                {
+                     return NotFound();             
+                }
+
+                // if(file.Length > 10 * 1024) return BadRequest("Max File Size exceeded");
+                // if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
+
+                var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
+                if(!Directory.Exists(uploadsFolderPath))
+                    Directory.CreateDirectory(uploadsFolderPath);
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    var filePath = Path.Combine(uploadsFolderPath, fileName);
+
+                    using( var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                       await file.CopyToAsync(stream);
+                    }
+
+                    user.FileName = fileName;
+
+                 await userManager.UpdateAsync(user);
+
+
+                return Ok(user);
+            }
+
 
 
             [AllowAnonymous]
@@ -192,7 +239,7 @@ namespace PROJECT.Controllers
                 if (result.Succeeded)
                 {
                     var user = userManager.Users.SingleOrDefault(c => c.Email == model.Email);
-                    return    GenerateJwtToken(model.Email, user);
+                    return  GenerateJwtToken(model.Email, user);
                 }
                 
                 throw new ApplicationException("Unknown Error"); 
@@ -202,6 +249,8 @@ namespace PROJECT.Controllers
             private IActionResult GenerateJwtToken(string email, ApplicationUser user)
             {
                 
+
+               
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -214,21 +263,12 @@ namespace PROJECT.Controllers
                         new Claim(ClaimTypes.UserData, user.LastName.ToString()),
                         new Claim(ClaimTypes.StreetAddress, user.Address.ToString()),
                         new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString()),
-                        new Claim(ClaimTypes.Rsa, user.FileName.ToString()),
-                        
                         
                     }),
                     
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
-                // claimsIdentity.AddClaims(user.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
-                
-                // var roles = await userManager.GetRolesAsync(user);
-                // foreach(string roleName in roles)
-                // {
-                //     tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, roleName));
-                // };
                 
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -236,7 +276,7 @@ namespace PROJECT.Controllers
             
                 return Ok(new{ token = tokenString });
 
-               // new JwtSecurityTokenHandler().WriteToken(token)
+               
             }
 
             [HttpGet]
@@ -249,7 +289,11 @@ namespace PROJECT.Controllers
             [HttpGet("{id}")]
            public async Task<IActionResult> GetById(string id)
            {
-               var user = await userManager.Users.SingleOrDefaultAsync(c => c.Id == id);
+               var user = await userManager.Users.Include(s => s.Sex)
+                                                    .Include(b => b.BloodGroup)
+                                                    .Include(g => g.GenoType)
+                                                    .Include(n => n.NKRelationship)
+                                                    .Include(r => r.Religion).SingleOrDefaultAsync(c => c.Id == id);
 
                if(user == null)
                {
@@ -260,26 +304,19 @@ namespace PROJECT.Controllers
            }
 
            [HttpGet("/api/profile")]
-           public IActionResult Index()
+           public async Task<IActionResult>  Index()
            {
-               
-                var claimIdentity = this.User.Identity as ClaimsIdentity;
-                IEnumerable<Claim> claims = claimIdentity.Claims;
+              
+                var userId = caller.Claims.Single(c => c.Type == ClaimTypes.Name);
 
-                var model = new IndexViewModel
-                {
-                    Id = claimIdentity.FindFirst(ClaimTypes.Name).Value,
-                    Email = claimIdentity.FindFirst(ClaimTypes.Email).Value,
-                    FirstName = claimIdentity.FindFirst(ClaimTypes.GivenName).Value,
-                    LastName = claimIdentity.FindFirst(ClaimTypes.UserData).Value,
-                    Address = claimIdentity.FindFirst(ClaimTypes.StreetAddress).Value,
-                    DateOfBirth = claimIdentity.FindFirst(ClaimTypes.DateOfBirth).Value,
-                    FileName = claimIdentity.FindFirst(ClaimTypes.Rsa)?.Value,
-                
-                };
-           
+                var user = await userManager.Users.Include(s => s.Sex)
+                                                    .Include(b => b.BloodGroup)
+                                                    .Include(g => g.GenoType)
+                                                    .Include(n => n.NKRelationship)
+                                                    .Include(r => r.Religion)
+                                                    .SingleOrDefaultAsync( c => c.Id == userId.Value);
 
-                return Ok(model);
+                return Ok(user);
                
            }
 

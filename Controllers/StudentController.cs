@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,17 +29,20 @@ namespace PROJECT.Controllers
         private readonly IUnitOfWork unitOfWork;
         private readonly IHostingEnvironment host;
         private readonly AppSettings appSettings;
+        private readonly ClaimsPrincipal caller;
 
         public StudentController(IStudentService studentService,
                                  IOptions<AppSettings> appSettings, 
                                  IMapper mapper,
                                  IUnitOfWork unitOfWork,
+                                 IHttpContextAccessor httpContextAccessor,
                                  IHostingEnvironment host)
         {
             this.studentService = studentService;
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
             this.host = host;
+            caller = httpContextAccessor.HttpContext.User;
             this.appSettings = appSettings.Value;
         }
 
@@ -149,17 +153,18 @@ namespace PROJECT.Controllers
             return Ok();
         }
 
-        [HttpPut("api/changepassword/{id}")]
-        public IActionResult ChangePassword(int id, [FromBody]StudentDto studentDto)
+        [HttpPut("/api/changepassword/{id}")]
+        public async Task<IActionResult> ChangePassword(int id, [FromBody]ChangePasswordDto changePasswordDto)
         {
            // map dto to entity and set id
-            var student = mapper.Map<Student>(studentDto);
+            var student = mapper.Map<ChangePassword>(changePasswordDto);
             student.Id = id;
 
             try 
             {
                 // save 
-                studentService.ChangePassword(student, studentDto.Password);
+                studentService.ChangePassword(student, changePasswordDto.Password);
+                await unitOfWork.CompleteAsync();
                 return Ok();
             } 
             catch(AppException ex)
@@ -179,6 +184,17 @@ namespace PROJECT.Controllers
                 await unitOfWork.CompleteAsync();
 
                     return Ok();
+        }
+
+        [HttpGet("/api/studentProfile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            var userId = caller.Claims.Single(c => c.Type == ClaimTypes.Name);
+            
+           var student = await studentService.GetProfile(Convert.ToInt32(userId.Value));
+           var studentDto = mapper.Map<StudentDto>(student);
+            
+            return Ok(studentDto);
         }
 
         

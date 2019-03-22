@@ -40,7 +40,7 @@ namespace PROJECT.Migrations
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -60,7 +60,7 @@ namespace PROJECT.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -80,7 +80,7 @@ namespace PROJECT.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -98,7 +98,7 @@ namespace PROJECT.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -111,7 +111,7 @@ namespace PROJECT.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -126,7 +126,7 @@ namespace PROJECT.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("PROJECT.Models.ApplicationUser", b =>
@@ -138,8 +138,12 @@ namespace PROJECT.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<int?>("BloodGroupId");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("Country");
 
                     b.Property<string>("DateOfBirth");
 
@@ -152,11 +156,25 @@ namespace PROJECT.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<int?>("GenoTypeId");
+
+                    b.Property<string>("HairColor");
+
+                    b.Property<string>("LGA");
+
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NKAddress");
+
+                    b.Property<string>("NKName");
+
+                    b.Property<string>("NKPhoneNumber");
+
+                    b.Property<int?>("NKRelationshipId");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -170,14 +188,26 @@ namespace PROJECT.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<int?>("ReligionId");
+
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<int?>("SexId");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
+                    b.Property<string>("state");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BloodGroupId");
+
+                    b.HasIndex("GenoTypeId");
+
+                    b.HasIndex("NKRelationshipId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -187,7 +217,37 @@ namespace PROJECT.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("SexId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.BloodGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodGroups");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.GenoType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GenoTypes");
                 });
 
             modelBuilder.Entity("PROJECT.Models.Grade", b =>
@@ -201,6 +261,57 @@ namespace PROJECT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grade");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.NextKinRelationship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NextKinRelationship");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.Religion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Religions");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.Result", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CA1");
+
+                    b.Property<string>("CA2");
+
+                    b.Property<string>("Exam");
+
+                    b.Property<string>("Grade");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Remark");
+
+                    b.Property<string>("TotalScore");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("PROJECT.Models.Sessions", b =>
@@ -237,39 +348,78 @@ namespace PROJECT.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<int?>("BloodGroupId");
+
+                    b.Property<string>("Country");
+
                     b.Property<string>("DateOfBirth");
 
                     b.Property<string>("FileName");
 
                     b.Property<string>("FirstName");
 
+                    b.Property<int?>("GenoTypeId");
+
                     b.Property<int>("GradeId");
 
+                    b.Property<string>("HairColor");
+
+                    b.Property<string>("LGA");
+
                     b.Property<string>("LastName");
+
+                    b.Property<string>("NKAddress");
+
+                    b.Property<string>("NKName");
+
+                    b.Property<string>("NKPhoneNumber");
+
+                    b.Property<int?>("NKRelationshipId");
 
                     b.Property<byte[]>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");
 
+                    b.Property<int?>("ReligionId");
+
                     b.Property<int>("SessionId");
 
                     b.Property<int>("SexId");
 
-                    b.Property<int>("TermId");
-
                     b.Property<string>("UserName");
+
+                    b.Property<string>("state");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BloodGroupId");
+
+                    b.HasIndex("GenoTypeId");
+
                     b.HasIndex("GradeId");
+
+                    b.HasIndex("NKRelationshipId");
+
+                    b.HasIndex("ReligionId");
 
                     b.HasIndex("SessionId");
 
                     b.HasIndex("SexId");
 
+                    b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("PROJECT.Models.StudentTerm", b =>
+                {
+                    b.Property<int>("StudentId");
+
+                    b.Property<int>("TermId");
+
+                    b.HasKey("StudentId", "TermId");
+
                     b.HasIndex("TermId");
 
-                    b.ToTable("Students");
+                    b.ToTable("StudentTerm");
                 });
 
             modelBuilder.Entity("PROJECT.Models.Term", b =>
@@ -330,12 +480,51 @@ namespace PROJECT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("PROJECT.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("PROJECT.Models.BloodGroup", "BloodGroup")
+                        .WithMany()
+                        .HasForeignKey("BloodGroupId");
+
+                    b.HasOne("PROJECT.Models.GenoType", "GenoType")
+                        .WithMany()
+                        .HasForeignKey("GenoTypeId");
+
+                    b.HasOne("PROJECT.Models.NextKinRelationship", "NKRelationship")
+                        .WithMany()
+                        .HasForeignKey("NKRelationshipId");
+
+                    b.HasOne("PROJECT.Models.Religion", "Religion")
+                        .WithMany()
+                        .HasForeignKey("ReligionId");
+
+                    b.HasOne("PROJECT.Models.Sex", "Sex")
+                        .WithMany()
+                        .HasForeignKey("SexId");
+                });
+
             modelBuilder.Entity("PROJECT.Models.Student", b =>
                 {
+                    b.HasOne("PROJECT.Models.BloodGroup", "BloodGroup")
+                        .WithMany()
+                        .HasForeignKey("BloodGroupId");
+
+                    b.HasOne("PROJECT.Models.GenoType", "GenoType")
+                        .WithMany()
+                        .HasForeignKey("GenoTypeId");
+
                     b.HasOne("PROJECT.Models.Grade", "Grade")
                         .WithMany("Students")
                         .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PROJECT.Models.NextKinRelationship", "NKRelationship")
+                        .WithMany()
+                        .HasForeignKey("NKRelationshipId");
+
+                    b.HasOne("PROJECT.Models.Religion", "Religion")
+                        .WithMany()
+                        .HasForeignKey("ReligionId");
 
                     b.HasOne("PROJECT.Models.Sessions", "Session")
                         .WithMany("Students")
@@ -345,6 +534,14 @@ namespace PROJECT.Migrations
                     b.HasOne("PROJECT.Models.Sex", "Sex")
                         .WithMany()
                         .HasForeignKey("SexId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PROJECT.Models.StudentTerm", b =>
+                {
+                    b.HasOne("PROJECT.Models.Student", "Student")
+                        .WithMany("Terms")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PROJECT.Models.Term", "Term")

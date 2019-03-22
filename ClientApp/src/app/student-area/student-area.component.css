@@ -3,13 +3,38 @@
  
 
 /* Highlighting rules for nav menu items */
+.dash{
+    background-color: #444; 
+    height: 100vh;
+}
+
+.dash ul{
+    padding-top: 10px;
+}
+
+
+/* Highlighting rules for nav menu items */
 li.link-active a,
 li.link-active a:hover,
 li.link-active a:focus {
-    background-color: #4189C7;
-    color: white;
+  background: #4189C7;
+  color:white ;
+  /* border-bottom: 1px solid royalblue; */
+  
 }
 
+
+
+
+.lik{
+  font-weight: bolder;
+  border-radius: 0px;
+  color: white;
+}
+.lik:hover {
+  color: white !important;
+  background: #4189C7;
+}
 /* Keep the nav menu independent of scrolling and on top of other items */
 
 
