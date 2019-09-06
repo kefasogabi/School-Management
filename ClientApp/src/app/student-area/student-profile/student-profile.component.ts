@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentService } from '../../Services/student.service';
+import { Student } from '../../models/student.model';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { StudentService } from '../../Services/student.service';
 export class StudentProfileComponent implements OnInit {
   id: number;
 
-  student = {
+  student: Student = {
     id:0,
       firstName: "",
       lastName: "",
@@ -19,6 +20,14 @@ export class StudentProfileComponent implements OnInit {
       dateOfBirth: "",
       address: "",
       fileName:"",
+      country:"",
+      state: "",
+      lGA:"",
+      nkName:"",
+      nkAddress:"",
+      nkPhone:"",
+      hairColor:"",
+      password: "",
       sex: {
         id: 0,
         name: ""
@@ -26,10 +35,6 @@ export class StudentProfileComponent implements OnInit {
       grade: {
         id: 0,
         name: ""
-      },
-      term:{
-        id:0,
-        name:""
       },
       session:{
         id:0,
@@ -51,6 +56,9 @@ export class StudentProfileComponent implements OnInit {
         id:0,
         name:""
       },
+      results:[],
+      terms:[]
+      
   };
   constructor(private studentService: StudentService,  private route: ActivatedRoute) {
 
@@ -64,6 +72,8 @@ export class StudentProfileComponent implements OnInit {
     this.studentService.getProfile().subscribe((data:any) => {
       this.student = data;
     });
+
+    
     
   
   }

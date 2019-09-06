@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace PROJECT.Models
 {
@@ -9,6 +10,7 @@ namespace PROJECT.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Required]
         public string UserName { get; set; }
         public string DateOfBirth { get; set; }
         public string Address { get; set; }
@@ -36,6 +38,7 @@ namespace PROJECT.Models
         public Religion Religion { get; set; }
         public string HairColor { get; set; }
         public string NKName { get; set; }
+        public ICollection<Result> Results { get; set; }
         public string NKPhoneNumber { get; set; }
         public int? NKRelationshipId { get; set; } 
         [ForeignKey("NKRelationshipId")]  
@@ -45,6 +48,7 @@ namespace PROJECT.Models
         public Student()
         {
             Terms = new Collection<StudentTerm>();
+            Results = new Collection<Result>();
         }
         
     }

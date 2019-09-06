@@ -6,7 +6,7 @@ import { DataTableResource } from 'angular-4-data-table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataTableDirective } from 'angular-datatables';
 import { UserService } from '../../Services/user.service';
-import { User } from '../../Services/user.model';
+import { AuthenticationService } from '../../Services/authentication.service';
 
 
 @Component({
@@ -26,7 +26,10 @@ export class UserComponent implements OnInit {
   
 
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private spinner: NgxSpinnerService) { 
+  constructor(private userService: UserService, 
+              private route: ActivatedRoute, 
+              private spinner: NgxSpinnerService,
+              private authService: AuthenticationService) { 
     let id = this.route.snapshot.paramMap.get('id');
     if (id) this.userService.getById(id).take(1).subscribe(data => this.staff = data );
   }

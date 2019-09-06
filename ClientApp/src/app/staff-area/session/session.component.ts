@@ -1,9 +1,9 @@
-import { Session, Term } from './../../Services/user.model';
 import { UserService } from './../../Services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { Session, Term } from '../../models/user.model';
 
 @Component({
   selector: 'app-session',

@@ -27,6 +27,7 @@
     "@nguniversal/module-map-ngfactory-loader": "^5.0.0-beta.5",
     "angular-4-data-table": "^0.4.6",
     "angular-datatables": "^6.0.1",
+    "angular2-jwt": "^0.2.3",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",

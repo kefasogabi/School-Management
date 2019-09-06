@@ -12,12 +12,15 @@ export class StudentAreaComponent implements OnInit {
   student = {};
   constructor(private studentService: StudentService,  private route: ActivatedRoute) {
 
-    let token = JSON.parse(localStorage.getItem('token'));
-    let id = token.id
-    if (id) this.studentService.getById(id).take(1).subscribe(data => this.student = data );
+    // let token = JSON.parse(localStorage.getItem('token'));
+    // let id = token.id
+    // if (id) this.studentService.getById(id).take(1).subscribe(data => this.student = data );
    }
 
-  ngOnInit() {
+    ngOnInit() {
+      this.studentService.getProfile().subscribe((data:any) => {
+        this.student = data;
+    });
   }
 
 }

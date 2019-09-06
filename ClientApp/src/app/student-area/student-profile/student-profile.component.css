@@ -21,18 +21,9 @@
     right: 0;
     top: 0;
 }
-
-.img-div{
+.editable{
     width: 100%;
     height: 100%; 
-}
-
-
-.panel{
-    margin: 20px;
-}
-.panel-title{
-    font-weight: bold;
 }
 
 .tabble{

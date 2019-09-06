@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PROJECT.Dto
@@ -9,6 +10,7 @@ namespace PROJECT.Dto
          public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Required]
         public string UserName { get; set; }
         public string DateOfBirth { get; set; }
         public string Address { get; set; }
@@ -16,6 +18,7 @@ namespace PROJECT.Dto
         public Pair Grade { get; set; }
         public int SexId { get; set; }
         public SexDto Sex { get; set; }
+        [Required]
         public string Password { get; set; }
         public int SessionId { get; set; }
         public Pair Session { get; set; }
@@ -35,6 +38,15 @@ namespace PROJECT.Dto
         public int NKRelationshipId { get; set; }   
         public Pair NKRelationship { get; set; }
         public string NKAddress { get; set; }
+        public ICollection<ResultDto> Results { get; set; }
+
+        public ICollection<Pair> Terms { get; set; }
+
+        public StudentDto()
+        {
+            Terms = new Collection<Pair>();
+            Results = new Collection<ResultDto>();
+        }
       
     }
 }

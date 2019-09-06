@@ -4,6 +4,12 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/take';
 import { StudentService } from '../../Services/student.service';
 import { NgForm } from '@angular/forms';
+import { UserService } from '../../Services/user.service';
+import { ResultComponent } from '../../student-area/result/result.component';
+import { ResultService } from '../../Services/result.service';
+import { AlertService } from '../../Services/alert.service';
+import { Student } from '../../models/student.model';
+import { Term } from '../../models/user.model';
 
 
 
@@ -14,57 +20,78 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./view-student.component.css']
 })
 export class ViewStudentComponent implements OnInit {
-  student = {
+
+  public t = '';
+  terms: Term[] = [];
+  model = {
     id:0,
-      firstName: "",
-      lastName: "",
-      userName: "",
-      dateOfBirth: "",
-      address: "",
-      fileName:"",
-      country:"",
-      state: "",
-      lGA:"",
-      nkName:"",
-      nkAddress:"",
-      nkPhone:"",
-      hairColor:"",
-      sex: {
-        id: 0,
-        name: ""
-      },
-      grade: {
-        id: 0,
-        name: ""
-      },
-      session:{
-        id:0,
-        name:""
-      },
-      genoType: {
-        id: 0,
-        name: ""
-      },
-      bloodGroup:{
-        id:0,
-        name:""
-      },
-      religion:{
-        id:0,
-        name:""
-      },
-      nkRelationship:{
-        id:0,
-        name:""
-      },
+    termId:""
+
+  };
+  load = false;
+
+  student: Student ={
+    id:0,
+    userName:"",
+    firstName:"",
+    lastName:"",
+    fileName:"",
+    dateOfBirth:"",
+    address:"",
+    password:"",
+    country:"",
+    state:"",
+    lGA:"",
+    hairColor:"",
+    nkName:"",
+    nkPhone: "",
+    nkAddress:"",
+    sex: {
+      id: 0,
+      name: ""
+    },
+    session: {
+      id: 0,
+      name: ""
+    },
+    grade: {
+      id: 0,
+      name: ""
+    },
+    genoType: {
+      id: 0,
+      name: ""
+    },
+    bloodGroup:{
+      id:0,
+      name:""
+    },
+    religion:{
+      id:0,
+      name:""
+    },
+    nkRelationship:{
+      id:0,
+      name:""
+    },
+    results:[],
+    terms:[]
   };
 
+ yea:any = "";
+  subjects: any[];
+ some:any[];
 
   imageUrl: string ="/img/avatar.jpg";
   @ViewChild('fileInput') fileInput: ElementRef;
   loading = false;
 
-  constructor(private studentService: StudentService, private route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(private studentService: StudentService, 
+              private route: ActivatedRoute, 
+              private resultService: ResultService,
+              private userService: UserService,
+              private alertService: AlertService,
+              private toastr: ToastrService) {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) this.studentService.getById(id).take(1).subscribe( (data:any) => {
     this.student = data;
@@ -73,7 +100,21 @@ export class ViewStudentComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+
+    this.userService.getTerms().subscribe(data => {
+      this.terms = data;
+
+    });
+
+  }
+
+  onYearChange(){
+    let res = this.student.results;
+     this.subjects = res.filter(m => m.year == this.yea);   
+  }
+
+  setT(t) {
+    this.t = t; 
   }
 
   getStudent(){
@@ -99,9 +140,30 @@ changePassword(form: NgForm){
     this.loading = false;
   },error => {
     if(error.status == 400)
-    this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
+    this.alertService.error(error._body);
+    // this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
     this.loading = false;
   });
+}
+
+
+postResult(form: NgForm){
+  console.log(form.value);
+  this.resultService.postResult(form.value).subscribe( data => {
+    this.toastr.success('Result Added Successfully', 'Succes');
+  });
+}
+
+postTerm(body){
+  console.log(body.value);
+    this.load = true;
+  this.resultService.create(body.value).subscribe( (data:any) => {
+    this.getStudent();
+    this.toastr.success('Term Added successfully', 'Success');
+    this.load = false;
+}, error => {
+  this.alertService.error(error._body);
+}); 
 }
 
 

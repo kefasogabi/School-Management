@@ -33,7 +33,7 @@ private jwt() {
   // create authorization header with jwt token
   let token = JSON.parse(localStorage.getItem('token'));
   if (token) {
-      let headers = new Headers({ 'Authorization': 'Bearer ' + token.token });
+      let headers = new Headers({ 'Authorization': 'Bearer ' + token});
       return new RequestOptions({ headers: headers });
   }
 }

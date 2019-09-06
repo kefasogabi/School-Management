@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJECT.Dto;
 using PROJECT.Interface;
@@ -9,6 +10,7 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
+    [Authorize]
     public class SessionController : Controller
     {
         private readonly ISessionService sessionService;

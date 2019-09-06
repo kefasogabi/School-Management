@@ -1,0 +1,59 @@
+
+
+    <div >
+        <div class="login-box">
+          <div class="login-logo">
+            <b>STAFF LOGIN</b>
+          </div>
+          <!-- /.login-logo -->
+          <div class="card">
+            <div class="card-body login-card-body">
+              <p class="login-box-msg">Sign in to start your session</p>
+              <div *ngIf="isLoginError" align="center" class="red-text glyphicon glyphicon-error">Incorrect Username or Password</div>
+              <form name="form" (ngSubmit)="login(f.value)" #f="ngForm" novalidate>
+                <div *ngIf="invalidLogin" class="alert alert-danger">
+                  invalid Username and/or password
+                </div>
+                <div class="input-group mb-3">
+                  <input type="email" class="form-control"  name="email" [(ngModel)]="model.email" #email="ngModel" required placeholder="Email">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="email.touched && email.invalid"  class="validation-error">Email is required</div>
+                <div class="input-group mb-3">
+                  <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
+                <div class="row">
+                  <div class="col-8">
+                    <div class="icheck-primary">
+                      <input type="checkbox" id="remember">
+                      <label for="remember">
+                        Remember Me
+                      </label>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                  </div>
+                  <!-- /.col -->
+                </div>
+              </form>
+        
+              
+            </div>
+            <!-- /.login-card-body -->
+          </div>
+        </div>
+        <!-- /.login-box -->
+       
+      </div>

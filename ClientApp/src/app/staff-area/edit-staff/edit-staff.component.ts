@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../Services/user.service';
-import { User } from '../../Services/user.model';
+import { User } from '../../models/user.model';
+
 
 
 

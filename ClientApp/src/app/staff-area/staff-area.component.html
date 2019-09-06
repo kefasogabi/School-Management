@@ -1,23 +1,124 @@
 
-<div class='container-fluid'>
-<div style="margin-top: 60px;" class="row">
-  <div class="col-sm-2  dash">
-    <ul class="nav  nav-pills nav-stacked">
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/staff-profile"]' ><i class="fa fa-user"></i> MY PROFILE  </a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik "  [routerLink]='["/staffs"]'><i class="fa fa-briefcase"></i> STAFFS</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/students"]'><i class="fa fa-graduation-cap"></i> STUDENTS</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/staff-register"]'><i class="fa fa-plus"></i> REGISTER STAFF</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/student-register"]'><i class="fa fa-plus"></i> REGISTER STUDENT</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/upload-photo"]'><i class="fa fa-hand-o-right"></i> UPLOAD IMAGE</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/session"]'><i class="fa fa-hand-o-right"></i> SESSION</a></li>
-      <li role="presentation" [routerLinkActive]='["link-active"]'><a class="lik " [routerLink]='["/change-password"]' ><i class="fa fa-lock"></i> CHANGE PASSWORD</a></li>
-    </ul>
+
+<div>
+  <div >
+    <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a [routerLink]='["/staff/dashboard"]' class="brand-link">
+      <img src="/uploads/nsuk.png" alt="NSUK" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-bold">NSUK</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="/uploads/{{staff.fileName}}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a [routerLink]='["/staff-profile"]' class="d-block">{{staff.lastName}} {{staff.firstName}} </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          
+          <li *ngIf="authService.isLoggedIn()"  [routerLinkActive]='["link-active"]' role="presentation"  class="nav-item">
+            <a [routerLink]='["/staff/dashboard"]' class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                DASHBOARD
+              </p>
+            </a>
+          </li>
+          <li *ngIf="authService.isLoggedIn() && authService.isAdmin()" [routerLinkActive]='["link-active"]' class="nav-item ">
+            <a [routerLink]='["/staffs"]' class="nav-link">
+              <i class="nav-icon fa fa-briefcase"></i>
+              <p>
+                STAFFS
+              </p>
+            </a>
+          </li>
+          <li *ngIf="authService.isLoggedIn()" [routerLinkActive]='["link-active"]' class="nav-item ">
+              <a [routerLink]='["/students"]' class="nav-link">
+                <i class="nav-icon fa fa-graduation-cap"></i>
+                <p>
+                  STUDENTS
+                </p>
+              </a>
+            </li>
+            <li *ngIf="authService.isLoggedIn() && authService.isAdmin()" [routerLinkActive]='["link-active"]' class="nav-item">
+              <a [routerLink]='["/staff-register"]' class="nav-link">
+                <i class="nav-icon fa fa-user-plus"></i>
+                <p>
+                  ADD STAFF
+                </p>
+              </a>
+            </li>
+            <li *ngIf="authService.isLoggedIn() && authService.isAdmin()" [routerLinkActive]='["link-active"]' class="nav-item">
+                <a [routerLink]='["/student-register"]' class="nav-link">
+                  <i class="nav-icon fa fa-user-plus"></i>
+                  <p>
+                    ADD STUDENT
+                  </p>
+                </a>
+              </li>
+            <li *ngIf="authService.isLoggedIn() && authService.isAdmin()" [routerLinkActive]='["link-active"]' class="nav-item">
+                <a [routerLink]='["/session"]' class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    SESSIONS
+                  </p>
+                </a>
+              </li>
+              <li *ngIf="authService.isLoggedIn() " [routerLinkActive]='["link-active"]' class="nav-item">
+                <a [routerLink]='["/results"]' class="nav-link">
+                  <i class="nav-icon far fa-list-alt"></i>
+                  <p>
+                    RESULTS
+                  </p>
+                </a>
+              </li>
+              <li *ngIf="authService.isLoggedIn()" [routerLinkActive]='["link-active"]' class="nav-item">
+                  <a [routerLink]='["/change-password"]' class="nav-link">
+                    <i class="nav-icon fa fa-lock"></i>
+                    <p>
+                      CHANGE PASSWORD
+                    </p>
+                  </a>
+                </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
   </div>
-  <div class="col-sm-10 main ">
-    <div class="">
-      <app-nav-bar></app-nav-bar>
-    <router-outlet></router-outlet>
+  <div>
+      <app-staff-bar></app-staff-bar>
+      <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+        <section class="content">
+          <div class="row">
+            <div class="col-12 back">
+                <div class="">
+                    <app-alert></app-alert>
+                  </div>
+              <router-outlet></router-outlet>
+            </div>
+  <!-- /.col -->
+        </div>
+  <!-- /.row -->
+    </section>
+  <!-- /.content -->
   </div>
+  <!-- <app-staff-footer></app-staff-footer> -->
+
   </div>
-</div>
 </div>

@@ -20,7 +20,7 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("[controller]")]
     public class StudentController : Controller
     {
@@ -51,6 +51,10 @@ namespace PROJECT.Controllers
         [HttpPost("/api/Login")]
         public IActionResult Authenticate([FromBody]StudentDto studentDto)
         {
+                if(!ModelState.IsValid)
+                {
+                    BadRequest("Please fill in Username and Password");
+                }
             var student = studentService.Authenticate(studentDto.UserName, studentDto.Password);
 
             if (student == null)
@@ -75,17 +79,19 @@ namespace PROJECT.Controllers
 
             // return basic user info (without password) and token to store client side
             return Ok(new {
-                Token = tokenString,
-                Id = student.Id,
-               
+                token = tokenString 
             });
         }
 
 
-        [AllowAnonymous]
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost("/api/Register")]
         public async Task<IActionResult> Register([FromBody]StudentDto studentDto)
         {
+               if(!ModelState.IsValid)
+               {
+                   return BadRequest(ModelState);
+               }
             // map dto to entity
             var student = mapper.Map<Student>(studentDto);
 
@@ -122,7 +128,7 @@ namespace PROJECT.Controllers
             return Ok(studentDto);
         }
 
-
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPut("/api/student/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody]StudentDto studentDto)
         {
@@ -144,7 +150,7 @@ namespace PROJECT.Controllers
             }
         }
 
-
+        [Authorize(Roles = RoleName.Admin)]
         [HttpDelete("/api/student/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -174,6 +180,7 @@ namespace PROJECT.Controllers
             }
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost("/api/StudentUpload/{id}")]
         public async Task<IActionResult> UploadImage( int id, IFormFile file)
         {
@@ -194,7 +201,7 @@ namespace PROJECT.Controllers
            var student = await studentService.GetProfile(Convert.ToInt32(userId.Value));
            var studentDto = mapper.Map<StudentDto>(student);
             
-            return Ok(studentDto);
+            return Ok(studentDto );
         }
 
         

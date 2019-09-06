@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Login } from '../models/student.model';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class StudentauthService {
@@ -8,13 +10,12 @@ export class StudentauthService {
 
 
 
-  login(userName: string, password: string) {
-    var body ={
-      userName: userName,
-       password: password
-    }
-   
-      return this.http.post('/api/Login', body);
+  login(login: Login) {
+      return this.http.post('/api/Login', login);
+  }
+
+  isLoggedIn(){
+    return tokenNotExpired();
   }
 
 

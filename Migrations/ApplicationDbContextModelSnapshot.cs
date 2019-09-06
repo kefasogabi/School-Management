@@ -307,9 +307,15 @@ namespace PROJECT.Migrations
 
                     b.Property<string>("Remark");
 
+                    b.Property<int?>("StudentId");
+
                     b.Property<string>("TotalScore");
 
+                    b.Property<string>("Year");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Results");
                 });
@@ -435,6 +441,19 @@ namespace PROJECT.Migrations
                     b.ToTable("Terms");
                 });
 
+            modelBuilder.Entity("PROJECT.Models.TermResult", b =>
+                {
+                    b.Property<int>("TermId");
+
+                    b.Property<int>("ResultId");
+
+                    b.HasKey("TermId", "ResultId");
+
+                    b.HasIndex("ResultId");
+
+                    b.ToTable("TermResult");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -503,6 +522,13 @@ namespace PROJECT.Migrations
                         .HasForeignKey("SexId");
                 });
 
+            modelBuilder.Entity("PROJECT.Models.Result", b =>
+                {
+                    b.HasOne("PROJECT.Models.Student")
+                        .WithMany("Results")
+                        .HasForeignKey("StudentId");
+                });
+
             modelBuilder.Entity("PROJECT.Models.Student", b =>
                 {
                     b.HasOne("PROJECT.Models.BloodGroup", "BloodGroup")
@@ -545,7 +571,20 @@ namespace PROJECT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PROJECT.Models.Term", "Term")
-                        .WithMany("Students")
+                        .WithMany()
+                        .HasForeignKey("TermId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PROJECT.Models.TermResult", b =>
+                {
+                    b.HasOne("PROJECT.Models.Result", "Result")
+                        .WithMany()
+                        .HasForeignKey("ResultId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PROJECT.Models.Term", "Term")
+                        .WithMany()
                         .HasForeignKey("TermId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

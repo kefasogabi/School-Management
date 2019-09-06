@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJECT.Dto;
 using PROJECT.Interface;
@@ -9,6 +10,7 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
+    [Authorize]
     public class TermController : Controller
     {
         private readonly ITermService termService;
@@ -26,7 +28,7 @@ namespace PROJECT.Controllers
         public async Task<IActionResult> GetAll()
         {
             var term = await termService.GetAllAsync();
-            var termDto = mapper.Map<IList<TermDto>>(term);
+            var termDto = mapper.Map<IList<Pair>>(term);
             return Ok(termDto); 
         }
 
@@ -36,12 +38,13 @@ namespace PROJECT.Controllers
         {
             var term = await termService.GetByIdAsync(id);
 
-            var termDto = mapper.Map<TermDto>(term);
+            var termDto = mapper.Map<Pair>(term);
             return Ok(termDto);
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost("/api/postTerm")]
-        public async Task<IActionResult> Create([FromBody] TermDto termDto)
+        public async Task<IActionResult> Create([FromBody] Pair termDto)
         {
             var term = mapper.Map<Term>(termDto);
 
@@ -59,8 +62,9 @@ namespace PROJECT.Controllers
             }
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPut("/api/updateTerm/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] TermDto termDto)
+        public async Task<IActionResult> Update(int id, [FromBody] Pair termDto)
         {
             var term = mapper.Map<Term>(termDto);
 
@@ -77,6 +81,7 @@ namespace PROJECT.Controllers
             }
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpDelete("/api/deleteTerm/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

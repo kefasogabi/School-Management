@@ -4,8 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { User } from '../../Services/user.model';
 import { UserService } from '../../Services/user.service';
+import { User } from '../../models/user.model';
 
 
 
@@ -47,43 +47,25 @@ export class StaffRegisterComponent implements OnInit {
                private toastr: ToastrService) { }
 
   ngOnInit() {
-    // this.resetForm();
+    
+let sources = [
+      this.universalService.getSex(),
+      this.universalService.getBloodGroup(),
+      this.universalService.getGenoType(),
+      this.universalService.getReligion(),
+      this.universalService.getNextKin()
+];
 
-    this.universalService.getSex().subscribe( sex => {
-      this.sex = sex;
+    Observable.forkJoin(sources).subscribe( data => {
+      this.sex = data[0];
+      this.bloodGroups = data[1];
+      this.genoTypes = data[2];
+      this.religions = data[3];
+      this.nextKin = data[4];
+    }, err => {
+      if(err.status == 404)
+      this.toastr.error('Not Found', 'Error');
     });
-
-    this.universalService.getBloodGroup().subscribe( data => {
-      this.bloodGroups = data;
-    });
-
-    this.universalService.getGenoType().subscribe( data => {
-      this.genoTypes = data;
-    });
-
-    this.universalService.getReligion().subscribe( data => {
-      this.religions = data;
-    });
-
-    this.universalService.getNextKin().subscribe(data => {
-      this.nextKin = data;
-    })
-
-
-    // Observable.forkJoin([
-    //   this.universalService.getSex(),
-    //   this.universalService.getBloodGroup(),
-    //   this.universalService.getGenoType(),
-    //   this.universalService.getReligion()
-    // ]).subscribe( data => {
-    //   this.sex = data[0];
-    //   this.bloodGroups = data[1];
-    //   this.genoTypes = data[2];
-    //   this.religion = data[3]
-    // }, err => {
-    //   if(err.status == 404)
-    //   this.toastr.error('Not Found', 'Error');
-    // });
 
 
       this.userService.getAllRoles().subscribe(
@@ -95,20 +77,16 @@ export class StaffRegisterComponent implements OnInit {
   }
 
   register(form: NgForm) {
-   
-    this.loading = true;
 //    var x = this.roles.filter(x => x.selected).map(y => y.name);
     this.userService.create(form.value)
         .subscribe(
             (data: any) => {
                 // this.resetForm(form);
-                console.log(data);
+                
                 this.toastr.success('Registration successful', 'Success');
             },
             error => {
-                if(error.status == 400)
-                this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
-                this.loading = false;
+                this.toastr.error(error._body, 'Error');
               });
 }
 

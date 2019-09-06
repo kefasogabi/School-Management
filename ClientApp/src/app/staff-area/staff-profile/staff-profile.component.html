@@ -1,150 +1,147 @@
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-      <h3  class="panel-title">My Profile</h3>
-    </div>
-    <div class="panel-body">
-     
-    
 
-        <div id="user-profile-2" class=" row user-profile">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h2  class="card-title" style="font-weight: bolder;  font-size: 25px;"  >My Profile</h2>
+        </div>
+        <div class="card-body">
+            <div id="user-profile-2" class=" user-profile">
           
          
-          <div class="tabbable">
-           
-      
-            <div class="tab-content no-border padding-24">
-              <div id="home" class="tab-pane in active">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-3 center">
-                    <span class="profile-picture">
-                      <img class="editable img-responsive" style="width:190px; height: 200px" src="/uploads/{{staff.fileName}}">
-                      <div class="file btn btn-lg btn-primary">
-                        Change Photo
-                        <input type="file" (change)="upload()" #fileInput name="file"/>
-                    </div>
-                    </span>
-                   
-                  </div><!-- /.col -->
-      
-                  <div class="col-xs-12 col-sm-9">
-                   
-      
-                    <table class="table table-striped table-hover table-bordered ">
-                      <thead>
-                        <tr>
-                          <th class="tabble" colspan="2">Personal Details</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Name</td>
-                          <td>{{staff.firstName}}  {{staff.lastName}}</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>{{staff.email}}</td>
-                          </tr>
-                          <tr>
-                        <tr>
-                            <td>Date Of Birth</td>
-                            <td>{{staff.dateOfBirth}}</td>
-                          </tr>
-                          <tr>
-                              <td>Address</td>
-                              <td><i class="fa fa-map-marker light-orange bigger-110"></i> {{staff.address}}</td>
-                            </tr>
-                            <tr>
-                                <td>Country</td>
-                                <td>{{staff.country}}</td>
-                              </tr>
-                              <tr>
-                                  <td>State</td>
-                                  <td>{{staff.state}}</td>
-                                </tr>
-                                <tr>
-                                    <td>LGA</td>
-                                    <td>{{staff.lga}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Gender</td>
-                                    <td>{{staff.sex.name}}</td>
-                                  </tr>
-                      </tbody>
-                    </table>
-
-
-                   
-                </div><!-- /.row -->
-      
-                <!-- <div class="space-20"></div> -->
-      
-                <!-- <div class="row"> -->
-                  <div class="col-xs-12 col-sm-12">
-                    <div class="widget-box transparent">
-                        <table class="table table-striped table-hover table-bordered ">
+                <div class="tabbable">
+                 
+            
+                  <div class="tab-content no-border padding-24">
+                    <div id="home" class="tab-pane in active">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+                          <span class="profile-picture">
+                            <img class="editable img-responsive"  src="/uploads/{{staff.fileName}}">
+                            <div class="file btn btn-lg btn-primary">
+                              Change Photo
+                              <input type="file" (change)="upload()" #fileInput name="file"/>
+                          </div>
+                          </span>
+                         
+                        </div><!-- /.col -->
+            
+                        <div class="col-xs-12 col-sm-9">
+                         
+            
+                          <table class="table table-striped table-hover table-bordered ">
                             <thead>
                               <tr>
-                                <th class="tabble" colspan="2">Next of Kin Details</th>
+                                <th class="tabble" colspan="2">Personal Details</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
                                 <td>Name</td>
-                                <td>{{staff.nkName}}</td>
+                                <td>{{staff.firstName}}  {{staff.lastName}}</td>
                               </tr>
                               <tr>
-                                  <td>Phone Number</td>
-                                  <td>{{staff.nkPhoneNumber}}</td>
+                                  <td>Email</td>
+                                  <td>{{staff.email}}</td>
                                 </tr>
                                 <tr>
-                                  <td>Next of Kin Relationship</td>
-                                  <td>{{staff.nkRelationship.name}}</td>
+                              <tr>
+                                  <td>Date Of Birth</td>
+                                  <td>{{staff.dateOfBirth}}</td>
                                 </tr>
                                 <tr>
                                     <td>Address</td>
-                                    <td>{{staff.nkAddress}}</td>
+                                    <td><i class="fa fa-map-marker light-orange bigger-110"></i> {{staff.address}}</td>
                                   </tr>
-                              </tbody>
+                                  <tr>
+                                      <td>Country</td>
+                                      <td>{{staff.country}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>{{staff.state}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td>LGA</td>
+                                          <td>{{staff.lga}}</td>
+                                        </tr>
+                                        <tr>
+                                          <td>Gender</td>
+                                          <td>{{staff.sex.name}}</td>
+                                        </tr>
+                            </tbody>
                           </table>
-
-                          <table class="table table-striped table-hover table-bordered ">
-                              <thead>
-                                <tr>
-                                  <th class="tabble" colspan="2">Other Details</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>Hair Colour</td>
-                                  <td>{{staff.hairColor}}</td>
-                                </tr>
-                                <tr>
-                                  <td>Blood Group</td>
-                                  <td>{{staff.bloodGroup.name}}</td>
-                                </tr>
-                                <tr>
-                                  <td>GenoType</td>
-                                  <td>{{staff.genoType.name}}</td>
-                                </tr>
-                                <tr>
-                                  <td>Religion</td>
-                                  <td>{{staff.religion.name}}</td>
-                                </tr>
-                                
-                                </tbody>
-                            </table>
-                      
-                    </div>
-                  </div>
-                <!-- </div> -->
-              </div><!-- /#home -->
       
-              
-            </div>
-          </div>
+      
+                         
+                      </div><!-- /.row -->
+            
+                      <!-- <div class="space-20"></div> -->
+            
+                      <!-- <div class="row"> -->
+                        <div class="col-xs-12 col-sm-12">
+                          <div class="widget-box transparent">
+                              <table class="table table-striped table-hover table-bordered ">
+                                  <thead>
+                                    <tr>
+                                      <th class="tabble" colspan="2">Next of Kin Details</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>Name</td>
+                                      <td>{{staff.nkName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone Number</td>
+                                        <td>{{staff.nkPhoneNumber}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Next of Kin Relationship</td>
+                                        <td>{{staff.nkRelationship.name}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td>Address</td>
+                                          <td>{{staff.nkAddress}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+      
+                                <table class="table table-striped table-hover table-bordered ">
+                                    <thead>
+                                      <tr>
+                                        <th class="tabble" colspan="2">Other Details</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>Hair Colour</td>
+                                        <td>{{staff.hairColor}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Blood Group</td>
+                                        <td>{{staff.bloodGroup.name}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>GenoType</td>
+                                        <td>{{staff.genoType.name}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Religion</td>
+                                        <td>{{staff.religion.name}}</td>
+                                      </tr>
+                                      
+                                      </tbody>
+                                  </table>
+                            
+                          </div>
+                        </div>
+                      <!-- </div> -->
+                    </div><!-- /#home -->
+            
+                    
+                  </div>
+                </div>
+              </div>
+              </div>
         </div>
-        </div>
-
-      </div><!-- /panel body end -->
-    </div><!-- /panel end -->
+    </div>

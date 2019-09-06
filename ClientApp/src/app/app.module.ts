@@ -1,3 +1,5 @@
+import { AdminAuthGuard } from './authguard/adminauthguard';
+import { AlertService } from './Services/alert.service';
 import { UniversalService } from './Services/universal.service';
 import { AuthenticationService } from './Services/authentication.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,10 +21,6 @@ import { LoaderService } from './Services/loader.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { StaffAreaComponent } from './staff-area/staff-area.component';
-import { MainLoginComponent } from './main-login/main-login.component';
-import { StaffLoginComponent } from './main-login/staff-login/staff-login.component';
-import { StudentLoginComponent } from './main-login/student-login/student-login.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { StaffProfileComponent } from './staff-area/staff-profile/staff-profile.component';
 import { ChangePasswordComponent } from './staff-area/change-password/change-password.component';
 import { StudentAreaComponent } from './student-area/student-area.component';
@@ -35,10 +33,21 @@ import { UserComponent } from './staff-area/user/user.component';
 import { ViewStaffComponent } from './staff-area/view-staff/view-staff.component';
 import { EditStaffComponent } from './staff-area/edit-staff/edit-staff.component';
 import { ViewStudentComponent } from './staff-area/view-student/view-student.component';
-import { UploadImageComponent } from './staff-area/upload-image/upload-image.component';
 import { StudentChangepasswordComponent } from './student-area/student-changepassword/student-changepassword.component';
 import { SessionComponent } from './staff-area/session/session.component';
-import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
+import { ResultComponent } from './student-area/result/result.component';
+import { ResultService } from './Services/result.service';
+import { AlertComponent } from './alert/alert.component';
+import { StudentLoginComponent } from './student-login/student-login.component';
+import { StaffLoginComponent } from './staff-login/staff-login.component';
+import { StudentBarComponent } from './student-area/student-bar/student-bar.component';
+import { StaffBarComponent } from './staff-area/staff-bar/staff-bar.component';
+import { DashboardComponent } from './staff-area/dashboard/dashboard.component';
+import { DashboardService } from './Services/dashboard.service';
+import { ResultsComponent } from './staff-area/results/results.component';
+import { StaffFooterComponent } from './staff-area/staff-footer/staff-footer.component';
+import { AuthGuard } from './authguard/authguard';
+
 
 
 
@@ -51,11 +60,9 @@ import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
   declarations: [
     AppComponent,
     UserComponent,
-    StaffLoginComponent,
     StaffRegisterComponent,
     ViewStaffComponent,
     StudentRegisterComponent,
-    StudentLoginComponent,
     EditStaffComponent,
     StudentComponent,
     ViewStudentComponent,
@@ -63,14 +70,19 @@ import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
     StudentProfileComponent,
     StaffProfileComponent,
     StaffAreaComponent,
-    NavBarComponent,
-    MainLoginComponent,
+    StudentLoginComponent,
+    StaffLoginComponent,
     ChangePasswordComponent,
-    UploadImageComponent,
     StudentAreaComponent,
     StudentChangepasswordComponent,
     SessionComponent,
-    NavMenuComponent,
+    ResultComponent,
+    AlertComponent,
+    StudentBarComponent,
+    StaffBarComponent,
+    DashboardComponent,
+    ResultsComponent,
+    StaffFooterComponent,
 
    
     
@@ -86,73 +98,75 @@ import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: MainLoginComponent,
-        children: [{ path: '', component: StudentLoginComponent, pathMatch: 'full'}]
-      },
+      { path: '', component: StudentLoginComponent },
       
 ///////////////////////////////
-      { path: 'staff-login', component: MainLoginComponent,
-        children: [{ path: '', component: StaffLoginComponent}]
-      },
-      { path: 'student-login', component: MainLoginComponent,
-        children: [{ path: '', component: StudentLoginComponent}]
-      },
+      { path: 'staff/login', component: StaffLoginComponent },
+      { path: 'student/login', component: StudentLoginComponent },
     ///////////////////////////
       
       //Student Area Starts Here
       { path: 'student-profile', component: StudentAreaComponent,
-        children: [{ path: '', component: StudentProfileComponent}]
+        children: [{ path: '', component: StudentProfileComponent, canActivate: [AuthGuard]}]
       },
       { path: 'student-change-password', component: StudentAreaComponent,
-        children: [{ path: '', component: StudentChangepasswordComponent}]
+        children: [{ path: '', component: StudentChangepasswordComponent, canActivate: [AuthGuard]}]
+      },
+      {
+        path: 'result', component: StudentAreaComponent,
+        children: [{ path: '', component: ResultComponent, canActivate: [AuthGuard] }]
       },
       // Staff Area Ends Here
 
 
       //Staff Area Starts Here
       { path: 'edit-staff/:id', component: StaffAreaComponent,
-        children: [{ path: '', component: EditStaffComponent}]
+        children: [{ path: '', component: EditStaffComponent, canActivate: [AdminAuthGuard]}]
       },
       { path: 'view-staff/:id', component: StaffAreaComponent,
-        children: [{ path: '', component: ViewStaffComponent}]
+        children: [{ path: '', component: ViewStaffComponent, canActivate: [AdminAuthGuard]}]
       },
       { path: 'view-student/:id', component: StaffAreaComponent,
-        children: [{ path: '', component: ViewStudentComponent}]
+        children: [{ path: '', component: ViewStudentComponent, canActivate: [StaffAuthGuard]}]
       },
       { path: 'edit-student/:id', component: StaffAreaComponent,
-        children: [{ path: '', component: EditStudentComponent}]
+        children: [{ path: '', component: EditStudentComponent, canActivate: [AdminAuthGuard]}]
+      },
+      { path: 'staff/dashboard', component: StaffAreaComponent,
+        children: [{ path: '', component: DashboardComponent, canActivate: [StaffAuthGuard]}]
       },
 
       { path: 'staff-profile', component: StaffAreaComponent,
-        children: [{ path: '', component: StaffProfileComponent}]
+        children: [{ path: '', component: StaffProfileComponent, canActivate: [StaffAuthGuard]}]
       },
       { path: 'session', component: StaffAreaComponent,
-        children: [{ path: '', component: SessionComponent}]
+        children: [{ path: '', component: SessionComponent, canActivate: [AdminAuthGuard]}]
       },
       { path: 'edit-session/:id', component: StaffAreaComponent,
-        children: [{ path: '', component: SessionComponent}]
+        children: [{ path: '', component: SessionComponent, canActivate: [AdminAuthGuard]}]
       },
 
       { path: 'staffs', component: StaffAreaComponent,
-        children: [{ path: '', component: UserComponent}]
+        children: [{ path: '', component: UserComponent, canActivate: [AdminAuthGuard]}]
       },
       { path: 'students', component: StaffAreaComponent,
-        children: [{ path: '', component: StudentComponent}]
+        children: [{ path: '', component: StudentComponent, canActivate: [StaffAuthGuard]}]
       },
       { path: 'staff-register', component: StaffAreaComponent,
-        children: [{ path: '', component: StaffRegisterComponent}]
+        children: [{ path: '', component: StaffRegisterComponent, canActivate: [AdminAuthGuard]}]
       },
       { path: 'student-register', component: StaffAreaComponent,
-        children: [{ path: '', component: StudentRegisterComponent}]
+        children: [{ path: '', component: StudentRegisterComponent, canActivate: [AdminAuthGuard]}]
       },
 
       { path: 'change-password', component: StaffAreaComponent,
-        children: [{ path: '', component: ChangePasswordComponent}]
+        children: [{ path: '', component: ChangePasswordComponent, canActivate: [StaffAuthGuard]}]
+      },
+      {
+        path: 'results', component: StaffAreaComponent,
+        children: [{ path: '', component: ResultsComponent, canActivate: [StaffAuthGuard]}]
       },
 
-    { path: 'upload-photo', component: StaffAreaComponent,
-    children: [{ path: '', component: UploadImageComponent}]
-  },
       // Staff Area Ends Here
      
      
@@ -164,10 +178,15 @@ import { NavMenuComponent } from './staff-area/nav-menu/nav-menu.component';
     StudentauthService,
     UserService,
     StaffAuthGuard,
+    AdminAuthGuard,
+    AuthGuard,
     StudentService,
     LoaderService,
     UniversalService,
-    { provide: ErrorHandler, useClass:AppErrorHandler },
+    ResultService,
+    AlertService,
+    DashboardService,
+    { provide: ErrorHandler, useClass: AppErrorHandler },
   ],
   bootstrap: [AppComponent]
 })

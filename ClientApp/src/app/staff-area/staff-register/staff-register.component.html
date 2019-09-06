@@ -1,134 +1,144 @@
 
-<div style="margin-top: 20px;" class="col-md-6 col-md-offset-2">
+<div style="margin-top: 20px;" class="col-md-8 offset-md-2">
 
-
-    
-         
-  <h2 style="font-weight: bolder; color: #4189C7; font-size: 25px;" align="center" >REGISTER STAFF</h2>
-  <form name="form" (ngSubmit)="register(f)" #f="ngForm" novalidate>
-
-<fieldset>
-    <legend>Personal Details</legend>
-      <div class="form-group col-md-6" >
-          <input type="text" class="form-control inp" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" placeholder="FirstName" required />
-          <div *ngIf="firstName.touched && firstName.invalid"  class="validation-error">FirstName is required</div>
-      </div>
-      <div class="form-group col-md-6" >
-        <input type="text" class="form-control inp" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" placeholder="LastName" required />
-        <div *ngIf="lastName.touched && lastName.invalid"  class="validation-error">LastName is required</div>
-    </div> 
-    <div class="form-group col-md-12" >
-      <input type="text" class="form-control inp" name="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email" required />
-      <div *ngIf="email.touched && email.invalid"  class="validation-error">Email is required</div>
-  </div>
-  <div class="form-group col-md-12" >
-    <input type="date"   name="dateOfBirth" #dateOfBirth="ngModel" [(ngModel)]="model.dateOfBirth" class="form-control"    />
-    <div *ngIf="dateOfBirth.touched && dateOfBirth.invalid"  class="validation-error">Date Of Birth is required</div>
-  </div>
-  <div class="form-group col-md-12" >
-    <input type="text" class="form-control inp" name="address" [(ngModel)]="model.address" #address="ngModel" placeholder="Address" required />
-    <div *ngIf="address.touched && address.invalid"  class="validation-error">Address is required</div>
-</div>
-      <div class="form-group col-md-12" >
-          <input type="password" class="form-control inp" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password" />
-          <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
-      </div>
-      <div class="form-group col-md-6" >
-            <select class="form-control" [(ngModel)]="model.sexId" name="sexId" required #sexId="ngModel" >
-                <option value="Select Sex" [selected] >Select Sex</option>
-                <option *ngFor="let s of sex"  value="{{s.id}}">{{s.name}}</option>
-            </select>
-            <div class="validation-error" *ngIf="sexId.touched && sexId.invalid">Please Select the Sex</div>
-        </div>
-
-      <div class="form-group col-md-6" >
-        <select class="form-control" [(ngModel)]="model.role" name="role" required #role="ngModel" >
-            <option >Select Role</option>
-            <option *ngFor="let r of roles" value="{{r.name}}">{{r.name}}</option>
-        </select>
-        <div class="validation-error" *ngIf="role.touched && role.invalid">Please Select Role</div>
-    </div>
-    <div class="form-group col-md-12" >
-            <input type="text" class="form-control inp" name="country" [(ngModel)]="model.country" #country="ngModel" placeholder="Country" required />
-            <div *ngIf="country.touched && country.invalid"  class="validation-error">Country is required</div>
-        </div>
-
-        <div class="form-group col-md-12" >
-                <input type="text" class="form-control inp" name="state" [(ngModel)]="model.state" #state="ngModel" placeholder="State" required />
-                <div *ngIf="state.touched && state.invalid"  class="validation-error">State is required</div>
-            </div>
-
-            <div class="form-group col-md-12" >
-                    <input type="text" class="form-control inp" name="lGA" [(ngModel)]="model.lGA" #lGA="ngModel" placeholder="Local Government Area" required />
-                    <div *ngIf="lGA.touched && lGA.invalid"  class="validation-error">State is required</div>
+        <div class="card card-primary">
+                <div class="card-header">
+                        <h2  class="card-title" style="font-weight: bolder;  font-size: 25px;" align="center" >REGISTER STAFF</h2>
                 </div>
-</fieldset>
-<fieldset>
-    <legend>Other Details</legend>
-    <div class="form-group col-md-12" >
-            <input type="text" class="form-control inp" name="hairColor" [(ngModel)]="model.hairColor" #hairColor="ngModel" placeholder="Hair Colour" required />
-            <div *ngIf="hairColor.touched && hairColor.invalid"  class="validation-error">Hair Colour is required</div>
-        </div>
-        <div class="form-group col-md-12" >
-                <select class="form-control" [(ngModel)]="model.genoTypeId" name="genoTypeId" required #genoTypeId="ngModel" >
-                    <option >Select GenoType</option>
-                    <option *ngFor="let g of genoTypes" value="{{g.id}}">{{g.name}}</option>
-                </select>
-                <div class="validation-error" *ngIf="genoTypeId.touched && genoTypeId.invalid">Please Select GenoType</div>
-            </div>
-            <div class="form-group col-md-12" >
-                    <select class="form-control" [(ngModel)]="model.bloodGroupId" name="bloodGroupId" required #bloodGroupId="ngModel" >
-                        <option >Select BloodGroup</option>
-                        <option *ngFor="let b of bloodGroups" value="{{b.id}}">{{b.name}}</option>
-                    </select>
-                    <div class="validation-error" *ngIf="bloodGroupId.touched && bloodGroupId.invalid">Please Select BloodGroup</div>
-                </div>
-                <div class="form-group col-md-12" >
-                        <select class="form-control" [(ngModel)]="model.religionId" name="religionId" required #religionId="ngModel" >
-                            <option >Select Religion</option>
-                            <option *ngFor="let r of religions" value="{{r.id}}">{{r.name}}</option>
-                        </select>
-                        <div class="validation-error" *ngIf="religionId.touched && religionId.invalid">Please Select Religion</div>
-                    </div>
-</fieldset>
-<fieldset>
-    <legend>Next of Kin Details</legend>
-    <div class="form-group col-md-12" >
-            <input type="text" class="form-control inp" name="nKName" [(ngModel)]="model.nKName" #nKName="ngModel" placeholder="Name" required />
-            <div *ngIf="nKName.touched && nKName.invalid"  class="validation-error">Name is required</div>
-        </div>
-        <div class="form-group col-md-12" >
-                <input type="text" class="form-control inp" name="nKPhoneNumber" [(ngModel)]="model.nKPhoneNumber" #nKPhoneNumber="ngModel" placeholder="Phone Number" required />
-                <div *ngIf="nKPhoneNumber.touched && nKPhoneNumber.invalid"  class="validation-error">Phone Number is required</div>
-            </div>
-            <div class="form-group col-md-12" >
-                    <select class="form-control" [(ngModel)]="model.nKRelationshipId" name="nKRelationshipId" required #nKRelationshipId="ngModel" >
-                        <option >Select Next of Kin</option>
-                        <option *ngFor="let k of nextKin" value="{{k.id}}">{{k.name}}</option>
-                    </select>
-                    <div class="validation-error" *ngIf="nKRelationshipId.touched && nKRelationshipId.invalid">Please Select Next of Kin</div>
-                </div>
-            <div class="form-group col-md-12" >
-                    <input type="text" class="form-control inp" name="nKAddress" [(ngModel)]="model.nKAddress" #nKAddress="ngModel" placeholder="Address" required />
-                    <div *ngIf="nKAddress.touched && nKAddress.invalid"  class="validation-error">Address is required</div>
-                </div>
-</fieldset>
-     <div class="form-row">
-      <div class="form-group col-md-8">
-          <button [disabled]="f.invalid || loading" style="font-weight:bolder;"  class="btn btn-primary btn-block ">Register</button>
-          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-         
-      </div>
-      <div class="form-group col-md-4">
-            <button type="button" (click)="resetForm(f)" class="btn btn-secondary btn-block"> <i class="fa fa-repeat"></i> reset</button>
-        </div>
-    </div>
-      
-  </form>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form name="form" (ngSubmit)="register(f)" #f="ngForm" novalidate>
+                  <div class="card-body">
+                        <fieldset>
+                                <legend>Personal Details</legend>
+                                <div class="form-row">
+                                  <div class="form-group col-md-6" >
+                                      <input type="text" class="form-control inp" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" placeholder="FirstName" required />
+                                      <div *ngIf="firstName.touched && firstName.invalid"  class="validation-error">FirstName is required</div>
+                                  </div>
+                                  <div class="form-group col-md-6" >
+                                    <input type="text" class="form-control inp" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" placeholder="LastName" required />
+                                    <div *ngIf="lastName.touched && lastName.invalid"  class="validation-error">LastName is required</div>
+                                </div> 
+                            </div>
+                                <div class="form-group col-md-12" >
+                                  <input type="text" class="form-control inp" name="email" [(ngModel)]="model.email" #email="ngModel" placeholder="Email" required />
+                                  <div *ngIf="email.touched && email.invalid"  class="validation-error">Email is required</div>
+                              </div>
+                              <div class="form-group col-md-12" >
+                                <input type="date"   name="dateOfBirth" #dateOfBirth="ngModel" [(ngModel)]="model.dateOfBirth" class="form-control"    />
+                                <div *ngIf="dateOfBirth.touched && dateOfBirth.invalid"  class="validation-error">Date Of Birth is required</div>
+                              </div>
+                              <div class="form-group col-md-12" >
+                                <input type="text" class="form-control inp" name="address" [(ngModel)]="model.address" #address="ngModel" placeholder="Address" required />
+                                <div *ngIf="address.touched && address.invalid"  class="validation-error">Address is required</div>
+                            </div>
+                                  <div class="form-group col-md-12" >
+                                      <input type="password" class="form-control inp" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password" />
+                                      <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
+                                  </div>
+                                  <div class="form-row">
+                                  <div class="form-group col-md-6" >
+                                        <select class="form-control" [(ngModel)]="model.sexId" name="sexId" required #sexId="ngModel" >
+                                            <option value="Select Sex" [selected] >Select Sex</option>
+                                            <option *ngFor="let s of sex"  value="{{s.id}}">{{s.name}}</option>
+                                        </select>
+                                        <div class="validation-error" *ngIf="sexId.touched && sexId.invalid">Please Select the Sex</div>
+                                    </div>
+                            
+                                  <div class="form-group col-md-6" >
+                                    <select class="form-control" [(ngModel)]="model.role" name="role" required #role="ngModel" >
+                                        <option value="Select Role" [selected] >Select Role</option>
+                                        <option *ngFor="let r of roles" value="{{r.name}}">{{r.name}}</option>
+                                    </select>
+                                    <div class="validation-error" *ngIf="role.touched && role.invalid">Please Select Role</div>
+                                </div>
+                            </div>
+                                <div class="form-group col-md-12" >
+                                        <input type="text" class="form-control inp" name="country" [(ngModel)]="model.country" #country="ngModel" placeholder="Country" required />
+                                        <div *ngIf="country.touched && country.invalid"  class="validation-error">Country is required</div>
+                                    </div>
+                            
+                                    <div class="form-group col-md-12" >
+                                            <input type="text" class="form-control inp" name="state" [(ngModel)]="model.state" #state="ngModel" placeholder="State" required />
+                                            <div *ngIf="state.touched && state.invalid"  class="validation-error">State is required</div>
+                                        </div>
+                            
+                                        <div class="form-group col-md-12" >
+                                                <input type="text" class="form-control inp" name="lGA" [(ngModel)]="model.lGA" #lGA="ngModel" placeholder="Local Government Area" required />
+                                                <div *ngIf="lGA.touched && lGA.invalid"  class="validation-error">State is required</div>
+                                            </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Other Details</legend>
+                                <div class="form-group col-md-12" >
+                                        <input type="text" class="form-control inp" name="hairColor" [(ngModel)]="model.hairColor" #hairColor="ngModel" placeholder="Hair Colour" required />
+                                        <div *ngIf="hairColor.touched && hairColor.invalid"  class="validation-error">Hair Colour is required</div>
+                                    </div>
+                                    <div class="form-group col-md-12" >
+                                            <select class="form-control" [(ngModel)]="model.genoTypeId" name="genoTypeId" required #genoTypeId="ngModel" >
+                                                <option >Select GenoType</option>
+                                                <option *ngFor="let g of genoTypes" value="{{g.id}}">{{g.name}}</option>
+                                            </select>
+                                            <div class="validation-error" *ngIf="genoTypeId.touched && genoTypeId.invalid">Please Select GenoType</div>
+                                        </div>
+                                        <div class="form-group col-md-12" >
+                                                <select class="form-control" [(ngModel)]="model.bloodGroupId" name="bloodGroupId" required #bloodGroupId="ngModel" >
+                                                    <option >Select BloodGroup</option>
+                                                    <option *ngFor="let b of bloodGroups" value="{{b.id}}">{{b.name}}</option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="bloodGroupId.touched && bloodGroupId.invalid">Please Select BloodGroup</div>
+                                            </div>
+                                            <div class="form-group col-md-12" >
+                                                    <select class="form-control" [(ngModel)]="model.religionId" name="religionId" required #religionId="ngModel" >
+                                                        <option >Select Religion</option>
+                                                        <option *ngFor="let r of religions" value="{{r.id}}">{{r.name}}</option>
+                                                    </select>
+                                                    <div class="validation-error" *ngIf="religionId.touched && religionId.invalid">Please Select Religion</div>
+                                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Next of Kin Details</legend>
+                                <div class="form-group col-md-12" >
+                                        <input type="text" class="form-control inp" name="nKName" [(ngModel)]="model.nKName" #nKName="ngModel" placeholder="Name" required />
+                                        <div *ngIf="nKName.touched && nKName.invalid"  class="validation-error">Name is required</div>
+                                    </div>
+                                    <div class="form-group col-md-12" >
+                                            <input type="text" class="form-control inp" name="nKPhoneNumber" [(ngModel)]="model.nKPhoneNumber" #nKPhoneNumber="ngModel" placeholder="Phone Number" required />
+                                            <div *ngIf="nKPhoneNumber.touched && nKPhoneNumber.invalid"  class="validation-error">Phone Number is required</div>
+                                        </div>
+                                        <div class="form-group col-md-12" >
+                                                <select class="form-control" [(ngModel)]="model.nKRelationshipId" name="nKRelationshipId" required #nKRelationshipId="ngModel" >
+                                                    <option >Select Next of Kin</option>
+                                                    <option *ngFor="let k of nextKin" value="{{k.id}}">{{k.name}}</option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="nKRelationshipId.touched && nKRelationshipId.invalid">Please Select Next of Kin</div>
+                                            </div>
+                                        <div class="form-group col-md-12" >
+                                                <input type="text" class="form-control inp" name="nKAddress" [(ngModel)]="model.nKAddress" #nKAddress="ngModel" placeholder="Address" required />
+                                                <div *ngIf="nKAddress.touched && nKAddress.invalid"  class="validation-error">Address is required</div>
+                                            </div>
+                            </fieldset>
+                                 
+                  </div>
+                  <!-- /.card-body -->
   
-
-
-
+                  <div class="card-footer">
+                        <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <button  style="font-weight:bolder;"  class="btn btn-primary btn-block ">Register</button>
+                                   
+                                </div>
+                                <div class="form-group col-md-4">
+                                      <button type="button" (click)="resetForm(f)" class="btn btn-secondary btn-block"> <i class="fa fa-repeat"></i> reset</button>
+                                  </div>
+                              </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+    
+ 
 
 </div>
 

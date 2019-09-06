@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../Services/authentication.service';
 import { UserService } from './../Services/user.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StaffAreaComponent implements OnInit {
 staff ={};
-  constructor( private userService: UserService) { }
+  constructor( private userService: UserService, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.userService.getUserProfile().subscribe((data:any) => {

@@ -73,6 +73,9 @@ namespace PROJECT.Models
              modelBuilder.Entity<StudentTerm>().HasKey(st => new 
             { st.StudentId, st.TermId });
 
+            modelBuilder.Entity<TermResult>().HasKey(tr => new 
+            { tr.TermId, tr.ResultId });
+
             base.OnModelCreating(modelBuilder);  
   
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");

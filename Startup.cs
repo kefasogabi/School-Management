@@ -17,6 +17,7 @@ using PROJECT.Helper;
 using PROJECT.Interface;
 using PROJECT.Models;
 using PROJECT.Repository;
+using PROJECT.Services;
 
 namespace PROJECT
 {
@@ -36,6 +37,7 @@ namespace PROJECT
           
 
              services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
@@ -44,7 +46,7 @@ namespace PROJECT
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddIdentityCore<ApplicationUser>(o =>
             {
-                    // configure identity options
+                // configure identity options
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
@@ -85,6 +87,8 @@ namespace PROJECT
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITermService, TermService>();
+            services.AddScoped<IResultService, ResultService>();
+            services.AddScoped<IDashBoardService, DashBoardService>();
 
 
 

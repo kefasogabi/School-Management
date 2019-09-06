@@ -57,7 +57,7 @@ namespace PROJECT.Controllers
 
     
 
-            [AllowAnonymous]
+            [Authorize(Roles = RoleName.Admin)]
             [HttpPost]
             public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
             {
@@ -124,7 +124,7 @@ namespace PROJECT.Controllers
                
             }
 
-
+            [Authorize(Roles = RoleName.Admin)]
             [HttpPut("{id}")]
             public async Task<IActionResult> Update([FromBody] RegisterViewModel model )
             {
@@ -171,8 +171,8 @@ namespace PROJECT.Controllers
                 }
 
 
-                // if(file.Length > 10 * 1024) return BadRequest("Max File Size exceeded");
-                // if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
+                if(file.Length > 10 * 1024 * 1024) return BadRequest("Max File Size exceeded");
+                if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
 
                 var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
                 if(!Directory.Exists(uploadsFolderPath))
@@ -193,6 +193,7 @@ namespace PROJECT.Controllers
                 return Ok(user);
             }
 
+            [Authorize(Roles = RoleName.Admin)]
             [HttpPost("/api/staffUpload/{id}")]
             public async Task<IActionResult> UploadImage(string id, IFormFile file)
             {
@@ -202,8 +203,8 @@ namespace PROJECT.Controllers
                      return NotFound();             
                 }
 
-                // if(file.Length > 10 * 1024) return BadRequest("Max File Size exceeded");
-                // if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
+                if(file.Length > 10 * 1024 * 1024) return BadRequest("Max File Size exceeded");
+                if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
 
                 var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
                 if(!Directory.Exists(uploadsFolderPath))
@@ -230,55 +231,41 @@ namespace PROJECT.Controllers
             [HttpPost]
             public async Task<IActionResult> Login([FromBody] LoginViewModel model)
             {
-                
-                if(!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
-                if (result.Succeeded)
-                {
-                    var user = userManager.Users.SingleOrDefault(c => c.Email == model.Email);
-                    return  GenerateJwtToken(model.Email, user);
-                }
-                
-                throw new ApplicationException("Unknown Error"); 
-            }
 
-            [AllowAnonymous]
-            private IActionResult GenerateJwtToken(string email, ApplicationUser user)
-            {
-                
-
-               
+                var user = await userManager.FindByNameAsync(model.Email);
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-                var tokenDescriptor = new SecurityTokenDescriptor
+
+                if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    Subject = new ClaimsIdentity(new Claim[] 
+                    //Get role assigned to the user
+                    var role = await userManager.GetRolesAsync(user);
+                    IdentityOptions _options = new IdentityOptions();
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
-                        new Claim(ClaimTypes.Name, user.Id.ToString()),
-                        new Claim(ClaimTypes.Email, user.Email.ToString()),
-                        new Claim(ClaimTypes.GivenName, user.FirstName.ToString()),
-                        new Claim(ClaimTypes.UserData, user.LastName.ToString()),
-                        new Claim(ClaimTypes.StreetAddress, user.Address.ToString()),
-                        new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString()),
-                        
-                    }),
-                    
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
+                            new Claim(ClaimTypes.Name,user.Id.ToString()),
+                            new Claim(_options.ClaimsIdentity.RoleClaimType,role.FirstOrDefault())
+                        }),
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var tokenString = tokenHandler.WriteToken(token);
+                    return Ok(new{ 
+                        token = tokenString,
+                        role = role.FirstOrDefault()
+                                 });
 
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
-            
-                return Ok(new{ token = tokenString });
-
-               
+                }
+                else
+                    return BadRequest(new { message = "Username or password is incorrect." });
             }
 
+
+            [Authorize(Roles = RoleName.Admin)]
             [HttpGet]
            public async Task<IActionResult> GetAll()
            {
@@ -286,6 +273,7 @@ namespace PROJECT.Controllers
                return Ok(users);
            } 
 
+            [Authorize(Roles = RoleName.Admin)]
             [HttpGet("{id}")]
            public async Task<IActionResult> GetById(string id)
            {
@@ -293,7 +281,8 @@ namespace PROJECT.Controllers
                                                     .Include(b => b.BloodGroup)
                                                     .Include(g => g.GenoType)
                                                     .Include(n => n.NKRelationship)
-                                                    .Include(r => r.Religion).SingleOrDefaultAsync(c => c.Id == id);
+                                                    .Include(r => r.Religion)
+                                                    .SingleOrDefaultAsync(c => c.Id == id);
 
                if(user == null)
                {
@@ -320,7 +309,7 @@ namespace PROJECT.Controllers
                
            }
 
-
+            [Authorize(Roles = RoleName.Admin)]
            [HttpDelete("{id}")]
            public async Task<IActionResult> Delete(string id)
            {
@@ -367,13 +356,13 @@ namespace PROJECT.Controllers
                return Ok(model);
            }
 
-           private void AddErrors(IdentityResult result)  
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
+        //    private void AddErrors(IdentityResult result)  
+        //     {
+        //         foreach (var error in result.Errors)
+        //         {
+        //             ModelState.AddModelError(string.Empty, error.Description);
+        //         }
+        //     }
 
 
 

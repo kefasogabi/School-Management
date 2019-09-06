@@ -14,6 +14,7 @@ namespace PROJECT.Repository
 {
     public class StudentService : IStudentService
     {
+        private readonly string[] Accepted_file = new[] {".jpg", ".jpeg", ".png"};
         private readonly ApplicationDbContext context;
         private readonly IHostingEnvironment host;
 
@@ -24,18 +25,18 @@ namespace PROJECT.Repository
         }
         public Student Authenticate(string userName, string password)
         {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-                return null;
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+                throw new AppException("Please fill in Username and Password");
 
             var student = context.Students.SingleOrDefault(x => x.UserName == userName);
 
             // check if username exists
             if (student == null)
-                return null;
+                throw new AppException("User not found");
 
             // check if password is correct
             if (!VerifyPasswordHash(password, student.PasswordHash, student.PasswordSalt))
-                return null;
+                throw new AppException("Password is incorrect");
 
             // authentication successful
             return student;
@@ -91,11 +92,15 @@ namespace PROJECT.Repository
         public async Task<Student> GetByIdAsync(int id)
         {
             return await context.Students.Include(c => c.Sex)
+                                    .Include(t => t.Terms)
+                                    .ThenInclude(st => st.Term)
+                                    .OrderByDescending( x => x.Id)
                                     .Include(c => c.Grade)
                                     .Include(b => b.BloodGroup)
                                     .Include(g => g.GenoType)
                                     .Include(n => n.NKRelationship)
                                     .Include(r => r.Religion)
+                                    .Include(c => c.Results)
                                     .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
         }
 
@@ -160,6 +165,8 @@ namespace PROJECT.Repository
             
         }
 
+        
+
         // private helper methods
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -200,6 +207,9 @@ namespace PROJECT.Repository
             if (student == null)
                 throw new AppException("User not found");
 
+            // if(file.Length > 10 * 1024 * 1024) throw new ApplicationException("Max File Size exceeded");
+            // if(!Accepted_file.Any(s => s == Path.GetExtension(file.FileName))) throw new ApplicationException("Invalid File Type");
+
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolderPath))
                 Directory.CreateDirectory(uploadsFolderPath);
@@ -224,7 +234,9 @@ namespace PROJECT.Repository
                                     .Include(g => g.GenoType)
                                     .Include(n => n.NKRelationship)
                                     .Include(r => r.Religion)
-                                    // .Include(c => c.Term)
+                                    .Include(c => c.Results)
+                                    .Include(t => t.Terms)
+                                    .ThenInclude(st => st.Term)
                                     .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
         }
     }

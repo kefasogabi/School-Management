@@ -7,10 +7,10 @@ namespace PROJECT.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<StudentTerm> Students { get; set; }
-        public Term()
-        {
-            Students = new Collection<StudentTerm>();
-        }
+        // public ICollection<TermResult> Results { get; set; }
+        // public Term()
+        // {
+        //     Results = new Collection<TermResult>();   
+        // }
     }
 }

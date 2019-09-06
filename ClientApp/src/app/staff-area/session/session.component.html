@@ -1,90 +1,79 @@
-<div>
-<div style="margin-top: 20px;" class="col-md-6 " >
-
-    <form name="form" class="form-inline" (ngSubmit)="postSession(s)" #s="ngForm" novalidate>
-        <input *ngIf="session.id" type="hidden" name="id" #id="ngModel" [(ngModel)]="session.id"   >
-      <div class="form-row">
-        <div class="form-group">
-            <input type="text" class="form-control " name="name" [(ngModel)]="session.name" #name="ngModel" required placeholder="Session" />
-            <div *ngIf="name.invalid && name.touched" class="validation-error">Session is required</div>
-        </div> 
-        
-        <div class="form-group ">
-            <button type="submit" style="font-weight:bolder;"  class="btn btn-primary "> <i class="fa fa-floppy-o"></i> Submit</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        </div> 
-        <div class="form-group">
-            <button type="button" (click)="resetForm(s)" class="btn btn-secondary"> <i class="fa fa-repeat"></i> reset</button>
-        </div>
-    </div>
-        </form>
-
-   
-    <table class="table  table-hover table-striped">
-        <thead>
-            <tr>
-                <th>S/N</th>
-                <th>Session</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let session of sessions ; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{session.name}}</td>
-                <td><a (click)="editSession(session.id)" class="btn"><i class="fa fa-pencil-square-o"></i></a></td>
-                <td><a (click)="deleteSession(session.id)" class="btn text-danger"> <i class="fa fa-trash-o"></i></a></td>
-            </tr>
-        </tbody>
-    </table>
-
-</div>
 
 
-<div style="margin-top: 20px;" class="col-md-6 " >
 
-    <form name="form" class="form-inline" (ngSubmit)="postTerm(t)" #t="ngForm" novalidate>
-        <input *ngIf="term.id" type="hidden" name="id" #id="ngModel" [(ngModel)]="term.id"   >
-      <div class="form-row">
-        <div class="form-group">
-            <input type="text" class="form-control " name="name" [(ngModel)]="term.name" #name="ngModel" required placeholder="Term" />
-            <div *ngIf="name.invalid && name.touched" class="validation-error">Term is required</div>
-        </div> 
-        
-        <div class="form-group ">
-            <button style="font-weight:bolder;"  class="btn btn-primary "> <i class="fa fa-floppy-o"></i> Submit</button>
-            <img *ngIf="load" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        </div> 
-        <div class="form-group">
-            <button type="button" (click)="resetForm(t)" class="btn btn-secondary"> <i class="fa fa-repeat"></i> reset</button>
-        </div>
-    </div>
-        </form>
+<div class="row">
 
-   
-    <table class="table  table-hover table-striped">
-        <thead>
-            <tr>
-                <th>S/N</th>
-                <th>Term</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let term of terms ; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{term.name}}</td>
-                <td><a (click)="editTerm(term.id)" class="btn"><i class="fa fa-pencil-square-o"></i></a></td>
-                <td><a (click)="deleteTerm(term.id)" class="btn text-danger"> <i class="fa fa-trash-o"></i></a></td>
-            </tr>
-        </tbody>
-    </table>
+        <div style="margin-top: 20px;" class="col-md-6 " >
+
+                <form name="form" class="form-inline" (ngSubmit)="postSession(s)" #s="ngForm" novalidate>
+                        <input *ngIf="session.id" type="hidden" name="id" #id="ngModel" [(ngModel)]="session.id"   >
+                        <div class="form-group mx-sm-3 mb-2">
+                          <input type="text" class="form-control " name="name" [(ngModel)]="session.name" #name="ngModel" required placeholder="Session" />
+                            <div *ngIf="name.invalid && name.touched" class="validation-error">Session is required</div>
+                        </div>
+                            <button type="submit" class="btn btn-primary mb-2">Add</button>
+                            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                      </form>
+            
+                <table class="table  table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Session</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let session of sessions ; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{session.name}}</td>
+                            <td><a (click)="editSession(session.id)" class="btn btn-primary">Edit</a></td>
+                            <td><a (click)="deleteSession(session.id)" class="btn btn-danger"> Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            </div>
+            
+            
+            <div style="margin-top: 20px;" class="col-md-6 " >
+            
+                    <form name="form" class="form-inline" (ngSubmit)="postTerm(t)" #t="ngForm" novalidate>
+                            <input *ngIf="term.id" type="hidden" name="id" #id="ngModel" [(ngModel)]="term.id"   >
+                            <div class="form-group mx-sm-3 mb-2">
+                              <input type="text" class="form-control " name="name" [(ngModel)]="term.name" #nam="ngModel" required placeholder="Term" />
+                                <div *ngIf="nam.invalid && nam.touched" class="validation-error">Term is required</div>
+                            </div>
+                                <button type="submit" class="btn btn-primary mb-2">Add</button>
+                                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                          </form>
+            
+               
+                <table class="table  table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Term</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let term of terms ; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{term.name}}</td>
+                            <td><a (click)="editTerm(term.id)" class="btn btn-primary">Edit</a></td>
+                            <td><a (click)="deleteTerm(term.id)" class="btn btn-danger"> Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            </div>
 
 </div>
 
 
-</div>
+
 
 

@@ -26,23 +26,15 @@
     top: 0;
 }
 
-.img-div{
+.editable{
     width: 100%;
     height: 100%; 
 }
 
-.panel{
-    margin: 20px;
-}
-.panel-title{
-    font-weight: bold;
-}
 
 .tabble{
-    background-color: rgba(95, 94, 94, 0.486) !important;
+    background: gray;
 }
-
-
 
 
 body{margin-top:20px;}

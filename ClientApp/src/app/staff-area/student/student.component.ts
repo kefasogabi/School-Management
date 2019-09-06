@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../Services/authentication.service';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -26,7 +27,9 @@ export class StudentComponent implements OnInit {
   students: any[];
   grades: any[];
   public id = '';
-  constructor(private studentService: StudentService, private spinner: NgxSpinnerService ) { }
+  constructor(private studentService: StudentService, 
+              private spinner: NgxSpinnerService,
+              private authService: AuthenticationService ) { }
 
   ngOnInit() {
     

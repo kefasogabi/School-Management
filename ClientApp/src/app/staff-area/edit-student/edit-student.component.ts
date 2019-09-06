@@ -5,7 +5,7 @@ import 'rxjs/add/operator/take';
 import { ActivatedRoute } from '@angular/router';
 import { StudentService } from '../../Services/student.service';
 import { NgForm } from '@angular/forms';
-import { EditStudent } from '../../Services/student.model';
+import { EditStudent } from '../../models/student.model';
 
 
 

@@ -1,0 +1,45 @@
+<div style="margin-top: 20px;" class="col-md-10 offset-md-1">
+
+    <div class="card card-default">
+            <div class="card-header">
+                <h3 class="panel-title">My Result</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info" role="alert">Please select the Term, for which you want to see your result.</div>
+                <div class="form-group col-md-4 offset-md-4 " >
+                        <select class="form-control"   [(ngModel)]="yea" name="yea" >
+                          <option value="Select Term" >Select Term </option>
+                          <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
+                      </select>
+                    </div>
+            </div>
+            <div class="card-footer">
+                <button (click)="onYearChange()" class="btn btn-success float-right"><span class="fas fa-search"></span> Search</button>
+            </div>
+</div>
+
+ 
+ <div style="margin-top:20px;" class="" >
+    
+
+  <div *ngIf="subjects" >
+  <table class="table  table-hover table-striped">
+      <thead>
+          <tr>
+              <th>Subject</th>
+              <th>1st CA</th>
+              <th>2nd CA</th>
+              <th>Exam</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let sub of subjects">
+              <td>{{sub.name}}</td>
+              <td>{{sub.cA1}}</td>
+              <td>{{sub.cA2}}</td>
+              <td>{{sub.exam}}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+  </div>

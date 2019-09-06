@@ -1,8 +1,7 @@
-import { User, ChangePassword, upload, Session, Term } from './user.model';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions,  Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { User, Session, Term, ChangePassword } from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -98,7 +97,7 @@ export class UserService {
     // create authorization header with jwt token
     let token = JSON.parse(localStorage.getItem('token'));
     if (token) {
-        let headers = new Headers({ 'Authorization': 'Bearer ' + token.token });
+        let headers = new Headers({ 'Authorization': 'Bearer ' + token});
         return new RequestOptions({ headers: headers });
     }
 }
