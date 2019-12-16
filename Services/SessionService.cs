@@ -46,7 +46,7 @@ namespace PROJECT.Repository
         {
             var sessions = context.Session.Find(session.Id);
             
-            if(session == null)
+            if(sessions == null)
             throw new ApplicationException("Session not found");
 
             sessions.Name = session.Name;

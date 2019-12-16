@@ -22,10 +22,10 @@ export class StudentProfileComponent implements OnInit {
       fileName:"",
       country:"",
       state: "",
-      lGA:"",
+      lga:"",
       nkName:"",
       nkAddress:"",
-      nkPhone:"",
+      nkPhoneNumber:"",
       hairColor:"",
       password: "",
       sex: {

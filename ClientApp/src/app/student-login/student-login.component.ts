@@ -27,15 +27,14 @@ export class StudentLoginComponent implements OnInit {
   login(form){
     this.spinner.show();
     this.studentauthService.login(form).subscribe((data:any )=> {
-      if(data){
+      
         localStorage.setItem('token', JSON.stringify(data.token));
         let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
         this.router.navigate([returnUrl || '/student-profile']);
         this.spinner.hide();
-      }else{
-        this.invalidLogin = true;
+    }, error => {
+      this.invalidLogin = true;
       this.spinner.hide();
-      }
     });
   }
 

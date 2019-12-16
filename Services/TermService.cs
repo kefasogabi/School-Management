@@ -44,7 +44,7 @@ namespace PROJECT.Repository
         {
             var terms = context.Terms.Find(term.Id);
 
-            if(term == null)
+            if(terms == null)
                 throw new ApplicationException("Term not found");
             
             terms.Name = term.Name;

@@ -2,10 +2,10 @@
 
     <div class="card card-default">
             <div class="card-header">
-                <h3 class="panel-title">My Result</h3>
+                <h5 class="panel-title">My Result</h5>
             </div>
             <div class="card-body">
-                <div class="alert alert-info" role="alert">Please select the Term, for which you want to see your result.</div>
+                <div class="alert alert-info" role="alert">Please select the Term, for which you want to check result.</div>
                 <div class="form-group col-md-4 offset-md-4 " >
                         <select class="form-control"   [(ngModel)]="yea" name="yea" >
                           <option value="Select Term" >Select Term </option>
@@ -24,22 +24,28 @@
 
   <div *ngIf="subjects" >
   <table class="table  table-hover table-striped">
-      <thead>
-          <tr>
-              <th>Subject</th>
-              <th>1st CA</th>
-              <th>2nd CA</th>
-              <th>Exam</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let sub of subjects">
-              <td>{{sub.name}}</td>
-              <td>{{sub.cA1}}</td>
-              <td>{{sub.cA2}}</td>
-              <td>{{sub.exam}}</td>
-          </tr>
-      </tbody>
+        <thead>
+                <tr>
+                    <th>SUBJECT</th>
+                    <th>1ST ASGMT</th>
+                    <th>2ND ASGMT</th>
+                    <th>1ST CA</th>
+                    <th>2ND CA</th>
+                    <th>EXAM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sub of subjects">
+                    <td>{{sub.name}}</td>
+                    <td>{{sub.ass1}}</td>
+                    <td>{{sub.ass2}}</td>
+                    <td>{{sub.cA1}}</td>
+                    <td>{{sub.cA2}}</td>
+                    <td>{{sub.exam}}</td>
+                </tr>
+            </tbody>
   </table>
 </div>
   </div>
+
+</div>

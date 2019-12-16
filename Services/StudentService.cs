@@ -60,7 +60,6 @@ namespace PROJECT.Repository
             student.PasswordHash = passwordHash;
             student.PasswordSalt = passwordSalt;
             student.Session = context.Session.Last();
-            // student.Term = context.Terms.FirstOrDefault();
             student.FileName = "avatar.jpg";
             context.Students.Add(student);
 
@@ -119,8 +118,6 @@ namespace PROJECT.Repository
             }
 
             // update user properties
-
-
             students.UserName = student.UserName;
             students.Address = student.Address;
             students.FirstName = student.FirstName;
@@ -128,6 +125,19 @@ namespace PROJECT.Repository
             students.DateOfBirth = student.DateOfBirth;
             students.SexId = student.SexId;
             students.GradeId = student.GradeId;
+            students.HairColor = student.HairColor;
+            students.Country = student.Country;
+            students.state = student.state;
+            students.LGA = student.LGA;
+            students.GenoTypeId = student.GenoTypeId;
+            students.NKName = student.NKName;
+            students.NKPhoneNumber = student.NKPhoneNumber;
+            students.NKAddress = student.NKAddress;
+            students.NKRelationshipId = student.NKRelationshipId;
+            students.ReligionId = student.ReligionId;
+            students.BloodGroupId = student.BloodGroupId;
+
+
 
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
@@ -238,6 +248,30 @@ namespace PROJECT.Repository
                                     .Include(t => t.Terms)
                                     .ThenInclude(st => st.Term)
                                     .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+
+        public string GenerateRRR()
+        {
+            string RrrLength = "12";
+            
+                string rrr = "";
+            
+                string allowedChars = "";           
+            
+                allowedChars = "1,2,3,4,5,6,7,8,9,0";   
+                char[] sep = { ',' };
+                string[] arr = allowedChars.Split(sep);
+                string IDString = "";
+                string temp = "";
+                Random rand = new Random(); 
+                for (int i = 0; i < Convert.ToInt32(RrrLength); i++)
+                {
+                    temp = arr[rand.Next(0, arr.Length)];
+                    IDString += temp;
+                    rrr = IDString;          
+                }
+                    return rrr;
         }
     }
 }

@@ -1,3 +1,4 @@
+import { JwtHelper } from 'angular2-jwt';
 import { AuthenticationService } from './../Services/authentication.service';
 import { UserService } from './../Services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,6 +17,14 @@ staff ={};
       this.staff = data;
     });
   
+  }
+
+  get user() {
+    let token = localStorage.getItem('token');
+    if(!token) return null;
+
+    return new JwtHelper().decodeToken(token);
+
   }
 
  

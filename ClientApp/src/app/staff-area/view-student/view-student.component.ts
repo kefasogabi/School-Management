@@ -7,7 +7,6 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../../Services/user.service';
 import { ResultComponent } from '../../student-area/result/result.component';
 import { ResultService } from '../../Services/result.service';
-import { AlertService } from '../../Services/alert.service';
 import { Student } from '../../models/student.model';
 import { Term } from '../../models/user.model';
 
@@ -41,10 +40,10 @@ export class ViewStudentComponent implements OnInit {
     password:"",
     country:"",
     state:"",
-    lGA:"",
+    lga:"",
     hairColor:"",
     nkName:"",
-    nkPhone: "",
+    nkPhoneNumber: "",
     nkAddress:"",
     sex: {
       id: 0,
@@ -90,7 +89,6 @@ export class ViewStudentComponent implements OnInit {
               private route: ActivatedRoute, 
               private resultService: ResultService,
               private userService: UserService,
-              private alertService: AlertService,
               private toastr: ToastrService) {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) this.studentService.getById(id).take(1).subscribe( (data:any) => {
@@ -140,8 +138,7 @@ changePassword(form: NgForm){
     this.loading = false;
   },error => {
     if(error.status == 400)
-    this.alertService.error(error._body);
-    // this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
+    this.toastr.error(error._body, 'Error');
     this.loading = false;
   });
 }
@@ -162,7 +159,7 @@ postTerm(body){
     this.toastr.success('Term Added successfully', 'Success');
     this.load = false;
 }, error => {
-  this.alertService.error(error._body);
+  this.toastr.error(error._body, 'Error');
 }); 
 }
 

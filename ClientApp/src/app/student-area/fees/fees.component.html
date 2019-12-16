@@ -1,0 +1,28 @@
+
+<div style="margin-top: 20px;" class="col-md-10 offset-md-1">
+
+  <div class="card card-default">
+          <div class="card-header">
+              <h5 class="panel-title">Student School Fee</h5>
+          </div>
+          <div class="card-body">
+              <div class="alert alert-info" role="alert">Please select the academic term, for which you want to pay school fee.</div>
+              <div class="form-group col-md-4 offset-md-4 " >
+                      <select class="form-control"   [(ngModel)]="yea" name="yea" >
+                        <option value="Select Term" >Select</option>
+                        <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
+                    </select>
+                  </div>
+          </div>
+          <div class="card-footer">
+              <button  class="btn btn-success float-right"><span class="fas fa-search"></span> GET FEE DETAILS</button>
+          </div>
+</div>
+<div style="margin-top:20px;" class="" >
+  
+  
+
+
+</div>
+
+</div>

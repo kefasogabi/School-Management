@@ -1,7 +1,6 @@
 import { DashboardService } from './../../Services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
-import 'rxjs/add/Observable/forkJoin';
 import { Observable } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 
@@ -28,8 +27,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
+ 
 
-    let sources = [ 
+    let sources = [
       this.dashBoard.getBoys(),
       this.dashBoard.getGirls(),
       this.dashBoard.getStudents(),
@@ -39,8 +39,10 @@ export class DashboardComponent implements OnInit {
       this.dashBoard.getGradeMale(),
       this.dashBoard.getGradeFemale()
      ];
-     this.spinner.show();
+     
      Observable.forkJoin(sources).subscribe(data => {
+        this.spinner.show();
+        
       this.boys = data[0];
       this.girls = data[1];
       this.students = data[2];
@@ -49,6 +51,8 @@ export class DashboardComponent implements OnInit {
       let staffGenders:any[] = data[5];
       this.gradeMale = data[6];
       this.gradeFemale = data[7];
+
+      this.spinner.hide();
 
 
       this.BarChart = new Chart('barChart', {
@@ -177,10 +181,9 @@ this.BarChart3 = new Chart('barChart3', {
 
      });
 
-    //  setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-    //   }, 5000);
+   
+        
+  
 
   }
 

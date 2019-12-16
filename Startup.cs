@@ -36,11 +36,15 @@ namespace PROJECT
 
           
 
-             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+             services.AddDbContext<ApplicationDbContext>
+             (options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+
+        
+
 
             services.AddAutoMapper();
             services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();

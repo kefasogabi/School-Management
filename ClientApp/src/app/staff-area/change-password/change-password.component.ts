@@ -22,10 +22,6 @@ loading = false;
               ) {}
 
   ngOnInit() {
-    // this.userService.getPassword().subscribe((data: any) => {
-    //   this.staff = data;
-    //   console.log("User", data)
-    // })
   }
 
   submit(form: NgForm){

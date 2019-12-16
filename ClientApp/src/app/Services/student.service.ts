@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Student, changePassword } from '../models/student.model';
+import { Student, changePassword, SaveStudent } from '../models/student.model';
 
 @Injectable()
 export class StudentService {
@@ -17,12 +17,12 @@ getById(id) {
     return this.http.get( '/api/student/' + id, this.jwt()).map((response: Response) => response.json());
 }
 
-create(student: Student) {
-    return this.http.post('/api/Register', student, this.jwt());
+create(student: SaveStudent) {
+    return this.http.post('/api/Register', student, this.jwt()).map((response: Response) => response.json());
 }
 
 update(student: Student) {
-    return this.http.put( '/api/student/' + student.id, student, this.jwt());
+    return this.http.put( '/api/student/' + student.id, student, this.jwt()).map((response: Response) => response.json());
 }
 
 delete(id: number) {
@@ -57,5 +57,5 @@ changePassword(student: Student){
         let headers = new Headers({ 'Authorization': 'Bearer ' + token});
         return new RequestOptions({ headers: headers });
     }
-}
+};
 }

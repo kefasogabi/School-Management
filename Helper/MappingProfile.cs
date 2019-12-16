@@ -13,7 +13,7 @@ namespace PROJECT.Helper
             .ForMember(sd => sd.Terms, opt => opt.MapFrom(s => s.Terms
             .Select(st => new Pair {Id = st.Term.Id, Name = st.Term.Name})))
             .ForMember(sr => sr.Results, opt => opt.MapFrom( r => r.Results
-            .Select(rt => new ResultDto { Id = rt.Id, Year = rt.Year, Name = rt.Name, CA1 = rt.CA1, CA2 = rt.CA2, Exam = rt.Exam, StudentId = rt.StudentId })));
+            .Select(rt => new ResultDto { Id = rt.Id, Year = rt.Year, Name = rt.Name, Ass1 = rt.Ass1, Ass2 = rt.Ass2, CA1 = rt.CA1, CA2 = rt.CA2, Exam = rt.Exam, StudentId = rt.StudentId })));
             CreateMap<StudentDto, Student>();
 
              CreateMap<Sex, SexDto>();

@@ -1,3 +1,4 @@
+import { KeyValuePair } from './../models/student.model';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions,  Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -19,25 +20,23 @@ export class UserService {
   }
 
   update(user: User){
-    return this.http.put('/Account/Update/'+ user.id, user, this.jwt());
+    return this.http.put('/Account/Update/'+ user.id, user, this.jwt()).map((response: Response) => response.json());
   }
 
   uploadImage( photo: File){
-    var formData = new FormData();
+    let formData = new FormData();
     formData.append('file', photo);
-
     return this.http.post('/api/upload', formData, this.jwt());
   }
 
   uploadimage(id, photo: File){
-    var formData = new FormData();
+    let formData = new FormData();
     formData.append('file', photo);
-
     return this.http.post('/api/staffUpload/' + id, formData, this.jwt());
   }
 
   create(user: User){
-    return this.http.post('/Account/Register', user, this.jwt());
+    return this.http.post('/Account/Register', user, this.jwt()).map((response: Response) => response.json());
   }
 
   delete(id){
@@ -90,7 +89,23 @@ export class UserService {
   // }
 
   getAllRoles(){
-    return this.http.get('/Role/GetRoles', this.jwt()).map((response: Response) => response.json());
+    return this.http.get('/api/GetRoles', this.jwt()).map((response: Response) => response.json());
+  }
+
+  getRole(id){
+    return this.http.get('/api/GetRole/' + id, this.jwt()).map((res:Response)=> res.json());
+  }
+
+  postRole(role: KeyValuePair){
+    return this.http.post('/api/PostRole', role, this.jwt());
+  }
+
+  updateRole(role: KeyValuePair){
+    return this.http.put('/api/updateRole/' + role.id, role, this.jwt());
+  }
+
+  deleteRole(id){
+    return this.http.delete('/api/DeleteRole/' + id, this.jwt());
   }
 
   private jwt() {

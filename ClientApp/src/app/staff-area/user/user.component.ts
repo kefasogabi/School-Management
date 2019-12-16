@@ -2,7 +2,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DataTableResource } from 'angular-4-data-table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataTableDirective } from 'angular-datatables';
 import { UserService } from '../../Services/user.service';
@@ -70,7 +69,6 @@ export class UserComponent implements OnInit {
   private loadAllUsers(){
     this.userService.getAll().subscribe( data =>{
       this.users = data;
-     
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         // Destroy the table first
         dtInstance.destroy();

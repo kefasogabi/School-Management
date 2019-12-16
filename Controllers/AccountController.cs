@@ -62,11 +62,6 @@ namespace PROJECT.Controllers
             public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
             {
                
-               if(!ModelState.IsValid)
-               {
-                   return BadRequest(ModelState);
-               }
-
                bool x = await roleManager.RoleExistsAsync("Admin");
                 if (!x)
                 {
@@ -145,6 +140,7 @@ namespace PROJECT.Controllers
                         return BadRequest("Email " + model.Email + " is already taken");
                     }
                 }
+                
                 // update user property
                 user.Email = model.Email;
                 user.UserName = model.Email;
@@ -152,6 +148,18 @@ namespace PROJECT.Controllers
                 user.LastName = model.LastName;
                 user.Address = model.Address;
                 user.DateOfBirth = model.DateOfBirth;
+                user.SexId = model.SexId;
+                user.HairColor = model.HairColor;
+                user.Country = model.Country;
+                user.state = model.state;
+                user.LGA = model.LGA;
+                user.GenoTypeId = model.GenoTypeId;
+                user.NKName = model.NKName;
+                user.NKPhoneNumber = model.NKPhoneNumber;
+                user.NKAddress = model.NKAddress;
+                user.NKRelationshipId = model.NKRelationshipId;
+                user.ReligionId = model.ReligionId;
+                user.BloodGroupId = model.BloodGroupId;
 
                await userManager.UpdateAsync(user);
               
@@ -246,6 +254,9 @@ namespace PROJECT.Controllers
                         Subject = new ClaimsIdentity(new Claim[]
                         {
                             new Claim(ClaimTypes.Name,user.Id.ToString()),
+                            new Claim(ClaimTypes.GivenName,user.FirstName.ToString()),
+                            new Claim(ClaimTypes.NameIdentifier,user.LastName.ToString()),
+                            new Claim(ClaimTypes.Hash,user.FileName.ToString()),
                             new Claim(_options.ClaimsIdentity.RoleClaimType,role.FirstOrDefault())
                         }),
                         Expires = DateTime.UtcNow.AddDays(7),
@@ -266,10 +277,12 @@ namespace PROJECT.Controllers
 
 
             [Authorize(Roles = RoleName.Admin)]
+            [AllowAnonymous]
             [HttpGet]
            public async Task<IActionResult> GetAll()
            {
                var users = await userManager.Users.ToListAsync();
+               
                return Ok(users);
            } 
 
@@ -277,13 +290,15 @@ namespace PROJECT.Controllers
             [HttpGet("{id}")]
            public async Task<IActionResult> GetById(string id)
            {
+               
                var user = await userManager.Users.Include(s => s.Sex)
                                                     .Include(b => b.BloodGroup)
                                                     .Include(g => g.GenoType)
                                                     .Include(n => n.NKRelationship)
                                                     .Include(r => r.Religion)
                                                     .SingleOrDefaultAsync(c => c.Id == id);
-
+                                                    
+                
                if(user == null)
                {
                    return NotFound();

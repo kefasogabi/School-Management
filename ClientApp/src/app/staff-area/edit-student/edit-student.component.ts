@@ -5,7 +5,9 @@ import 'rxjs/add/operator/take';
 import { ActivatedRoute } from '@angular/router';
 import { StudentService } from '../../Services/student.service';
 import { NgForm } from '@angular/forms';
-import { EditStudent } from '../../models/student.model';
+import { EditStudent, SaveStudent } from '../../models/student.model';
+import { Observable } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -15,66 +17,101 @@ import { EditStudent } from '../../models/student.model';
   styleUrls: ['./edit-student.component.css']
 })
 export class EditStudentComponent implements OnInit {
-student = {
-  id:0,
+student:SaveStudent = {
+    id:0,
     firstName: "",
     lastName: "",
     userName: "",
     dateOfBirth: "",
     address: "",
-    sex: {
-      id: 0,
-      name: ""
-    },
-    grade: {
-      id: 0,
-      name: ""
-    }
+    sexId: null ,
+    gradeId: null,
+    password:"",
+    country:"",
+    state:"",
+    lga:"",
+    genoTypeId: null,
+    bloodGroupId: null,
+    religionId: null,
+    hairColor:"",
+    nkName:"",
+    nkPhoneNumber:"",
+    nkRelationshipId: null,
+    nkAddress:"",
 };
 sex: any[];
-  grade: any[];
-
+grade: any[];
+bloodGroup: any[];
+genoType: any[];
+religion: any[];
+nkRelationship: any[];
 
   constructor(private studentService: StudentService,
               private universalService: UniversalService,
               private route: ActivatedRoute,
+              private spinner: NgxSpinnerService,
               private toastr: ToastrService) {
+                route.params.subscribe(p => {
+                  this.student.id = +p['id'] || 0;
+                });
     
    }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    if (id) this.studentService.getById(id).take(1).subscribe(data => {
-      
-      this.student = data; console.log(this.student)
-    });
 
+     let sources = [
+      this.universalService.getSex(),
+      this.studentService.getGrade(),
+      this.universalService.getBloodGroup(),
+      this.universalService.getGenoType(),
+      this.universalService.getReligion(),
+      this.universalService.getNextKin(),
+      this.studentService.getById(this.student.id).take(1),
+  
+    ];
 
-    this.universalService.getSex().subscribe( sex => {
-      this.sex = sex;
-    });
+    Observable.forkJoin(sources).subscribe(data =>{
+      this.sex = data[0];
+      this.grade = data[1];
+      this.bloodGroup = data[2];
+      this.genoType = data[3];
+      this.religion = data[4];
+      this.nkRelationship = data[5];
+      this.setStudent(data[6]);
 
-    this.studentService.getGrade().subscribe( data => {
-      this.grade = data;
     });
+   
+   
   }
 
   update(form: NgForm){
+    this.spinner.show();
     this.studentService.update(form.value).subscribe( data => {
       this.toastr.success('Updated Successfully', 'Student');
-      console.log("Data",data);
+      this.spinner.hide();
     });
   }
 
-  // private setStudent(s: EditStudent){
-  //   this.student.id = s.id;
-  //   this.student.firstName = s.firstName;
-  //   this.student.lastName = s.lastName;
-  //   this.student.userName = s.userName;
-  //   this.student.dateOfBirth = s.dateOfBirth;
-  //   this.student.address = s.address;
-  //   this.student.sexId = s.sex.id;
-  //   this.student.gradeId = s.grade.id;
-  // }
+  private setStudent(s: EditStudent){
+    this.student.id = s.id;
+    this.student.firstName = s.firstName;
+    this.student.lastName = s.lastName;
+    this.student.userName = s.userName;
+    this.student.dateOfBirth = s.dateOfBirth;
+    this.student.address = s.address;
+    this.student.sexId = s.sex.id;
+    this.student.gradeId = s.grade.id;
+    this.student.country = s.country;
+    this.student.state = s.state;
+    this.student.lga = s.lga;
+    this.student.nkName = s.nkName;
+    this.student.nkPhoneNumber = s.nkPhoneNumber;
+    this.student.nkRelationshipId = s.nkRelationship.id;
+    this.student.nkAddress = s.nkAddress;
+    this.student.hairColor = s.hairColor;
+    this.student.bloodGroupId = s.bloodGroup.id;
+    this.student.religionId = s.religion.id;
+    this.student.genoTypeId = s.genoType.id;
+  }
 
 }

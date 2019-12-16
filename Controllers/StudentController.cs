@@ -86,24 +86,18 @@ namespace PROJECT.Controllers
 
         [Authorize(Roles = RoleName.Admin)]
         [HttpPost("/api/Register")]
-        public async Task<IActionResult> Register([FromBody]StudentDto studentDto)
+        public IActionResult Register([FromBody]StudentDto studentDto)
         {
-               if(!ModelState.IsValid)
-               {
-                   return BadRequest(ModelState);
-               }
-            // map dto to entity
-            var student = mapper.Map<Student>(studentDto);
-
-            try 
-            {
-               
+           
+            try{
+                 // map dto to entity
+                var student = mapper.Map<Student>(studentDto);
                 // save 
                 studentService.Create(student, studentDto.Password  );
-                await unitOfWork.CompleteAsync();
-                return Ok(student);
-            } 
-            catch(AppException ex)
+                unitOfWork.CompleteAsync();
+                return Ok(student); 
+            }
+             catch(AppException ex)
             {
                 // return error message if there was an exception
                 return BadRequest(ex.Message);
@@ -198,7 +192,7 @@ namespace PROJECT.Controllers
         {
             var userId = caller.Claims.Single(c => c.Type == ClaimTypes.Name);
             
-           var student = await studentService.GetProfile(Convert.ToInt32(userId.Value));
+           var student = await studentService.GetByIdAsync(Convert.ToInt32(userId.Value));
            var studentDto = mapper.Map<StudentDto>(student);
             
             return Ok(studentDto );

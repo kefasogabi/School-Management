@@ -5,7 +5,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../Services/user.service';
-import { User } from '../../models/user.model';
+import { User, saveUser } from '../../models/user.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -17,23 +18,12 @@ import { User } from '../../models/user.model';
 })
 export class StaffRegisterComponent implements OnInit {
 
-  // model: User = {
-  //   id: 0,
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   dateOfBirth: '',
-  //   address: '',
-  //   password:'',
-  //   role:0,
-  //   fileName: '',
-  // };
 
   model = {};
  
   loading = false;
   roles : any[];
-  user: User;
+  user: saveUser;
   sex: any[];
   bloodGroups: any[];
   genoTypes: any[];
@@ -44,6 +34,7 @@ export class StaffRegisterComponent implements OnInit {
   constructor( private userService: UserService,
                private universalService: UniversalService,
                private router: Router,
+               private spinner: NgxSpinnerService,
                private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -77,46 +68,44 @@ let sources = [
   }
 
   register(form: NgForm) {
-//    var x = this.roles.filter(x => x.selected).map(y => y.name);
-    this.userService.create(form.value)
-        .subscribe(
-            (data: any) => {
-                // this.resetForm(form);
-                
-                this.toastr.success('Registration successful', 'Success');
-            },
-            error => {
-                this.toastr.error(error._body, 'Error');
-              });
+        this.spinner.show();
+        this.userService.create(form.value).subscribe(data => {
+        this.resetForm(form);
+        this.toastr.success('Registration successful', 'Success');
+        this.spinner.hide();
+        },
+        error => {
+            this.toastr.error(error._body, 'Error');
+            this.spinner.hide();
+        });
 }
 
-        // updateSelectedRoles(index){
-        //     this.roles[index].selected = !this.roles[index].selected;
-        // }
 
-        // onRoleToggle(roleId, $event){
-        //     if($event.target.checked)
-        //     this.model.role.push(roleId);
-        //     else{
-        //         var index = this.model.role.indexOf(roleId);
-        //         this.model.role.splice(index, 1);
-        //     }
-
-        // }
-
-        // resetForm(form? : NgForm){
-            
-        //     if(form != null)
-        //     form.reset();
-        //     this.user ={
-        //     id: null,
-        //     firstName: '',
-        //     lastName: '',
-        //     email: '',
-        //     address: '',
-        //     dateOfBirth: '',
-        //     password: '',
-        //     }
-        // }
+      resetForm(form? : NgForm){
+        if(form != null)
+        form.reset();
+        this.user = {
+        id: 0,
+        firstName: '',
+        lastName: '',
+        email: '',
+        address: '',
+        dateOfBirth: '',
+        role: '',
+        country:'',
+        state: '',
+        lga:'',
+        sexId: null,
+        genoTypeId: null,
+        bloodGroupId: null,
+        religionId: null,
+        nkName:'',
+        nkAddress:'',
+        nkPhoneNumber:'',
+        hairColor:'',
+        nkRelationshipId: null,
+        password: '',
+        }
+      }
 
 }

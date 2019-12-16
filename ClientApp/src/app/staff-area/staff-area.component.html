@@ -14,7 +14,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div *ngIf="authService.isLoggedIn()" class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="/uploads/{{staff.fileName}}" class="img-circle elevation-2" alt="User Image">
         </div>
@@ -81,7 +81,7 @@
                 <a [routerLink]='["/results"]' class="nav-link">
                   <i class="nav-icon far fa-list-alt"></i>
                   <p>
-                    RESULTS
+                    QUICK ACTION
                   </p>
                 </a>
               </li>
@@ -93,6 +93,30 @@
                     </p>
                   </a>
                 </li>
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-chart-pie"></i>
+                  <p>
+                    ROLE
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="pages/charts/chartjs.html" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Add Role</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a [routerLink]='["/roles"]' class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Manage Role</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -108,7 +132,6 @@
           <div class="row">
             <div class="col-12 back">
                 <div class="">
-                    <app-alert></app-alert>
                   </div>
               <router-outlet></router-outlet>
             </div>

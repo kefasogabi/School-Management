@@ -1,5 +1,10 @@
 import { ChangePassword } from './user.model';
 
+export interface KeyValuePair { 
+    id: number; 
+    name: string; 
+  }
+
 export class Student {
     id: any;
     firstName: string;
@@ -8,20 +13,20 @@ export class Student {
     fileName:string;
     dateOfBirth: string;
     address: string;
-    sex :{id:any, name:string};
-    grade :{id:any, name:string};
-    session:{id:any, name:string};
+    sex :KeyValuePair;
+    grade :KeyValuePair;
+    session:KeyValuePair;
     password:any;
     country:string;
     state:string;
-    lGA:string;
-    genoType:{id:any, name:string};
-    bloodGroup:{id:any, name:string};
-    religion:{id:any, name:string};
+    lga:string;
+    genoType:KeyValuePair;
+    bloodGroup:KeyValuePair;
+    religion:KeyValuePair;
     hairColor:string;
     nkName:string;
-    nkPhone: string;
-    nkRelationship:{id:any, name:string};
+    nkPhoneNumber: string;
+    nkRelationship:KeyValuePair;
     nkAddress:string;
     results:any[];
     terms:any[]
@@ -34,20 +39,19 @@ export class SaveStudent {
     userName: string;
     dateOfBirth: string;
     address: string;
-    sex :{id:any, name:string};
-    grade :{id:any, name:string};
-    // session:{id:any, name:string};
+    sexId :any;
+    gradeId :any;
     password:any;
     country:string;
     state:string;
-    lGA:string;
-    genoType:{id:any, name:string};
-    bloodGroup:{id:any, name:string};
-    religion:{id:any, name:string};
+    lga:string;
+    genoTypeId:any;
+    bloodGroupId:any;
+    religionId:any;
     hairColor:string;
     nkName:string;
-    nkPhone: string;
-    nkRelationship:{id:any, name:string};
+    nkPhoneNumber: string;
+    nkRelationshipId:any;
     nkAddress:string;
 }
 
@@ -74,15 +78,25 @@ export class Login{
 
 
 export class Result{
-
-
-    id:any;
+    id: any;
     name: string;
+    ass1: string;
+    ass2: string;
     cA1: string;
     cA2: string;
     exam: string;
     year: string;
-    studentId:any;
+    studentId: any;
+}
+
+export class resetResult{
+    id: any;
+    name: string;
+    ass1: string;
+    ass2: string;
+    cA1: string;
+    cA2: string;
+    exam: string;
 }
 
 export class changePassword{
@@ -91,13 +105,26 @@ export class changePassword{
 }
 
 export class EditStudent{
-    id:any;
+    id: any;
     firstName: string;
     lastName: string;
     userName: string;
     dateOfBirth: string;
     address: string;
-    fileName: string;
-    sex :{id:any, name:string};
-    grade :{id:any, name:string};
+    sex :KeyValuePair;
+    grade :KeyValuePair;
+    session:KeyValuePair;
+    password:any;
+    country:string;
+    state:string;
+    lga:string;
+    genoType:KeyValuePair;
+    bloodGroup:KeyValuePair;
+    religion:KeyValuePair;
+    hairColor:string;
+    nkName:string;
+    nkPhoneNumber: string;
+    nkRelationship:KeyValuePair;
+    nkAddress:string;
+
 }

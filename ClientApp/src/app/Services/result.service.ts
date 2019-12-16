@@ -16,8 +16,20 @@ export class ResultService {
      return this.http.post('/api/PostResult', result, this.jwt());
  }
 
+ getResult(id){
+     return this.http.get('/api/getresult/' + id, this.jwt()).map(res => res.json());
+ }
+
  getStudent(name){
-     return this.http.get('/api/Getstudent/' + name, this.jwt()).map((res:Response) => res.json());
+     return this.http.get('/api/Getstudent/' + name, this.jwt()).map(res => res.json());
+ }
+
+ updateReault(result: Result){
+     return this.http.put('/api/updateresult/' + result.id, result, this.jwt()).map(res => res.json());
+ }
+
+ deleteResult(id){
+     return this.http.delete('/api/deleteresult/' + id, this.jwt()).map(res => res.json());
  }
 
 

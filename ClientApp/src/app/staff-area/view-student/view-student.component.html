@@ -68,6 +68,10 @@
                                       <td>Gender</td>
                                       <td>{{student.sex.name}}</td>
                                     </tr>
+                                    <tr>
+                                        <td>Entry Session</td>
+                                        <td>{{student.session.name}}</td>
+                                      </tr>
                         </tbody>
                       </table>
     
@@ -143,43 +147,47 @@
                                   <div class="row">
                                       <div class="col-3">
                                         <div class="nav flex-column nav-tabs" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                                          <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">View Result</a>
-                                          <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Upload Result</a>
-                                          <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">Change Password</a>
+                                          <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">VIEW RESULT</a>
+                                          <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">UPLOAD RESULT</a>
+                                          <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">RESET PASSWORD</a>
                                         </div>
                                       </div>
                                       <div class="col-9">
                                         <div class="tab-content" id="vert-tabs-tabContent">
                                           <div class="tab-pane fade show active" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                                              
-                                              <h2 align="center">RESULT</h2>
-    
-                                              <div class=" ">
-                                                <div style="margin-top:20px;" class="" >
-                                              <div class="form-group col-md-4 offset-md-4" >
-                                                <select class="form-control" (change)="onYearChange()"  [(ngModel)]="yea" name="yea" >
-                                                  <option >Select Term </option>
-                                                  <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
-                                              </select>
-                                              <!-- <div class="validation-error" *ngIf="year.touched && year.invalid">Please Select Term</div> -->
-                                            </div>
-
-                                          </div>
-                                        </div>
+                                              <div class="card card-default">
+                                                  <div class="card-body">
+                                                      <div class="alert alert-info" role="alert">Please select the Term, for which you want to see your result.</div>
+                                                      <div class="form-group col-md-4 offset-md-4 " >
+                                                              <select class="form-control"   [(ngModel)]="yea" name="yea" >
+                                                                <option value="Select Term" >Select Term </option>
+                                                                <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
+                                                            </select>
+                                                          </div>
+                                                  </div>
+                                                  <div class="card-footer">
+                                                      <button (click)="onYearChange()" class="btn btn-success float-right"><span class="fas fa-search"></span> Search</button>
+                                                  </div>
+                                      </div>
               
                                             <div *ngIf="subjects" >
                                             <table class="table  table-hover table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>Subject</th>
-                                                        <th>1st CA</th>
-                                                        <th>2nd CA</th>
-                                                        <th>Exam</th>
+                                                        <th>SUBJECT</th>
+                                                        <th>1ST ASGMT</th>
+                                                        <th>2ND ASGMT</th>
+                                                        <th>1ST CA</th>
+                                                        <th>2ND CA</th>
+                                                        <th>EXAM</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let sub of subjects">
                                                         <td>{{sub.name}}</td>
+                                                        <td>{{sub.ass1}}</td>
+                                                        <td>{{sub.ass2}}</td>
                                                         <td>{{sub.cA1}}</td>
                                                         <td>{{sub.cA2}}</td>
                                                         <td>{{sub.exam}}</td>
@@ -191,9 +199,6 @@
 
                                           </div>
                                           <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
-                                            
-
-                                              <h2 align="center">Upload result form</h2>
                                               <div class=" ">
                                                 <div style="margin-top:20px;" class="" >
               
@@ -253,26 +258,34 @@
                                                                 <div class="validation-error" *ngIf="year.touched && year.invalid">Please Select Term</div>
                                                             </div>
                                                             <div class="row">
-                                                            <div class=" col-2" >
-                                                              <input type="text" class="form-control" name="name" [(ngModel)]="result.name" #name="ngModel" placeholder="Subject" required />
-                                                              <div *ngIf="name.touched && name.invalid"  class="validation-error">Subject is required</div>
+                                                                <div class="form-group col-md-2" >
+                                                                  <input type="text" class="form-control" name="name" [(ngModel)]="result.name" #name="ngModel" placeholder="Subject" required />
+                                                                  <div *ngIf="name.touched && name.invalid"  class="validation-error">Subject is required</div>
+                                                              </div>
+                                                              <div class="form-group col-md-2" >
+                                                                  <input type="text" class="form-control" name="ass1" [(ngModel)]="result.ass1" #ass1="ngModel" placeholder="1st ASS" required />
+                                                                  <div *ngIf="ass1.touched && ass1.invalid"  class="validation-error">1st Assignment is required</div>
+                                                              </div>
+                                                              <div class="form-group col-md-2" >
+                                                                  <input type="text" class="form-control" name="ass2" [(ngModel)]="result.ass2" #ass2="ngModel" placeholder="2nd ASS" required />
+                                                                  <div *ngIf="ass2.touched && ass2.invalid"  class="validation-error">2nd Assignment is required</div>
+                                                              </div>
+                                                              <div class="form-group col-md-2" >
+                                                                <input type="text" class="form-control" name="cA1" [(ngModel)]="result.cA1" #cA1="ngModel" placeholder="1st CA" required />
+                                                                <div *ngIf="cA1.touched && cA1.invalid"  class="validation-error">1st CA is required</div>
+                                                            </div>
+                                                            <div class="form-group col-md-2" >
+                                                              <input type="text" class="form-control" name="cA2" [(ngModel)]="result.cA2" #cA2="ngModel" placeholder="2nd CA" required />
+                                                              <div *ngIf="cA2.touched && cA2.invalid"  class="validation-error">2nd CA is required</div>
                                                           </div>
-                                                          <div class=" col-2" >
-                                                            <input type="text" class="form-control" name="cA1" [(ngModel)]="result.cA1" #cA1="ngModel" placeholder="1st CA" required />
-                                                            <div *ngIf="cA1.touched && cA1.invalid"  class="validation-error">1st CA is required</div>
+                                                          <div class="form-group col-md-1" >
+                                                            <input type="text" class="form-control" name="exam" [(ngModel)]="result.exam" #exam="ngModel" placeholder="Exam" required />
+                                                            <div *ngIf="exam.touched && exam.invalid"  class="validation-error">Exam is required</div>
                                                         </div>
-                                                        <div class=" col-2" >
-                                                          <input type="text" class="form-control" name="cA2" [(ngModel)]="result.cA2" #cA2="ngModel" placeholder="2nd CA" required />
-                                                          <div *ngIf="cA2.touched && cA2.invalid"  class="validation-error">2nd CA is required</div>
-                                                      </div>
-                                                      <div class=" col-md-2" >
-                                                        <input type="text" class="form-control" name="exam" [(ngModel)]="result.exam" #exam="ngModel" placeholder="Exam" required />
-                                                        <div *ngIf="exam.touched && exam.invalid"  class="validation-error">Exam is required</div>
-                                                    </div>
-                                                    <div class=" col-md-2">
-                                                      <button [disabled]="!result.valid" class="btn btn-primary">Add</button>
-                                                    </div>
-                                                  </div> 
+                                                        <div class="form-group col-md-1">
+                                                          <button [disabled]="!result.valid" class="btn btn-primary btn-block">Add</button>
+                                                        </div>
+                                                      </div> 
                                                         </form>
                                                       </div>
               
@@ -282,9 +295,7 @@
 
                                           </div>
                                           <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
-                                             
-
-                                              <h2 align="center">Change Password</h2>
+  
                                               <div class="row">
                                                 <div style="margin-top:20px;" class="col-md-4 offset-md-4" >
                                                     <form name="form" (ngSubmit)="changePassword(f)" #f="ngForm" novalidate>

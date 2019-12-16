@@ -9,6 +9,10 @@ namespace PROJECT.Interface
          void Create(StudentTerm studentTerm);
          void Save(Result result);
         Task<Student> GetStudent(string name);
+        Result GetById(int id);
+        void Update(Result result);
+        void Delete(int id);
+        // Task<Result> GetUserResult(Result result);
         
     }
 }

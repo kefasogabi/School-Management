@@ -1,5 +1,4 @@
 import { AdminAuthGuard } from './authguard/adminauthguard';
-import { AlertService } from './Services/alert.service';
 import { UniversalService } from './Services/universal.service';
 import { AuthenticationService } from './Services/authentication.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { Http, HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { UserService } from './Services/user.service';
-import { AppErrorHandler } from './app.error-handler';
+import { AppErrorHandler } from './app-error-handler';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StaffAuthGuard } from './authguard/staffauthguard';
@@ -37,7 +36,6 @@ import { StudentChangepasswordComponent } from './student-area/student-changepas
 import { SessionComponent } from './staff-area/session/session.component';
 import { ResultComponent } from './student-area/result/result.component';
 import { ResultService } from './Services/result.service';
-import { AlertComponent } from './alert/alert.component';
 import { StudentLoginComponent } from './student-login/student-login.component';
 import { StaffLoginComponent } from './staff-login/staff-login.component';
 import { StudentBarComponent } from './student-area/student-bar/student-bar.component';
@@ -47,6 +45,8 @@ import { DashboardService } from './Services/dashboard.service';
 import { ResultsComponent } from './staff-area/results/results.component';
 import { StaffFooterComponent } from './staff-area/staff-footer/staff-footer.component';
 import { AuthGuard } from './authguard/authguard';
+import { FeesComponent } from './student-area/fees/fees.component';
+import { RoleComponent } from './staff-area/role/role.component';
 
 
 
@@ -77,12 +77,13 @@ import { AuthGuard } from './authguard/authguard';
     StudentChangepasswordComponent,
     SessionComponent,
     ResultComponent,
-    AlertComponent,
     StudentBarComponent,
     StaffBarComponent,
     DashboardComponent,
     ResultsComponent,
     StaffFooterComponent,
+    FeesComponent,
+    RoleComponent,
 
    
     
@@ -115,6 +116,10 @@ import { AuthGuard } from './authguard/authguard';
       {
         path: 'result', component: StudentAreaComponent,
         children: [{ path: '', component: ResultComponent, canActivate: [AuthGuard] }]
+      },
+      {
+        path: 'fees', component: StudentAreaComponent,
+        children: [{ path: '', component: FeesComponent, canActivate: [AuthGuard] }]
       },
       // Staff Area Ends Here
 
@@ -166,6 +171,10 @@ import { AuthGuard } from './authguard/authguard';
         path: 'results', component: StaffAreaComponent,
         children: [{ path: '', component: ResultsComponent, canActivate: [StaffAuthGuard]}]
       },
+      {
+        path: 'roles', component: StaffAreaComponent,
+        children: [{ path: '', component: RoleComponent, canActivate: [StaffAuthGuard]}]
+      },
 
       // Staff Area Ends Here
      
@@ -184,7 +193,6 @@ import { AuthGuard } from './authguard/authguard';
     LoaderService,
     UniversalService,
     ResultService,
-    AlertService,
     DashboardService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ],

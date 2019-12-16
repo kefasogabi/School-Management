@@ -53,7 +53,7 @@ export class SessionComponent implements OnInit {
     },
     error => {
       if(error.status == 400)
-      this.toastr.error('Uknown Error occured when processing Your Request.', 'Error');
+      this.toastr.error(error._body, 'Error');
       this.loading = false;
     });
     }

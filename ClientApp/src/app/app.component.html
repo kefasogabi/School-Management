@@ -3,17 +3,19 @@
         <div class="col-md-4 col-md-offset-4">
          
         </div>
-        <div  >
-          <router-outlet></router-outlet>
+        <div class="wrapper" >
+          <router-outlet>
+            <ngx-spinner
+            bdColor="rgba(51,51,51,0.0)"
+            size="medium"
+            color="#3498db"
+            type="ball-spin-clockwise-fade">
+           <p  style="font-size: 20px; color: black">Loading...</p>
+          </ngx-spinner>
+          </router-outlet>
         </div>
        
-       <ngx-spinner
-       bdColor="rgba(51,51,51,0.0)"
-       size="medium"
-       color="#3498db"
-       type="ball-spin-clockwise-fade">
-      <p  style="font-size: 20px; color: white">Loading...</p>
-     </ngx-spinner>
+      
     </div>
 
 

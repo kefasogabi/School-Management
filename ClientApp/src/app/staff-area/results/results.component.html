@@ -1,14 +1,13 @@
 <div style="margin-top: 20px;">
   <div class="row">
     <div class="col-md-3">
-      <form name="form" class="form-inline" (ngSubmit)="getStudent(r)" #r="ngForm" novalidate>
-        <div class="form-group mx-sm-3 mb-2">
-          <input type="text" class="form-control " [(ngModel)]="name" name="name" placeholder="Username" />
-            <!-- <div *ngIf="name.invalid && name.touched" class="validation-error">Session is required</div> -->
+      <form >
+        <div class="form-group ">
+          <input type="text" class="form-control " [(ngModel)]="uname" name="uname"  placeholder="student username" />
         </div>
-            <button type="submit" class="btn btn-primary mb-2">Search</button>
+            <button (click)="getStudent()" class="btn btn-primary btn-block "><span class="fas fa-search"></span> Search</button>
       </form>
-
+      <br>
 
        <!-- Profile Image -->
        <div *ngIf="student" class="card card-primary card-outline">
@@ -40,95 +39,246 @@
     <div class="col-md-9">
         <div *ngIf="student" class="card">
             <div class="card-body">
-        
-        <div  class=" ">
-          <div style="margin-top:20px;" class="" >
 
-            <button style="font-weight:bolder;"  data-toggle="modal" data-target="#myModal"  class="btn btn-primary btn-sm col-md-4 offset-md-4"> <i class="fa fa-floppy-o"></i> Add Term</button>
-
-
-            <!-- modal begins here -->
-            <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title" id="myModalLabel">Add new Term to student</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form name="form" class="" (ngSubmit)="setT(t)" #t="ngForm" novalidate>
-                      <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
-                    <div class="row">
-                            <div class="form-group col-md-12" > 
-                              <select class="form-control" [(ngModel)]="model.termid" name="termid" required #termid="ngModel" >
-                                  <option >Select Term </option>
-                                  <option *ngFor="let t of terms" value="{{t.id}}">{{t.name}}</option>
-                              </select>
-                              <div class="validation-error" *ngIf="termid.touched && termid.invalid">Please Select Term</div>
+                <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
+                    <li [routerLinkActive]='["link-active"]' class="nav-item">
+                      <a class="nav-link"  id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">UPLOAD RESULT</a>
+                    </li>
+                    <li [routerLinkActive]='["link-active"]' class="nav-item">
+                      <a class="nav-link"  id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">VIEW RESULT</a>
+                    </li>
+                    <li [routerLinkActive]='["link-active"]' class="nav-item">
+                      <a class="nav-link"  id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">RESET PASSWORD</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div  class=" ">
+                            <div style="margin-top:20px;" class="" >
+                  
+                              <button style="font-weight:bolder;"  data-toggle="modal" data-target="#myModal"  class="btn btn-primary btn-sm col-md-4 offset-md-4"> <i class="fa fa-floppy-o"></i> Add Term</button>
+                  
+                  
+                              <!-- modal begins here -->
+                              <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Add new Term to student</h4>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form name="form" class="" (ngSubmit)="setT(t)" #t="ngForm" novalidate>
+                                        <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
+                                      <div class="row">
+                                              <div class="form-group col-md-12" > 
+                                                <select class="form-control" [(ngModel)]="model.termid" name="termid" required #termid="ngModel" >
+                                                    <option >Select Term </option>
+                                                    <option *ngFor="let t of terms" value="{{t.id}}">{{t.name}}</option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="termid.touched && termid.invalid">Please Select Term</div>
+                                            </div>
+                                        
+                                    </div>
+                                        </form> 
+                                    </div>
+                                    <div class="modal-footer">
+                                      
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                      <button type="button" (click)="postTerm(t)" data-dismiss="modal" class="btn btn-primary">Submit</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> <!--modal ends here-->
+                  
+                             
+                  
+                                  <br />
+                                  <br>
+                  
+                                  
+                                      <div class="">
+                                          
+                  
+                                  <div style="margin-top:20px;" >
+                                    <form name="form"  (ngSubmit)="postResult(r)" #r="ngForm" novalidate >
+                                      
+                                      <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
+                                        <div class="form-group  " >
+                                            <select class="form-control" [(ngModel)]="result.year" name="year" required #year="ngModel" >
+                                                <option selected="selected" >Select Term </option>
+                                                <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
+                                            </select>
+                                            <div class="validation-error" *ngIf="year.touched && year.invalid">Please Select Term</div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="form-group col-md-2" >
+                                          <input type="text" class="form-control" name="name" [(ngModel)]="result.name" #name="ngModel" placeholder="Subject" />
+                                      </div>
+                                      <div class="form-group col-md-2" >
+                                          <input type="text" class="form-control" name="ass1" [(ngModel)]="result.ass1" #ass1="ngModel" placeholder="1st ASS"  />
+                                      </div>
+                                      <div class="form-group col-md-2" >
+                                          <input type="text" class="form-control" name="ass2" [(ngModel)]="result.ass2" #ass2="ngModel" placeholder="2nd ASS"  />
+                                      </div>
+                                      <div class="form-group col-md-2" >
+                                        <input type="text" class="form-control" name="cA1" [(ngModel)]="result.cA1" #cA1="ngModel" placeholder="1st CA"  />
+                                    </div>
+                                    <div class="form-group col-md-2" >
+                                      <input type="text" class="form-control" name="cA2" [(ngModel)]="result.cA2" #cA2="ngModel" placeholder="2nd CA"  />
+                                  </div>
+                                  <div class="form-group col-md-1" >
+                                    <input type="text" class="form-control" name="exam" [(ngModel)]="result.exam" #exam="ngModel" placeholder="Exam"  />
+                                </div>
+                                <div class="form-group col-md-1">
+                                  <button  class="btn btn-primary btn-block">Add</button>
+                                </div>
+                              </div> 
+                                    </form>
+                                  </div>
+                                  <div *ngIf="res" >
+                                  <table class="table  table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>SUBJECT</th>
+                                            <th>1ST ASGMT</th>
+                                            <th>2ND ASGMT</th>
+                                            <th>1ST CA</th>
+                                            <th>2ND CA</th>
+                                            <th>EXAM</th>
+                                            <!-- <th>EDIT</th> -->
+                                            <th>DELETE</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let sub of res; let i = index">
+                                            <td>{{sub.name}}</td>
+                                            <td>{{sub.ass1}}</td>
+                                            <td>{{sub.ass2}}</td>
+                                            <td>{{sub.cA1}}</td>
+                                            <td>{{sub.cA2}}</td>
+                                            <td>{{sub.exam}}</td>
+                                            <!-- <td><a (click)="editResult(i)"><span class="fas fa-edit"></span></a></td> -->
+                                            <td><a (click)="deleteResults(i)"><span class="fas fa-trash"></span></a></td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              </div>
+                  
                           </div>
-                      
-                  </div>
-                      </form> 
-                  </div>
-                  <div class="modal-footer">
-                    
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" (click)="postTerm(t)" data-dismiss="modal" class="btn btn-primary">Submit</button>
-                  </div>
-                </div>
-              </div>
-            </div> <!--modal ends here-->
-
-           
-
-                <br />
-                <br>
-
-                
-                    <div class="">
-                        
-
-                <div style="margin-top:20px;" >
-                  <form name="form"  (ngSubmit)="postResult(result)" #result="ngForm" novalidate >
-                    
-                    <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
-                      <div class="form-group  " >
-                          <select class="form-control" [(ngModel)]="student.term" name="year" required #year="ngModel" >
-                              <option selected="selected" >Select Term </option>
-                              <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
-                          </select>
-                          <div class="validation-error" *ngIf="year.touched && year.invalid">Please Select Term</div>
-                      </div>
-                      <div class="row">
-                      <div class=" col-2" >
-                        <input type="text" class="form-control" name="name" [(ngModel)]="result.name" #name="ngModel" placeholder="Subject" required />
-                        <div *ngIf="name.touched && name.invalid"  class="validation-error">Subject is required</div>
+                         
+                        </div>
+                        </div>
                     </div>
-                    <div class=" col-2" >
-                      <input type="text" class="form-control" name="cA1" [(ngModel)]="result.cA1" #cA1="ngModel" placeholder="1st CA" required />
-                      <div *ngIf="cA1.touched && cA1.invalid"  class="validation-error">1st CA is required</div>
-                  </div>
-                  <div class=" col-2" >
-                    <input type="text" class="form-control" name="cA2" [(ngModel)]="result.cA2" #cA2="ngModel" placeholder="2nd CA" required />
-                    <div *ngIf="cA2.touched && cA2.invalid"  class="validation-error">2nd CA is required</div>
-                </div>
-                <div class=" col-md-2" >
-                  <input type="text" class="form-control" name="exam" [(ngModel)]="result.exam" #exam="ngModel" placeholder="Exam" required />
-                  <div *ngIf="exam.touched && exam.invalid"  class="validation-error">Exam is required</div>
-              </div>
-              <div class=" col-md-2">
-                <button [disabled]="!result.valid" class="btn btn-primary">Add</button>
-              </div>
-            </div> 
-                  </form>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="card card-default">
+                          <form >
+                            <div class="card-body">
+                                <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
+                                <div class="alert alert-info" role="alert">Please select the Term, for which you want to check result.</div>
+                                <div class="form-group col-md-4 offset-md-4 " >
+                                        <select class="form-control"   [(ngModel)]="yea" name="yea" >
+                                          <option value="Select Term" >Select Term </option>
+                                          <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
+                                      </select>
+                                    </div>
+                            </div>
+                            <div class="card-footer">
+                                <button (click)="onYearChange()" class="btn btn-success float-right"><span class="fas fa-search"></span> Search</button>
+                            </div>
+                          </form>
                 </div>
 
-        </div>
+                      <div *ngIf="subjects" >
+
+                          <form name="form"  (ngSubmit)="postResult(r)" #r="ngForm" novalidate >
+                                      
+                              <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
+                                <div class="form-group  " >
+                                    <select class="form-control" [(ngModel)]="Eresult.year" name="year" required #year="ngModel" >
+                                        <option selected="selected" >Select Term </option>
+                                        <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
+                                    </select>
+                                    <div class="validation-error" *ngIf="year.touched && year.invalid">Please Select Term</div>
+                                </div>
+                                <div class="row">
+                                <div class="form-group col-md-2" >
+                                  <input type="text" class="form-control" name="name" [(ngModel)]="Eresult.name" #name="ngModel" placeholder="Subject" />
+                              </div>
+                              <div class="form-group col-md-2" >
+                                  <input type="text" class="form-control" name="ass1" [(ngModel)]="Eresult.ass1" #ass1="ngModel" placeholder="1st ASS"  />
+                              </div>
+                              <div class="form-group col-md-2" >
+                                  <input type="text" class="form-control" name="ass2" [(ngModel)]="Eresult.ass2" #ass2="ngModel" placeholder="2nd ASS"  />
+                              </div>
+                              <div class="form-group col-md-2" >
+                                <input type="text" class="form-control" name="cA1" [(ngModel)]="Eresult.cA1" #cA1="ngModel" placeholder="1st CA"  />
+                            </div>
+                            <div class="form-group col-md-2" >
+                              <input type="text" class="form-control" name="cA2" [(ngModel)]="Eresult.cA2" #cA2="ngModel" placeholder="2nd CA"  />
+                          </div>
+                          <div class="form-group col-md-1" >
+                            <input type="text" class="form-control" name="exam" [(ngModel)]="Eresult.exam" #exam="ngModel" placeholder="Exam"  />
+                        </div>
+                        <div class="form-group col-md-1">
+                          <button  class="btn btn-primary btn-block">Edit</button>
+                        </div>
+                      </div> 
+                            </form>
+
+
+                      <table class="table  table-hover table-striped">
+                          <thead>
+                              <tr>
+                                  <th>SUBJECT</th>
+                                  <th>1ST ASGMT</th>
+                                  <th>2ND ASGMT</th>
+                                  <th>1ST CA</th>
+                                  <th>2ND CA</th>
+                                  <th>EXAM</th>
+                                  <th>TOTAL</th>
+                                  <th>EDIT</th>
+                                  <th>DELETE</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let sub of subjects">
+                                  <td>{{sub.name}}</td>
+                                  <td>{{sub.ass1}}</td>
+                                  <td>{{sub.ass2}}</td>
+                                  <td>{{sub.cA1}}</td>
+                                  <td>{{sub.cA2}}</td>
+                                  <td>{{sub.exam}}</td>
+                                  <td>{{total}}</td>
+                                  <td><a (click)="editResults(sub.id)"><span class="fas fa-edit"></span></a></td>
+                                  <td><a (click)="deleteResult(sub.id)" ><span class="fas fa-trash"></span></a></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                    </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="row">
+                          <div style="margin-top:20px;" class="col-md-4 offset-md-4" >
+                              <form name="form" (ngSubmit)="changePassword(f)" #f="ngForm" novalidate>
+                                <input  type="hidden" name="id" #id="ngModel" [(ngModel)]="student.id"   >
+                              <div class="form-group ">
+                                  <input type="password" class="form-control inp" name="password" [(ngModel)]="student.password" #password="ngModel" required placeholder="Password" />
+                                  <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
+                              </div>
+                              <div class="form-group">
+                                  <button [disabled]="!f.valid || loading" style="font-weight:bolder;"  class="btn btn-primary inp but form-control">Change Password</button>
+                                 </div>
+                              </form>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+        
        
-      </div>
-      </div>
 
 
 

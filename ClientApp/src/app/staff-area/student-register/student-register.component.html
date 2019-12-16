@@ -42,16 +42,7 @@
             </select>
             <div class="validation-error" *ngIf="sexId.touched && sexId.invalid">Please Select the Sex</div>
         </div>
-        </div>
-        <!-- <div class="form-group col-md-12" >
-            <select class="form-control" [(ngModel)]="model.genoTypeId" name="genoTypeId" required #genoTypeId="ngModel" >
-                <option >Select </option>
-                <option *ngFor="let t of terms" value="{{t.id}}">{{t.name}}</option>
-            </select>
-            <div class="validation-error" *ngIf="genoTypeId.touched && genoTypeId.invalid">Please Select GenoType</div>
-        </div> -->
-        
-        
+        </div>  
         <div class="form-group col-md-12" >
           <input type="date"   name="dateOfBirth" #dateOfBirth="ngModel" [(ngModel)]="model.dateOfBirth" class="form-control"    />
           <div *ngIf="dateOfBirth.touched && dateOfBirth.invalid"  class="validation-error">Date Of Birth is required</div>

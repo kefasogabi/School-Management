@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -35,15 +36,13 @@ namespace PROJECT.Models
         [ForeignKey("NKRelationshipId")]  
         public NextKinRelationship NKRelationship { get; set; }
         public string NKAddress { get; set; }
-        
-        
 
 
 
-   
 
     }
 
+    
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -76,8 +75,8 @@ namespace PROJECT.Models
             modelBuilder.Entity<TermResult>().HasKey(tr => new 
             { tr.TermId, tr.ResultId });
 
-            base.OnModelCreating(modelBuilder);  
-  
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");
 
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");

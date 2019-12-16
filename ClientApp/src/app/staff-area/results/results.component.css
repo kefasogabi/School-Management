@@ -1,3 +1,16 @@
 .validation-error{
     color:red;
 }
+
+li.link-active a,
+li.link-active a:hover,
+li.link-active a:focus {
+    background: #007bff !important;
+    color:white !important;
+    font-weight: bolder;
+}
+
+th{
+    background: #007bff !important;
+    color:white !important;
+}

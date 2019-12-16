@@ -66,6 +66,38 @@ namespace PROJECT.Controllers
             }
         }
 
+        [HttpPut("/api/updateresult/{id}")]
+        public async Task<IActionResult> UpdateResult(int id, [FromBody] ResultDto resultDto)
+        {
+            var result = mapper.Map<Result>(resultDto);
+
+            try{
+                resultService.Update(result);
+                await unitOfWork.CompleteAsync();
+                return Ok();
+            }
+            catch(ApplicationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("/api/getresult/{id}")]
+        public IActionResult GetById(int id)
+        {
+            var result = resultService.GetById(id);
+            var resultDto = mapper.Map<ResultDto>(result);
+            return Ok(resultDto);
+        }
+
+        [HttpDelete("/api/deleteresult/{id}")]
+        public  async Task<IActionResult> DeleteResult(int id)
+        {
+            resultService.Delete(id);
+            await unitOfWork.CompleteAsync();
+            return Ok(id);
+        }
+
         [HttpGet("/api/Getstudent/{name}")]
         public async Task<IActionResult> GetStudent(string name)
         {
@@ -76,6 +108,14 @@ namespace PROJECT.Controllers
             var studentDto = mapper.Map<StudentDto>(student);
             return Ok(studentDto);
         }
+
+            // [HttpGet("")]
+            // public async Task<IActionResult> GetUserResult(Result result)
+            // {
+            //     var results = await resultService.GetUserResult(result);
+            //     var Dto = mapper.Map<StudentDto>(results);
+            //     return Ok();
+            // }
 
         
     }

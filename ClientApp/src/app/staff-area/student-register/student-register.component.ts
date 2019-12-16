@@ -8,7 +8,7 @@ import { Student, SaveStudent } from '../../models/student.model';
 import { StudentService } from '../../Services/student.service';
 import { Term } from '../../models/user.model';
 import { Observable } from 'rxjs';
-import { AlertService } from '../../Services/alert.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -18,8 +18,9 @@ import { AlertService } from '../../Services/alert.service';
   styleUrls: ['./student-register.component.css']
 })
 export class StudentRegisterComponent implements OnInit {
-  model = {};
+  
   loading = false;
+  model = {};
   student: SaveStudent;
   sex: any[];
   grade: any[];
@@ -29,18 +30,15 @@ export class StudentRegisterComponent implements OnInit {
   nextKin: any[];
   terms: Term[] = [];
 
-  sexId: string ="Select Sex";
-  gradeId: string ="Select Class"; 
 
   constructor(private studentService: StudentService,
-              private alertService: AlertService,
               private universalService: UniversalService,
               private userService: UserService,
                private toastr: ToastrService,
+               private spinner: NgxSpinnerService,
                 private router: Router) { }
 
   ngOnInit() {
-    this.resetForm();
 
     let sources = [
       this.universalService.getSex(),
@@ -67,59 +65,43 @@ export class StudentRegisterComponent implements OnInit {
 
 
       register(form: NgForm) {
-        this.studentService.create(form.value).subscribe((data:any) => {
-                    this.resetForm(form);
-                    this.toastr.success('Registration successful', 'Success');
-                },
-                error => {
-                    this.toastr.error(error._body, 'Error');
-                  });
+            this.spinner.show();
+            this.studentService.create(form.value).subscribe(data => {
+            this.toastr.success('Registration successful', 'Success');
+            this.resetForm(form);
+            this.spinner.hide();
+      },
+        error => {
+          this.toastr.error(error._body, 'Error');
+          this.spinner.hide();
+      });
     }
 
-    resetForm(form? : NgForm){
-            
-      if(form != null)
-      form.reset();
-      this.student ={
-      id: null,
-      firstName: '',
-      lastName: '',
-      userName: '',
-      address: '',
-      dateOfBirth: '',
-      country:'',
-      state: '',
-      lGA:'',
-      sex: {
-        id: null,
-        name: ""
-      },
-      grade: {
-        id: null,
-        name: ""
-      },
-      genoType: {
-        id: null,
-        name: ""
-      },
-      bloodGroup:{
-        id:null,
-        name:""
-      },
-      religion:{
-        id:null,
-        name:""
-      },
-      nkName:'',
-      nkAddress:'',
-      nkPhone:'',
-      hairColor:'',
-      nkRelationship:{
-        id:null,
-        name:""
-      },
-      password: '',
-      }
+      resetForm(form? : NgForm){
+        if(form != null)
+        form.reset();
+        this.student = {
+        id: 0,
+        firstName: '',
+        lastName: '',
+        userName: '',
+        address: '',
+        dateOfBirth: '',
+        country:'',
+        state: '',
+        lga:'',
+        sexId: null,
+        gradeId: null,
+        genoTypeId: null,
+        bloodGroupId: null,
+        religionId: null,
+        nkName:'',
+        nkAddress:'',
+        nkPhoneNumber:'',
+        hairColor:'',
+        nkRelationshipId: null,
+        password: '',
+        }
   }
 
 }
