@@ -7,16 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent  {
   title = 'app'; 
-
-constructor( private spinner: NgxSpinnerService){}
-  ngOnInit() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 5000);
-  }
-
+  
 
 }

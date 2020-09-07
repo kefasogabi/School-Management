@@ -9,7 +9,6 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     public class SexController : Controller
     {
         private readonly ApplicationDbContext context;

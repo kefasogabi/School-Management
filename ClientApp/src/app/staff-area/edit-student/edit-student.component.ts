@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { EditStudent, SaveStudent } from '../../models/student.model';
 import { Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { error } from 'protractor';
 
 
 
@@ -18,26 +19,26 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class EditStudentComponent implements OnInit {
 student:SaveStudent = {
-    id:0,
-    firstName: "",
-    lastName: "",
-    userName: "",
-    dateOfBirth: "",
-    address: "",
-    sexId: null ,
-    gradeId: null,
-    password:"",
-    country:"",
-    state:"",
-    lga:"",
-    genoTypeId: null,
-    bloodGroupId: null,
-    religionId: null,
-    hairColor:"",
-    nkName:"",
-    nkPhoneNumber:"",
-    nkRelationshipId: null,
-    nkAddress:"",
+  id: 0,
+  firstName: "",
+  lastName: "",
+  userName: "",
+  dateOfBirth: "",
+  address: "",
+  sexId :0,
+  gradeId :0,
+  password: "",
+  country: "",
+  state:"",
+  lGA:"",
+  genoTypeId: 0,
+  bloodGroupId: 0,
+  religionId: 0,
+  hairColor: "",
+  nKName: "",
+  nKPhoneNumber: "",
+  nKRelationshipId: 0,
+  nKAddress: ""
 };
 sex: any[];
 grade: any[];
@@ -70,7 +71,7 @@ nkRelationship: any[];
   
     ];
 
-    Observable.forkJoin(sources).subscribe(data =>{
+    Observable.forkJoin(sources).subscribe((data:any) =>{
       this.sex = data[0];
       this.grade = data[1];
       this.bloodGroup = data[2];
@@ -79,6 +80,9 @@ nkRelationship: any[];
       this.nkRelationship = data[5];
       this.setStudent(data[6]);
 
+    },
+    error =>{
+      this.toastr.error(error);
     });
    
    
@@ -88,6 +92,10 @@ nkRelationship: any[];
     this.spinner.show();
     this.studentService.update(form.value).subscribe( data => {
       this.toastr.success('Updated Successfully', 'Student');
+      this.spinner.hide();
+    },
+    error =>{
+      this.toastr.error(error);
       this.spinner.hide();
     });
   }
@@ -103,11 +111,11 @@ nkRelationship: any[];
     this.student.gradeId = s.grade.id;
     this.student.country = s.country;
     this.student.state = s.state;
-    this.student.lga = s.lga;
-    this.student.nkName = s.nkName;
-    this.student.nkPhoneNumber = s.nkPhoneNumber;
-    this.student.nkRelationshipId = s.nkRelationship.id;
-    this.student.nkAddress = s.nkAddress;
+    this.student.lGA = s.lga;
+    this.student.nKName = s.nkName;
+    this.student.nKPhoneNumber = s.nkPhoneNumber;
+    this.student.nKRelationshipId = s.nkRelationship.id;
+    this.student.nKAddress = s.nkAddress;
     this.student.hairColor = s.hairColor;
     this.student.bloodGroupId = s.bloodGroup.id;
     this.student.religionId = s.religion.id;

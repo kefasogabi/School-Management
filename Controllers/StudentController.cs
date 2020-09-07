@@ -20,7 +20,6 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     public class StudentController : Controller
     {
@@ -85,7 +84,7 @@ namespace PROJECT.Controllers
 
 
         [Authorize(Roles = RoleName.Admin)]
-        [HttpPost("/api/Register")]
+                
         public IActionResult Register([FromBody]StudentDto studentDto)
         {
            
@@ -107,16 +106,18 @@ namespace PROJECT.Controllers
 
 
         [HttpGet("/api/students")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IEnumerable<StudentDto>> GetAll()
         {
             var student = await studentService.GetAllAsync();
-            var studentDto = mapper.Map<IList<StudentDto>>(student);
-            return Ok(studentDto);
+           
+           return mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto>>(student);
+          
         }
 
         [HttpGet("/api/student/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+            // await studentService.CreateTestUsers();
             var student = await studentService.GetByIdAsync(id);
             var studentDto = mapper.Map<StudentDto>(student);
             return Ok(studentDto);
@@ -153,11 +154,36 @@ namespace PROJECT.Controllers
             return Ok();
         }
 
-        [HttpPut("/api/changepassword/{id}")]
-        public async Task<IActionResult> ChangePassword(int id, [FromBody]ChangePasswordDto changePasswordDto)
+        [HttpPut("/api/changepassword")]
+        public async Task<IActionResult> ChangePassword( [FromBody]ChangePasswordDto changePasswordDto)
         {
+            var userId = caller.Claims.Single(c => c.Type == ClaimTypes.Name);
            // map dto to entity and set id
             var student = mapper.Map<ChangePassword>(changePasswordDto);
+            
+            student.Id = Convert.ToInt32(userId.Value);
+
+            try 
+            {
+                // save 
+                studentService.ChangePassword(student, changePasswordDto.Password);
+                await unitOfWork.CompleteAsync();
+                return Ok();
+            } 
+            catch(AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("/api/resetPassword/{id}")]
+        public async Task<IActionResult> ResetPassword( int id, [FromBody]ChangePasswordDto changePasswordDto)
+        {
+            
+           // map dto to entity and set id
+            var student = mapper.Map<ChangePassword>(changePasswordDto);
+            
             student.Id = id;
 
             try 
@@ -196,6 +222,13 @@ namespace PROJECT.Controllers
            var studentDto = mapper.Map<StudentDto>(student);
             
             return Ok(studentDto );
+        }
+
+        [AllowAnonymous]
+        [HttpGet("/api/GenerateRRR")]
+        public string GenerateRRR()
+        {
+            return studentService.GenerateRRR();
         }
 
         

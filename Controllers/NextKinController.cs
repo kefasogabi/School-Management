@@ -9,7 +9,7 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
+    
     public class NextKinController : Controller
     {
         private readonly ApplicationDbContext context;

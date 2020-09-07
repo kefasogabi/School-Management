@@ -72,7 +72,7 @@ export class EditStaffComponent implements OnInit {
   
     ];
 
-    Observable.forkJoin(sources).subscribe(data =>{
+    Observable.forkJoin(sources).subscribe( (data:any) =>{
       this.sex = data[0];
       this.bloodGroup = data[1];
       this.genoType = data[2];
@@ -80,6 +80,9 @@ export class EditStaffComponent implements OnInit {
       this.nkRelationship = data[4];
       this.setStaff(data[5]);
 
+    }, 
+    error => {
+      this.toastr.error(error);
     });
 
     this.userService.getAllRoles().subscribe(
@@ -96,6 +99,10 @@ export class EditStaffComponent implements OnInit {
     this.spinner.show();
     this.userService.update(form.value).subscribe( data => {
       this.toastr.success('Updated Successfully', 'User');
+      this.spinner.hide();
+    }, 
+    error => {
+      this.toastr.error(error);
       this.spinner.hide();
     });
   }

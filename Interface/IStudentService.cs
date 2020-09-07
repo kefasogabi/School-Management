@@ -14,10 +14,9 @@ namespace PROJECT.Interface
         void Update(Student student, string password = null);
         void ChangePassword( ChangePassword changePassword, string password = null);
         void Delete(int id);
-
-        Task<Student> GetProfile(int id);
         void UploadImage(int id, IFormFile file);
+        string GenerateRRR();
 
-       
+    //    Task CreateTestUsers();
     }
 }

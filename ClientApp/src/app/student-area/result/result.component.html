@@ -8,7 +8,7 @@
                 <div class="alert alert-info" role="alert">Please select the Term, for which you want to check result.</div>
                 <div class="form-group col-md-4 offset-md-4 " >
                         <select class="form-control"   [(ngModel)]="yea" name="yea" >
-                          <option value="Select Term" >Select Term </option>
+                          <option value="Select Year" >Select Term </option>
                           <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
                       </select>
                     </div>
@@ -19,33 +19,37 @@
 </div>
 
  
- <div style="margin-top:20px;" class="" >
+ <div  *ngIf="subjects" style="margin-top:20px;" class="" >
     
 
-  <div *ngIf="subjects" >
-  <table class="table  table-hover table-striped">
-        <thead>
-                <tr>
-                    <th>SUBJECT</th>
-                    <th>1ST ASGMT</th>
-                    <th>2ND ASGMT</th>
-                    <th>1ST CA</th>
-                    <th>2ND CA</th>
-                    <th>EXAM</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let sub of subjects">
-                    <td>{{sub.name}}</td>
-                    <td>{{sub.ass1}}</td>
-                    <td>{{sub.ass2}}</td>
-                    <td>{{sub.cA1}}</td>
-                    <td>{{sub.cA2}}</td>
-                    <td>{{sub.exam}}</td>
-                </tr>
-            </tbody>
-  </table>
-</div>
+
+<!-- <div class="row form-inline float-right">
+  <div class="form-group col-md-4">
+  <button type="button" (click)="generatePdf('open')"
+    class="btn btn-primary btn-block form-control">
+    <i class="fas fa-download ">
+    </i> <span>Open </span></button>
   </div>
+  <div class="form-group col-md-4">
+  <button type="button" (click)="generatePdf('download')"
+    class="btn btn-primary btn-block form-control">
+    <i class="fas fa-download">
+    </i><span>Download</span></button>
+  </div>
+  <div class="form-group col-md-4">
+  <button type="button" (click)="generatePdf('print')"
+    class="btn btn-primary btn-block form-control">
+    <i class="fas fa-print">
+    </i><span>Print PDF</span></button>
+  </div>
+</div> -->
+
+<div id="iframeContainer" width="400"> 
+  
+</div>
+
+  </div>
+
+  
 
 </div>

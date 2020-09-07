@@ -42,7 +42,49 @@ namespace PROJECT.Repository
             return student;
         }
 
+        // public async Task CreateTestUsers()
+        // {
+        //     for (var i = 1; i <= 100; i++)
+        //     {
+        //         var userName = "User" + i;
+        //         var user = await context.Students.FirstOrDefaultAsync( u => u.UserName == userName);
+        //          var password = "yohanna";
+        //             byte[] passwordHash, passwordSalt;
+        //             CreatePasswordHash(password, out passwordHash, out passwordSalt);
+        //         if (user == null)
+        //         {
+        //             user = new Student()
+        //             {
+        //                 FirstName = "first"+userName,
+        //                 LastName = "last"+userName,
+        //                 UserName = userName,
+        //                 DateOfBirth = DateTime.Now.ToString(),
+        //                 Address = "address"+userName,
+        //                 GradeId = 6,
+        //                 SexId = 2,
+        //                 FileName = "avatar.jpg",
+        //                 Country = "Nigeria",
+        //                 state =  "Anambra",
+        //                 LGA = "Awka-South",
+        //                 GenoTypeId = 1,
+        //                 BloodGroupId = 1,
+        //                 ReligionId = 1,
+        //                 HairColor = "Black",
+        //                 NKName = "NKN"+userName,
+        //                 NKPhoneNumber = "NKP"+userName,
+        //                 NKRelationshipId = 1,
+        //                 NKAddress = "NKA"+userName,
+        //                 PasswordHash = passwordHash,
+        //                 PasswordSalt = passwordSalt,
+        //                 Session = context.Session.Last()
+        //             };
 
+        //             context.Students.Add(user);
+        //             await context.SaveChangesAsync();
+                   
+        //         }
+        //     }
+        // }
 
         public Student Create(Student student, string password)
         {
@@ -85,6 +127,9 @@ namespace PROJECT.Repository
         {
             return await context.Students.Include(c => c.Sex)
                                     .Include(c => c.Grade)
+                                    .Include(b => b.BloodGroup)
+                                    .Include(g => g.GenoType)
+                                    .Include(r => r.Religion)
                                     .Include(c => c.Session).ToListAsync();
         }
 
@@ -93,7 +138,6 @@ namespace PROJECT.Repository
             return await context.Students.Include(c => c.Sex)
                                     .Include(t => t.Terms)
                                     .ThenInclude(st => st.Term)
-                                    .OrderByDescending( x => x.Id)
                                     .Include(c => c.Grade)
                                     .Include(b => b.BloodGroup)
                                     .Include(g => g.GenoType)
@@ -234,20 +278,6 @@ namespace PROJECT.Repository
                     student.FileName = fileName;
 
                     context.Students.Update(student);
-        }
-
-        public async Task<Student> GetProfile(int id)
-        {
-           return await context.Students.Include(c => c.Sex)
-                                    .Include(c => c.Grade)
-                                    .Include(b => b.BloodGroup)
-                                    .Include(g => g.GenoType)
-                                    .Include(n => n.NKRelationship)
-                                    .Include(r => r.Religion)
-                                    .Include(c => c.Results)
-                                    .Include(t => t.Terms)
-                                    .ThenInclude(st => st.Term)
-                                    .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
         }
 
 

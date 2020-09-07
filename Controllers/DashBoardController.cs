@@ -7,7 +7,6 @@ using PROJECT.Interface;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     public class DashBoardController : Controller
     {
         private readonly IDashBoardService dashBoardService;

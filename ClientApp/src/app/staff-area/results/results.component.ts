@@ -9,7 +9,7 @@ import { Term } from '../../models/user.model';
 import { Student } from '../../models/student.model';
 import { NgForm } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
-import { b } from '@angular/core/src/render3';
+import { b1 } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-results',
@@ -22,12 +22,17 @@ export class ResultsComponent implements OnInit {
   model = {
     termId:""
   };
-  yea:any = "";
+  yearId:any = "Select Term";
   uname:any = "";
   subjects: any[];
-  // public id = '';
-  res: any[] = [];
+  average:number = 0;
+  obj ={
+    sum: 0
+  };
+  sum:any[] = [];
   total:any;
+  public i = 0;
+  public id = "";
   result:any = {
     id: 0,
       name: "",
@@ -37,7 +42,7 @@ export class ResultsComponent implements OnInit {
       cA2: "",
       exam: "",
       year: "",
-      studentId: 0
+      studentId: 0 
   };
 
   Eresult:any = {
@@ -56,30 +61,43 @@ export class ResultsComponent implements OnInit {
               private spinner: NgxSpinnerService, 
               private toastr: ToastrService,
               private userService: UserService,
-              private studentService: StudentService
+              private studentService: StudentService,
+              
               ) { }
 
   ngOnInit() {
-    this.userService.getTerms().subscribe(data => {
+    this.userService.getTerms().subscribe((data:any) => {
       this.terms = data;
 
     });
   }
 
-  addResult(form){
-   this.res.unshift(form.value);
-   this.resetForm();
+  addResult(form:NgForm){
+   
+    if(this.i){ 
+      this.resultService.res.splice(this.i, 1, form.value);
+      this.i = 0;
+      this.resetForm();
+    }else{
+      this.resultService.res.unshift(form.value);
+      this.resetForm();
+    }
+  
   }
 
-  // editResult(i){
-  //   this.result = this.res[i];
-  // }
-  // private setIndex(i){
-  //   this.id = i;
-  // }
+
+  getIndex(i){
+    this.i = i;
+    this.result = this.resultService.res[i];
+    this.resultService.res.splice(i,1);
+  }
+
+  clear(){
+    this.resultService.res.splice(0, this.resultService.res.length);
+  }
 
   deleteResults(i){
-    this.res.splice(i, 1);
+    this.resultService.res.splice(i, 1);
   }
 
   resetForm(){
@@ -96,13 +114,12 @@ export class ResultsComponent implements OnInit {
 
 getStudent(){
   this.spinner.show();
-  this.resultService.getStudent(this.uname).subscribe(data =>{
+  this.resultService.getStudent(this.uname).subscribe((data:any) =>{
     this.student = data;
     this.spinner.hide();
   },
   error => {
-    if(error.status === 404)
-    this.toastr.error(error._body, 'Error');
+    this.toastr.error(error, 'Error');
     this.spinner.hide();
   });
 }
@@ -114,35 +131,64 @@ postTerm(body){
     this.toastr.success('Term Added successfully', 'Success');
     this.spinner.hide();
 }, error => {
-  this.toastr.error(error._body, 'Error');
+  this.toastr.error(error, 'Error');
   this.spinner.hide();
 });
 }
 
 onYearChange(){
-  let res = this.student.results;
-   this.subjects = res.filter(m => m.year == this.yea);
+  this.spinner.show();
+  let res = this.student.results.filter(m => m.year == this.yearId); 
+
+   this.subjects = res.map(x => ({ id: x.id,
+                                     name: x.name,
+                                     ass1: parseInt(x.ass1),
+                                     ass2: parseInt(x.ass2),
+                                     cA1: parseInt(x.cA1), 
+                                     cA2: parseInt(x.cA2),
+                                     exam: parseInt(x.exam),
+                                     year: x.year, 
+                                     studentId: x.studentId,
+                                     total: parseInt(x.ass1) + parseInt(x.ass2) + parseInt(x.cA1) + parseInt(x.cA2) + parseInt(x.exam) }));
+
+     this.average = this.getAverage(); 
+   this.spinner.hide(); 
 }
 
+getAverage(){
+  let sum = 0;
+  let count = 0;
+  let result = 0
+  this.subjects.forEach( x => sum += x.total);
 
+ 
+  for(let obj in this.subjects){
+    count++
+  }
 
-postResult(form: NgForm){
-  if(form.value.id != null){
-    this.spinner.show();
-    this.resultService.updateReault(form.value).subscribe(data => {
+  result = sum / count;
+  
+  return result;
+}
+
+postResult(){
+  this.spinner.show();
+  this.resultService.postResult().subscribe( data => {
+    this.toastr.success('Result Added Successfully', 'Success');
+    this.clear();
+    this.spinner.hide();
+  }), error =>{
+    this.toastr.error(error, 'Error');
+    this.spinner.hide();
+  }
+}
+
+updateResult(form:NgForm){
+  this.spinner.show();
+    this.resultService.updateResult(form.value).subscribe(data => {
     this.toastr.success('Result Updated Successfully', 'Success');
     this.spinner.hide();
     });
-  }else{
-  this.spinner.show();
-  this.resultService.postResult(form.value).subscribe( data => {
-    this.toastr.success('Result Added Successfully', 'Success');
-    this.spinner.hide();
-  }, error =>{
-    this.toastr.error(error._body, 'Error');
-  this.spinner.hide();
-  });
-  }
 }
 
 editResults(id){
@@ -150,8 +196,11 @@ editResults(id){
   this.resultService.getResult(id).subscribe(data => {
     this.Eresult = data;
 
-    console.log(this.Eresult);
   });
+}
+
+setId(id){
+  this.id = id;
 }
 
 deleteResult(id){
@@ -163,7 +212,7 @@ deleteResult(id){
     this.onYearChange();
     this.spinner.hide();
   }, error =>{
-    this.toastr.error(error._body, 'Error');
+    this.toastr.error(error, 'Error');
     this.spinner.hide();
   });
 }
@@ -176,7 +225,7 @@ changePassword(form: NgForm){
     this.spinner.hide();
   },error => {
     if(error.status == 400)
-    this.toastr.error(error._body, 'Error');
+    this.toastr.error(error, 'Error');
     this.spinner.hide();
   });
 }

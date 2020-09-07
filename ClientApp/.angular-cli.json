@@ -48,7 +48,9 @@
         "../src/dist/js/demo.js",
         "../src/plugins/datatables/jquery.dataTables.js",
         "../src/plugins/datatables/dataTables.bootstrap4.js",
-        "../src/plugins/toastr/toastr.min.js"
+        "../src/plugins/toastr/toastr.min.js",
+        "../src/assets/pdfmake.min.js",
+        "../src/assets/vfs_fonts.js"
         
       ],
       "environmentSource": "environments/environment.ts",

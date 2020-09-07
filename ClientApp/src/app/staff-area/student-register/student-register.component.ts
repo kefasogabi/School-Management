@@ -19,9 +19,31 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class StudentRegisterComponent implements OnInit {
   
-  loading = false;
-  model = {};
-  student: SaveStudent;
+
+  model = { };
+  student: SaveStudent = {
+    id: 0,
+    firstName: "",
+    lastName: "",
+    userName: "",
+    dateOfBirth: "",
+    address: "",
+    sexId :0,
+    gradeId :0,
+    password: "",
+    country: "",
+    state:"",
+    lGA:"",
+    genoTypeId: 0,
+    bloodGroupId: 0,
+    religionId: 0,
+    hairColor: "",
+    nKName: "",
+    nKPhoneNumber: "",
+    nKRelationshipId: 0,
+    nKAddress: ""
+  
+  };
   sex: any[];
   grade: any[];
   bloodGroups: any[];
@@ -50,7 +72,7 @@ export class StudentRegisterComponent implements OnInit {
       this.userService.getTerms()
     ];
 
-    Observable.forkJoin(sources).subscribe(data =>{
+    Observable.forkJoin(sources).subscribe((data:any) =>{
       this.sex = data[0];
       this.grade = data[1];
       this.bloodGroups = data[2];
@@ -64,15 +86,14 @@ export class StudentRegisterComponent implements OnInit {
 
 
 
-      register(form: NgForm) {
+      register() {
             this.spinner.show();
-            this.studentService.create(form.value).subscribe(data => {
+            this.studentService.create(this.student).subscribe((data:any) => {
             this.toastr.success('Registration successful', 'Success');
-            this.resetForm(form);
             this.spinner.hide();
       },
         error => {
-          this.toastr.error(error._body, 'Error');
+          this.toastr.error(error, 'Error');
           this.spinner.hide();
       });
     }
@@ -89,17 +110,17 @@ export class StudentRegisterComponent implements OnInit {
         dateOfBirth: '',
         country:'',
         state: '',
-        lga:'',
+        lGA:'',
         sexId: null,
         gradeId: null,
         genoTypeId: null,
         bloodGroupId: null,
         religionId: null,
-        nkName:'',
-        nkAddress:'',
-        nkPhoneNumber:'',
+        nKName:'',
+        nKAddress:'',
+        nKPhoneNumber:'',
         hairColor:'',
-        nkRelationshipId: null,
+        nKRelationshipId: null,
         password: '',
         }
   }

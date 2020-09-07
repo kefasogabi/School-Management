@@ -9,7 +9,6 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     public class BloodGroupController : Controller
     {
         private readonly ApplicationDbContext context;

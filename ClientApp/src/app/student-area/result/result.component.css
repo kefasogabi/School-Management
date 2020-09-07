@@ -1,3 +1,13 @@
 .card-header{
     background: rgb(250, 248, 248)
 }
+
+.img-div{
+    width: 150px !important;
+    height: auto; 
+}
+
+.img-div img{
+    width: 100%;
+    height: auto; 
+}

@@ -1,15 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJECT.Dto;
+using PROJECT.Helper;
 using PROJECT.Interface;
 using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     public class ResultController : Controller
     {
         private readonly IResultService resultService;
@@ -40,7 +41,7 @@ namespace PROJECT.Controllers
 
                 return Ok(studentTerm);
             }
-             catch(ApplicationException ex)
+             catch(AppException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -49,64 +50,92 @@ namespace PROJECT.Controllers
 
         
         [HttpPost("/api/PostResult")]
-        public async Task<IActionResult> PostResult([FromBody] ResultDto resultDto)
+        public async Task<IActionResult> PostResult([FromBody] List<ResultDto> resultDto)
         {
-            var result = mapper.Map<Result>(resultDto);
+            var result = mapper.Map<List<Result>>(resultDto);
 
             try
             {
                 resultService.Save(result);
-                await unitOfWork.CompleteAsync();
-
-                return Ok(result);
+                await unitOfWork.CompleteAsync();  
             }
-            catch(ApplicationException ex)
+            catch(AppException ex)
             {
                 return BadRequest(ex.Message);
             }
+            return Ok(result);
         }
 
         [HttpPut("/api/updateresult/{id}")]
-        public async Task<IActionResult> UpdateResult(int id, [FromBody] ResultDto resultDto)
+        public async Task<IActionResult> UpdateResult(int id, [FromBody]ResultDto resultDto)
         {
             var result = mapper.Map<Result>(resultDto);
+                result.Id = id; 
 
             try{
                 resultService.Update(result);
                 await unitOfWork.CompleteAsync();
-                return Ok();
+                
             }
-            catch(ApplicationException ex)
+            catch(AppException ex)
             {
                 return BadRequest(ex.Message);
             }
+
+            return Ok();
         }
 
         [HttpGet("/api/getresult/{id}")]
         public IActionResult GetById(int id)
-        {
-            var result = resultService.GetById(id);
-            var resultDto = mapper.Map<ResultDto>(result);
-            return Ok(resultDto);
+        { 
+            var res = new ResultDto();
+
+            try
+            {
+                var result = resultService.GetById(id);
+                res = mapper.Map<ResultDto>(result);
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
+            return Ok(res);
         }
 
         [HttpDelete("/api/deleteresult/{id}")]
         public  async Task<IActionResult> DeleteResult(int id)
         {
-            resultService.Delete(id);
-            await unitOfWork.CompleteAsync();
+            try{
+                 resultService.Delete(id);
+                await unitOfWork.CompleteAsync();
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
             return Ok(id);
         }
 
         [HttpGet("/api/Getstudent/{name}")]
         public async Task<IActionResult> GetStudent(string name)
         {
-            var student = await resultService.GetStudent(name);
-            if(student == null)
-                return NotFound("User Not Found");
-            
-            var studentDto = mapper.Map<StudentDto>(student);
-            return Ok(studentDto);
+            var res = new StudentDto();
+
+            try{
+                 var student = await resultService.GetStudent(name);
+                if(student == null)
+                    return NotFound("User Not Found");
+                
+                res = mapper.Map<StudentDto>(student);
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
+            return Ok(res);
         }
 
             // [HttpGet("")]

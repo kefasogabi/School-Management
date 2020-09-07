@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthenticationService } from '../Services/authentication.service';
+import { AuthenticationService } from '../Services/auth.service';
 
 
 
@@ -24,6 +24,7 @@ export class StaffLoginComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   login(form){
     this.spinner.show();
     this.authenticationService.login(form).subscribe((data:any) => {

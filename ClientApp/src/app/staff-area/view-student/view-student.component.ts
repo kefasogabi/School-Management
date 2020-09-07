@@ -9,6 +9,7 @@ import { ResultComponent } from '../../student-area/result/result.component';
 import { ResultService } from '../../Services/result.service';
 import { Student } from '../../models/student.model';
 import { Term } from '../../models/user.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -89,7 +90,8 @@ export class ViewStudentComponent implements OnInit {
               private route: ActivatedRoute, 
               private resultService: ResultService,
               private userService: UserService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService) {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) this.studentService.getById(id).take(1).subscribe( (data:any) => {
     this.student = data;
@@ -99,7 +101,7 @@ export class ViewStudentComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userService.getTerms().subscribe(data => {
+    this.userService.getTerms().subscribe((data:any) => {
       this.terms = data;
 
     });
@@ -107,8 +109,10 @@ export class ViewStudentComponent implements OnInit {
   }
 
   onYearChange(){
+    this.spinner.show();
     let res = this.student.results;
-     this.subjects = res.filter(m => m.year == this.yea);   
+     this.subjects = res.filter(m => m.year == this.yea);  
+     this.spinner.hide(); 
   }
 
   setT(t) {
@@ -116,50 +120,66 @@ export class ViewStudentComponent implements OnInit {
   }
 
   getStudent(){
+    this.spinner.show();
     let id = this.route.snapshot.paramMap.get('id');
     this.studentService.getById(id).take(1).subscribe( (data:any) => {
       this.student = data;
+      this.spinner.hide();
+      },
+      error =>{
+        this.toastr.error(error);
+        this.spinner.hide();
       });
   }
 
 uploadPhoto(id){
-  this.loading = true;
+  this.spinner.show();
   var nativeElemet: HTMLInputElement = this.fileInput.nativeElement;
   this.studentService.uploadImage(id, nativeElemet.files[0]).subscribe( data => {
     this.getStudent();
     this.toastr.success('Image Uploaded successful', 'Success');
+    this.spinner.hide();
+  },
+  error => {
+    this.toastr.error(error);
+    this.spinner.show();
   });
 }
 
 changePassword(form: NgForm){
-  this.loading = true;
-  this.studentService.changePassword(form.value).subscribe(data => {
+  this.spinner.show();
+  this.studentService.resetPassword(form.value).subscribe(data => {
     this.toastr.success('Updated Successfully', 'Password');
-    this.loading = false;
+    this.spinner.hide();
   },error => {
-    if(error.status == 400)
-    this.toastr.error(error._body, 'Error');
-    this.loading = false;
+    
+    this.toastr.error(error, 'Error');
+    this.spinner.hide();
   });
 }
 
 
 postResult(form: NgForm){
-  console.log(form.value);
-  this.resultService.postResult(form.value).subscribe( data => {
-    this.toastr.success('Result Added Successfully', 'Succes');
+  this.spinner.show();
+  this.resultService.postResult().subscribe( data => {
+    this.toastr.success('Result Added Successfully', 'Success');
+    this.spinner.hide();
+  },
+  error => {
+    this.toastr.error(error);
+    this.spinner.hide();
   });
 }
 
 postTerm(body){
-  console.log(body.value);
-    this.load = true;
+    this.spinner.show();
   this.resultService.create(body.value).subscribe( (data:any) => {
     this.getStudent();
     this.toastr.success('Term Added successfully', 'Success');
-    this.load = false;
+    this.spinner.hide();
 }, error => {
-  this.toastr.error(error._body, 'Error');
+  this.toastr.error(error, 'Error');
+  this.spinner.hide();
 }); 
 }
 

@@ -19,6 +19,7 @@ namespace PROJECT.Controllers
         }
 
         [Authorize(Roles = RoleName.Admin)]
+        [AllowAnonymous]
         [HttpGet("/api/GetRoles")]
         public IActionResult GetRoles()
         {

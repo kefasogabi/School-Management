@@ -10,7 +10,6 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     public class SessionController : Controller
     {
         private readonly ISessionService sessionService;

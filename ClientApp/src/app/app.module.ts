@@ -1,10 +1,10 @@
-import { AdminAuthGuard } from './authguard/adminauthguard';
+import { AuthService } from './auth/auth.service';
+import { AdminAuthGuard } from './auth/adminauthguard';
 import { UniversalService } from './Services/universal.service';
-import { AuthenticationService } from './Services/authentication.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Http, HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
@@ -12,7 +12,7 @@ import { UserService } from './Services/user.service';
 import { AppErrorHandler } from './app-error-handler';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StaffAuthGuard } from './authguard/staffauthguard';
+import { StaffAuthGuard } from './auth/staffauthguard';
 import { StudentauthService } from './Services/studentauth.service';
 import { StudentService } from './Services/student.service';
 import { DataTablesModule } from 'angular-datatables';
@@ -44,9 +44,11 @@ import { DashboardComponent } from './staff-area/dashboard/dashboard.component';
 import { DashboardService } from './Services/dashboard.service';
 import { ResultsComponent } from './staff-area/results/results.component';
 import { StaffFooterComponent } from './staff-area/staff-footer/staff-footer.component';
-import { AuthGuard } from './authguard/authguard';
+import { AuthGuard } from './auth/authguard';
 import { FeesComponent } from './student-area/fees/fees.component';
 import { RoleComponent } from './staff-area/role/role.component';
+import { AuthenticationService } from './Services/auth.service';
+import { TokenInterceptor } from './authguard/token.interceptor';
 
 
 
@@ -114,14 +116,14 @@ import { RoleComponent } from './staff-area/role/role.component';
         children: [{ path: '', component: StudentChangepasswordComponent, canActivate: [AuthGuard]}]
       },
       {
-        path: 'result', component: StudentAreaComponent,
+        path: 'result/student', component: StudentAreaComponent,
         children: [{ path: '', component: ResultComponent, canActivate: [AuthGuard] }]
       },
       {
         path: 'fees', component: StudentAreaComponent,
         children: [{ path: '', component: FeesComponent, canActivate: [AuthGuard] }]
       },
-      // Staff Area Ends Here
+      // Student Area Ends Here
 
 
       //Staff Area Starts Here
@@ -138,7 +140,7 @@ import { RoleComponent } from './staff-area/role/role.component';
         children: [{ path: '', component: EditStudentComponent, canActivate: [AdminAuthGuard]}]
       },
       { path: 'staff/dashboard', component: StaffAreaComponent,
-        children: [{ path: '', component: DashboardComponent, canActivate: [StaffAuthGuard]}]
+        children: [{ path: '', component: DashboardComponent, }]
       },
 
       { path: 'staff-profile', component: StaffAreaComponent,
@@ -158,7 +160,7 @@ import { RoleComponent } from './staff-area/role/role.component';
         children: [{ path: '', component: StudentComponent, canActivate: [StaffAuthGuard]}]
       },
       { path: 'staff-register', component: StaffAreaComponent,
-        children: [{ path: '', component: StaffRegisterComponent, canActivate: [AdminAuthGuard]}]
+        children: [{ path: '', component: StaffRegisterComponent, }]
       },
       { path: 'student-register', component: StaffAreaComponent,
         children: [{ path: '', component: StudentRegisterComponent, canActivate: [AdminAuthGuard]}]
@@ -194,7 +196,9 @@ import { RoleComponent } from './staff-area/role/role.component';
     UniversalService,
     ResultService,
     DashboardService,
-    { provide: ErrorHandler, useClass: AppErrorHandler },
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    //{ provide: ErrorHandler, useClass: AppErrorHandler },
   ],
   bootstrap: [AppComponent]
 })

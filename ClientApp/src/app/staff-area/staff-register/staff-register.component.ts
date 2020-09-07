@@ -19,7 +19,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class StaffRegisterComponent implements OnInit {
 
 
-  model = {};
+  model = { };
  
   loading = false;
   roles : any[];
@@ -47,7 +47,7 @@ let sources = [
       this.universalService.getNextKin()
 ];
 
-    Observable.forkJoin(sources).subscribe( data => {
+    Observable.forkJoin(sources).subscribe( (data:any) => {
       this.sex = data[0];
       this.bloodGroups = data[1];
       this.genoTypes = data[2];
@@ -69,13 +69,13 @@ let sources = [
 
   register(form: NgForm) {
         this.spinner.show();
-        this.userService.create(form.value).subscribe(data => {
+        this.userService.create(form.value).subscribe((data:any) => {
         this.resetForm(form);
         this.toastr.success('Registration successful', 'Success');
         this.spinner.hide();
         },
         error => {
-            this.toastr.error(error._body, 'Error');
+            this.toastr.error(error, 'Error'); 
             this.spinner.hide();
         });
 }

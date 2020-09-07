@@ -28,31 +28,31 @@ export class Student {
     nkPhoneNumber: string;
     nkRelationship:KeyValuePair;
     nkAddress:string;
-    results:any[];
+    results:Result[];
     terms:any[]
 }
 
 export class SaveStudent {
-    id: any;
+    id: number;
     firstName: string;
     lastName: string;
     userName: string;
     dateOfBirth: string;
     address: string;
-    sexId :any;
-    gradeId :any;
+    sexId :number;
+    gradeId :number;
     password:any;
     country:string;
     state:string;
-    lga:string;
-    genoTypeId:any;
-    bloodGroupId:any;
-    religionId:any;
+    lGA:string;
+    genoTypeId:number;
+    bloodGroupId:number;
+    religionId:number;
     hairColor:string;
-    nkName:string;
-    nkPhoneNumber: string;
-    nkRelationshipId:any;
-    nkAddress:string;
+    nKName:string;
+    nKPhoneNumber: string;
+    nKRelationshipId:number;
+    nKAddress:string;
 }
 
 export class Stud {
@@ -87,6 +87,7 @@ export class Result{
     exam: string;
     year: string;
     studentId: any;
+    total:any;
 }
 
 export class resetResult{

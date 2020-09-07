@@ -1,49 +1,43 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 @Injectable()
 export class DashboardService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
 getBoys(){
-  return this.http.get('/api/male', this.jwt()).map((res:Response)=> res.json());
+  return this.http.get('/api/male');
 }
 
 getGirls(){
-  return this.http.get('/api/female', this.jwt()).map((res:Response)=> res.json());
+  return this.http.get('/api/female');
 }
 
 getStudents(){
-  return this.http.get('/api/allStudents', this.jwt()).map((res:Response)=> res.json());
+  return this.http.get('/api/allStudents');
 }
 
 getStaffs(){
-  return this.http.get('/api/allStaff', this.jwt()).map((res:Response)=> res.json());
+  return this.http.get('/api/allStaff');
 }
 
 getGrades(){
-  return this.http.get('/api/gradeCount', this.jwt()).map((res:Response)=> res.json());
+  return this.http.get('/api/gradeCount');
 }
 
 getGradeMale(){
-  return this.http.get('/api/GradeMales', this.jwt()).map((res:Response) => res.json());
+  return this.http.get('/api/GradeMales');
 }
 getGradeFemale(){
-  return this.http.get('/api/GradeFemales', this.jwt()).map((res:Response) => res.json());
+  return this.http.get('/api/GradeFemales');
 }
 
 getStaffGenders(){
-  return this.http.get('/api/staffGenders', this.jwt()).map((res:Response)=> res.json());
+  return this.http.get('/api/staffGenders');
 }
 
 
-  private jwt() {
-    // create authorization header with jwt token
-    let token = JSON.parse(localStorage.getItem('token'));
-    if (token) {
-        let headers = new Headers({ 'Authorization': 'Bearer ' + token});
-        return new RequestOptions({ headers: headers });
-    }
-}
+  
 }

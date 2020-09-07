@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../../Services/student.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../../Services/authentication.service';
+import { AuthenticationService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-student-bar',

@@ -1,15 +1,22 @@
-<!-- <div  style="margin-top: 0px;  " class="form-group col-md-offset-4 col-md-4" >
+<div  style="margin-top: 20px;  " class="form-group offset-md-4 col-md-4" >
 
-
-    <select class="form-control" (change)="onGradeChange()" name="grade" [(ngModel)]="grade" >
+      <select class="form-control" (change)="onGradeChange()" name="grade"  [(ngModel)]="filter.gradeId" >
         <option  value="0">Please select class</option>
         <option *ngFor="let c of grades;"   value="{{c.id}}">{{c.name}}</option>
     </select>
 
-</div> -->
+</div>
 
 
-          <div class="card-body">
+          <div class="card-body" id="studentTable" #studentTable>
+            <div style="padding-bottom: 10px;padding-top: 10px;">
+              <div class="row">
+               <div class="col-sm-12">
+                <button (click)="exportToExcel()" class="btn btn-success">Export To Excel</button> 
+               </div>
+              </div>
+             </div>
+
               <table  id="example1" datatable="ng" class="table table-bordered table-striped" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                   <tr>
@@ -17,7 +24,7 @@
                     <th>Full Name</th>
                     <th>Class</th>
                     <th>Sex</th>
-                    <th *ngIf="authService.isAdmin()">Actions</th>
+                    <th >Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -25,19 +32,19 @@
                     <td>{{i+1}}</td>
                     <td>{{student.lastName  +  '   '  +   student.firstName}}</td>
                     <td>{{student.grade.name}}</td>
-                    <td>{{student.sex.name}}</td>
-                    <td *ngIf="authService.isAdmin()">
+                    <td>{{student.sex.name}}</td> 
+                    <td >
                       <a [routerLink]="['/view-student', student.id]" class="btn btn-primary btn-sm" >
                         <i class="fas fa-folder">
                         </i>
                         View
                       </a>
-                      <a [routerLink]="['/edit-student', student.id]" class="btn btn-info btn-sm" >
+                      <a *ngIf="authService.isAdmin()" [routerLink]="['/edit-student', student.id]" class="btn btn-info btn-sm" >
                         <i class="fas fa-pencil-alt">
                         </i>
                         Edit
                       </a>
-                      <a (click)="setId(student.id)"  data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-sm">
+                      <a *ngIf="authService.isAdmin()" (click)="setId(student.id)"  data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-sm">
                         <i class="fas fa-trash">
                         </i>
                         Delete

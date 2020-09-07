@@ -7,7 +7,7 @@ namespace PROJECT.Interface
     public interface IResultService
     {
          void Create(StudentTerm studentTerm);
-         void Save(Result result);
+         void Save(List<Result> results);
         Task<Student> GetStudent(string name);
         Result GetById(int id);
         void Update(Result result);

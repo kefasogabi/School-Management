@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataTableDirective } from 'angular-datatables';
 import { UserService } from '../../Services/user.service';
-import { AuthenticationService } from '../../Services/authentication.service';
+import { AuthenticationService } from '../../Services/auth.service';
 
 
 @Component({
@@ -67,7 +67,7 @@ export class UserComponent implements OnInit {
   }
 
   private loadAllUsers(){
-    this.userService.getAll().subscribe( data =>{
+    this.userService.getAll().subscribe((data:any) =>{
       this.users = data;
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         // Destroy the table first

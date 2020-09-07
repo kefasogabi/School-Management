@@ -1,7 +1,7 @@
 import { JwtHelper } from 'angular2-jwt';
-import { AuthenticationService } from './../Services/authentication.service';
 import { UserService } from './../Services/user.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-staff-area',

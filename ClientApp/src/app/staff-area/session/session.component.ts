@@ -68,7 +68,7 @@ export class SessionComponent implements OnInit {
   }
 
   private loadAllSessions(){
-    this.userService.getSessions().subscribe(data => {
+    this.userService.getSessions().subscribe((data:any) => {
       this.sessions = data;
     });
   }
@@ -116,7 +116,7 @@ export class SessionComponent implements OnInit {
 
 
 private loadAllTerms(){
-  this.userService.getTerms().subscribe(data => {
+  this.userService.getTerms().subscribe((data:any) => {
     this.terms = data;
   });
 }

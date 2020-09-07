@@ -26,7 +26,6 @@ using Newtonsoft.Json;
 namespace PROJECT.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize]
     public class AccountController : Controller
     {
         private readonly string[] Accepted_file = new[] {".jpg", ".jpeg", ".png"};
@@ -58,6 +57,7 @@ namespace PROJECT.Controllers
     
 
             [Authorize(Roles = RoleName.Admin)]
+            [AllowAnonymous]
             [HttpPost]
             public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
             {
@@ -277,7 +277,6 @@ namespace PROJECT.Controllers
 
 
             [Authorize(Roles = RoleName.Admin)]
-            [AllowAnonymous]
             [HttpGet]
            public async Task<IActionResult> GetAll()
            {
@@ -371,13 +370,7 @@ namespace PROJECT.Controllers
                return Ok(model);
            }
 
-        //    private void AddErrors(IdentityResult result)  
-        //     {
-        //         foreach (var error in result.Errors)
-        //         {
-        //             ModelState.AddModelError(string.Empty, error.Description);
-        //         }
-        //     }
+        
 
 
 

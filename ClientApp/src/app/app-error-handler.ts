@@ -2,7 +2,6 @@ import { NgZone, ErrorHandler, Inject, Injector, isDevMode } from "@angular/core
 import { Response } from "@angular/http";
 import { ToastrService } from "ngx-toastr";
 import * as Raven from 'raven-js'
-import { Observable } from "rxjs";
 
 
 export class AppErrorHandler implements ErrorHandler{
@@ -12,6 +11,7 @@ export class AppErrorHandler implements ErrorHandler{
     private get toastr(): ToastrService {
         return this.injector.get(ToastrService);
     }
+
 
     public handleError(error: any): void {
         this.ngZone.run(() => {
@@ -34,7 +34,7 @@ export class AppErrorHandler implements ErrorHandler{
 
         if (!isDevMode())
             Raven.captureException(error.originalError || error);
-        else
+        else 
             throw error;
     }
 

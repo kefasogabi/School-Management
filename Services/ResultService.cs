@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PROJECT.Helper;
 using PROJECT.Interface;
 using PROJECT.Models;
 
@@ -22,9 +23,19 @@ namespace PROJECT.Services
             context.Add(studentTerm);
         }
 
-        public void Save(Result result)
+        public void Save(List<Result> results)
         {
-            context.Add(result);
+            try{
+                foreach(Result result in results)
+                {
+                    context.Add(result);
+                }
+            }
+            catch(AppException ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public Result GetById(int id)
@@ -70,12 +81,7 @@ namespace PROJECT.Services
             return student;
         }
 
-        // public async Task<Result> GetUserResult(Result result)
-        // {
-        //     var results = await context.Results.Where(c => c.Year == result.Year)
-        //                                         .SingleOrDefaultAsync(c => c.StudentId == result.StudentId);
-        //     return results;
-        // }
+        
       
     }
 }

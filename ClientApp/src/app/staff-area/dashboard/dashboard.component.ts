@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
       this.dashBoard.getGradeFemale()
      ];
      
-     Observable.forkJoin(sources).subscribe(data => {
+     Observable.forkJoin(sources).subscribe((data:any) => {
         this.spinner.show();
         
       this.boys = data[0];
@@ -85,15 +85,15 @@ export class DashboardComponent implements OnInit {
 
 
     this.BarChart1 = new Chart('barChart1', {
-      type: 'bar',
+      type: 'pie',
       data: {
           labels: ['Male', 'Female'],
           datasets: [{
               label: `No of Students`,
               data: [this.boys, this.girls],
               backgroundColor: [
-                  '#28a745',
-                  '#28a745'
+                  '#00c0ef',
+                  '#f56954'
               ]
           }]
       },
@@ -110,15 +110,15 @@ export class DashboardComponent implements OnInit {
 
 
   this.BarChart2 = new Chart('barChart2', {
-    type: 'bar',
+    type: 'doughnut',
     data: {
         labels: ['Male', 'Female'],
         datasets: [{
             label: `No of Staffs`,
             data: staffGenders,
             backgroundColor: [
-                '#17a2b8',
-                '#17a2b8'
+                '#3c8dbc',
+                '#f39c12'
             ]
         }]
     },

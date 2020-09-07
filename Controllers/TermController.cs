@@ -10,7 +10,6 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
     public class TermController : Controller
     {
         private readonly ITermService termService;

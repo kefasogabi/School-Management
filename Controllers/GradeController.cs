@@ -9,7 +9,7 @@ using PROJECT.Models;
 
 namespace PROJECT.Controllers
 {
-    [Authorize]
+    
     public class GradeController : Controller
     {
         private readonly ApplicationDbContext context;

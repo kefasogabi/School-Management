@@ -4,6 +4,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/take';
 import { UserService } from '../../Services/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -14,10 +15,6 @@ import { UserService } from '../../Services/user.service';
 export class ViewStaffComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
-
-  loading =false;
-
-  
 
   staff ={
   
@@ -43,10 +40,13 @@ export class ViewStaffComponent implements OnInit {
       name:""
     },
 };
-  constructor(private userService: UserService, private route: ActivatedRoute, private toastr:ToastrService) {
+  constructor(private userService: UserService, 
+              private route: ActivatedRoute, 
+              private toastr:ToastrService,
+              private spinner: NgxSpinnerService,) {
 
     let id = this.route.snapshot.paramMap.get('id');
-    if (id) this.userService.getById(id).take(1).subscribe(data => this.staff = data );
+    if (id) this.userService.getById(id).take(1).subscribe((data:any) => this.staff = data );
     
    }
 
@@ -61,18 +61,16 @@ export class ViewStaffComponent implements OnInit {
   }
 
   uploadPhoto(id){
-    this.loading = true;
+    this.spinner.show();
     var nativeElemet: HTMLInputElement = this.fileInput.nativeElement;
     this.userService.uploadimage(id, nativeElemet.files[0]).subscribe((data:any) => {
-
-      console.log(data);
       this.getStaff(); 
       this.toastr.success('Image Uploaded successful', 'Success');
+      this.spinner.hide();
     },
     error => {
-      if(error)
       this.toastr.error(error);
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 

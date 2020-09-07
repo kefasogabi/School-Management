@@ -41,20 +41,20 @@
             <div class="card-body">
 
                 <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
-                    <li [routerLinkActive]='["link-active"]' class="nav-item">
+                    <li [routerLinkActive]='["active"]' class="nav-item">
                       <a class="nav-link"  id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">UPLOAD RESULT</a>
                     </li>
-                    <li [routerLinkActive]='["link-active"]' class="nav-item">
+                    <li [routerLinkActive]='["active"]' class="nav-item">
                       <a class="nav-link"  id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">VIEW RESULT</a>
                     </li>
-                    <li [routerLinkActive]='["link-active"]' class="nav-item">
+                    <li [routerLinkActive]='["active"]' class="nav-item">
                       <a class="nav-link"  id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">RESET PASSWORD</a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div  class=" ">
-                            <div style="margin-top:20px;" class="" >
+                            <div style="margin-top:20px;" class="" > 
                   
                               <button style="font-weight:bolder;"  data-toggle="modal" data-target="#myModal"  class="btn btn-primary btn-sm col-md-4 offset-md-4"> <i class="fa fa-floppy-o"></i> Add Term</button>
                   
@@ -103,9 +103,9 @@
                                           
                   
                                   <div style="margin-top:20px;" >
-                                    <form name="form"  (ngSubmit)="postResult(r)" #r="ngForm" novalidate >
+                                    <form name="form"  (ngSubmit)="addResult(r)" #r="ngForm" novalidate >
                                       
-                                      <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
+                                      <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"  >
                                         <div class="form-group  " >
                                             <select class="form-control" [(ngModel)]="result.year" name="year" required #year="ngModel" >
                                                 <option selected="selected" >Select Term </option>
@@ -129,16 +129,26 @@
                                     <div class="form-group col-md-2" >
                                       <input type="text" class="form-control" name="cA2" [(ngModel)]="result.cA2" #cA2="ngModel" placeholder="2nd CA"  />
                                   </div>
-                                  <div class="form-group col-md-1" >
+                                  <div class="form-group col-md-2" >
                                     <input type="text" class="form-control" name="exam" [(ngModel)]="result.exam" #exam="ngModel" placeholder="Exam"  />
                                 </div>
-                                <div class="form-group col-md-1">
-                                  <button  class="btn btn-primary btn-block">Add</button>
-                                </div>
+                                
                               </div> 
+                              <div class="row form-inline float-right"> 
+                                  <div class="form-group col-md-5 ">   
+                                    <button [disabled]="!r.valid" class="form-control btn btn-primary btn-block">Add</button>
+                                  </div> 
+                                  <div class="form-group col-md-7 "> 
+                                    <button type="button"  (click)="resetForm(f)" class="form-control btn btn-danger btn-block">Clear</button>
+                                  </div>
+                                </div>
                                     </form>
                                   </div>
-                                  <div *ngIf="res" >
+
+                                  <br> <br>
+
+
+                                  <div *ngIf="resultService.res" >
                                   <table class="table  table-hover table-striped">
                                     <thead>
                                         <tr>
@@ -148,23 +158,36 @@
                                             <th>1ST CA</th>
                                             <th>2ND CA</th>
                                             <th>EXAM</th>
-                                            <!-- <th>EDIT</th> -->
+                                            <th>EDIT</th>
                                             <th>DELETE</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let sub of res; let i = index">
+                                        <tr *ngFor="let sub of resultService.res; let i = index">
                                             <td>{{sub.name}}</td>
                                             <td>{{sub.ass1}}</td>
                                             <td>{{sub.ass2}}</td>
                                             <td>{{sub.cA1}}</td>
                                             <td>{{sub.cA2}}</td>
                                             <td>{{sub.exam}}</td>
-                                            <!-- <td><a (click)="editResult(i)"><span class="fas fa-edit"></span></a></td> -->
+                                            <td><a (click)="getIndex(i)"><span class="fas fa-edit"></span></a></td>
                                             <td><a (click)="deleteResults(i)"><span class="fas fa-trash"></span></a></td> 
                                         </tr>
                                     </tbody>
+                                  
                                 </table>
+                                <div>
+                                  
+                                    <div class="row form-inline float-right ">
+                                    <div class="form-group col-md-6  ">  
+                                      <button (click)="postResult()" type="button"  class="form-control btn btn-success btn-block">Submit</button>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6 "> 
+                                      <button (click)="clear()" type="button"  class="form-control btn btn-danger btn-block">Clear</button>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                   
                           </div>
@@ -179,7 +202,7 @@
                                 <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
                                 <div class="alert alert-info" role="alert">Please select the Term, for which you want to check result.</div>
                                 <div class="form-group col-md-4 offset-md-4 " >
-                                        <select class="form-control"   [(ngModel)]="yea" name="yea" >
+                                        <select class="form-control"   [(ngModel)]="yearId" name="yearId" >
                                           <option value="Select Term" >Select Term </option>
                                           <option *ngFor="let term of student.terms" value="{{term.name}}">{{term.name}}</option>
                                       </select>
@@ -187,13 +210,13 @@
                             </div>
                             <div class="card-footer">
                                 <button (click)="onYearChange()" class="btn btn-success float-right"><span class="fas fa-search"></span> Search</button>
-                            </div>
+                            </div> 
                           </form>
                 </div>
 
                       <div *ngIf="subjects" >
 
-                          <form name="form"  (ngSubmit)="postResult(r)" #r="ngForm" novalidate >
+                          <form name="form"  (ngSubmit)="updateResult(r)" #r="ngForm" novalidate >
                                       
                               <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
                                 <div class="form-group  " >
@@ -204,6 +227,7 @@
                                     <div class="validation-error" *ngIf="year.touched && year.invalid">Please Select Term</div>
                                 </div>
                                 <div class="row">
+                                  <input  type="hidden" name="id" #id="ngModel" [(ngModel)]="Eresult.id"  >
                                 <div class="form-group col-md-2" >
                                   <input type="text" class="form-control" name="name" [(ngModel)]="Eresult.name" #name="ngModel" placeholder="Subject" />
                               </div>
@@ -244,19 +268,25 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr *ngFor="let sub of subjects">
+                              <tr *ngFor="let sub of subjects;">
                                   <td>{{sub.name}}</td>
                                   <td>{{sub.ass1}}</td>
                                   <td>{{sub.ass2}}</td>
                                   <td>{{sub.cA1}}</td>
                                   <td>{{sub.cA2}}</td>
-                                  <td>{{sub.exam}}</td>
-                                  <td>{{total}}</td>
-                                  <td><a (click)="editResults(sub.id)"><span class="fas fa-edit"></span></a></td>
-                                  <td><a (click)="deleteResult(sub.id)" ><span class="fas fa-trash"></span></a></td>
+                                  <td>{{sub.exam}}</td>  
+                                  <td>{{sub.total}}</td>   
+                                  <td><a class="btn btn-success" (click)="editResults(sub.id)"><span class="fas fa-edit "></span></a></td>
+                                  <td><a class="btn btn-danger" (click)="setId(sub.id)" data-toggle="modal" data-target="#delModal" ><span class="fas fa-trash"></span></a></td>
                               </tr>
-                          </tbody>
-                      </table>
+                          </tbody> 
+                          <thead>
+                            <tr>
+                              <th colspan="6" >Average</th>
+                              <th>{{average | number:'2.1-2'}}</th>
+                            </tr>
+                          </thead> 
+                      </table> 
                     </div>
 
                     </div>
@@ -288,3 +318,21 @@
   </div>
 </div>
 
+ <!-- Modal -->
+ <div class="modal fade"  id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Warning</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete..
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" (click)="deleteResult(id)" data-dismiss="modal" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

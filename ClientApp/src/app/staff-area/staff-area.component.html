@@ -19,7 +19,7 @@
           <img src="/uploads/{{staff.fileName}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a [routerLink]='["/staff-profile"]' class="d-block">{{staff.lastName}} {{staff.firstName}} </a>
+          <a [routerLink]='["/staff-profile"]' class="d-block"><b>{{staff.firstName}} {{staff.lastName}}</b></a>
         </div>
       </div>
 
@@ -104,7 +104,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="pages/charts/chartjs.html" class="nav-link">
+                    <a [routerLink]='["/roles"]' class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Add Role</p>
                     </a>
@@ -141,7 +141,6 @@
     </section>
   <!-- /.content -->
   </div>
-  <!-- <app-staff-footer></app-staff-footer> -->
 
   </div>
 </div>
