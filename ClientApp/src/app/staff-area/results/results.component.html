@@ -42,23 +42,23 @@
 
                 <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
                     <li [routerLinkActive]='["active"]' class="nav-item">
-                      <a class="nav-link"  id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">UPLOAD RESULT</a>
+                      <a class="nav-link"  id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload" aria-selected="true">UPLOAD RESULT</a>
                     </li>
                     <li [routerLinkActive]='["active"]' class="nav-item">
-                      <a class="nav-link"  id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">VIEW RESULT</a>
+                      <a class="nav-link"  id="view-tab" data-toggle="tab" href="#view" role="tab" aria-controls="view" aria-selected="false">VIEW RESULT</a>
                     </li>
                     <li [routerLinkActive]='["active"]' class="nav-item">
-                      <a class="nav-link"  id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">RESET PASSWORD</a>
+                      <a class="nav-link"  id="contact-tab" data-toggle="tab" href="#password" role="tab" aria-controls="contact" aria-selected="false">RESET PASSWORD</a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
                         <div  class=" ">
-                            <div style="margin-top:20px;" class="" > 
-                  
+                            <div style="margin-top:20px;" class="" >
+
                               <button style="font-weight:bolder;"  data-toggle="modal" data-target="#myModal"  class="btn btn-primary btn-sm col-md-4 offset-md-4"> <i class="fa fa-floppy-o"></i> Add Term</button>
-                  
-                  
+
+
                               <!-- modal begins here -->
                               <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
@@ -70,41 +70,41 @@
                                       </button>
                                     </div>
                                     <div class="modal-body">
-                                      <form name="form" class="" (ngSubmit)="setT(t)" #t="ngForm" novalidate>
+                                      <form name="form" class="" (ngSubmit)="setTerm(t)" #t="ngForm" novalidate>
                                         <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
                                       <div class="row">
-                                              <div class="form-group col-md-12" > 
-                                                <select class="form-control" [(ngModel)]="model.termid" name="termid" required #termid="ngModel" >
+                                              <div class="form-group col-md-12" >
+                                                <select class="form-control" [(ngModel)]="model.termId" name="termId" required #termId="ngModel" >
                                                     <option >Select Term </option>
                                                     <option *ngFor="let t of terms" value="{{t.id}}">{{t.name}}</option>
                                                 </select>
-                                                <div class="validation-error" *ngIf="termid.touched && termid.invalid">Please Select Term</div>
+                                                <div class="validation-error" *ngIf="termId.touched && termId.invalid">Please Select Term</div>
                                             </div>
-                                        
+
                                     </div>
-                                        </form> 
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
-                                      
+
                                       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                       <button type="button" (click)="postTerm(t)" data-dismiss="modal" class="btn btn-primary">Submit</button>
                                     </div>
                                   </div>
                                 </div>
                               </div> <!--modal ends here-->
-                  
-                             
-                  
+
+
+
                                   <br />
                                   <br>
-                  
-                                  
+
+
                                       <div class="">
-                                          
-                  
+
+
                                   <div style="margin-top:20px;" >
                                     <form name="form"  (ngSubmit)="addResult(r)" #r="ngForm" novalidate >
-                                      
+
                                       <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"  >
                                         <div class="form-group  " >
                                             <select class="form-control" [(ngModel)]="result.year" name="year" required #year="ngModel" >
@@ -132,13 +132,13 @@
                                   <div class="form-group col-md-2" >
                                     <input type="text" class="form-control" name="exam" [(ngModel)]="result.exam" #exam="ngModel" placeholder="Exam"  />
                                 </div>
-                                
-                              </div> 
-                              <div class="row form-inline float-right"> 
-                                  <div class="form-group col-md-5 ">   
+
+                              </div>
+                              <div class="row form-inline float-right">
+                                  <div class="form-group col-md-5 ">
                                     <button [disabled]="!r.valid" class="form-control btn btn-primary btn-block">Add</button>
-                                  </div> 
-                                  <div class="form-group col-md-7 "> 
+                                  </div>
+                                  <div class="form-group col-md-7 ">
                                     <button type="button"  (click)="resetForm(f)" class="form-control btn btn-danger btn-block">Clear</button>
                                   </div>
                                 </div>
@@ -159,7 +159,7 @@
                                             <th>2ND CA</th>
                                             <th>EXAM</th>
                                             <th>EDIT</th>
-                                            <th>DELETE</th> 
+                                            <th>DELETE</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -171,31 +171,31 @@
                                             <td>{{sub.cA2}}</td>
                                             <td>{{sub.exam}}</td>
                                             <td><a (click)="getIndex(i)"><span class="fas fa-edit"></span></a></td>
-                                            <td><a (click)="deleteResults(i)"><span class="fas fa-trash"></span></a></td> 
+                                            <td><a (click)="deleteResults(i)"><span class="fas fa-trash"></span></a></td>
                                         </tr>
                                     </tbody>
-                                  
+
                                 </table>
                                 <div>
-                                  
+
                                     <div class="row form-inline float-right ">
-                                    <div class="form-group col-md-6  ">  
+                                    <div class="form-group col-md-6  ">
                                       <button (click)="postResult()" type="button"  class="form-control btn btn-success btn-block">Submit</button>
                                     </div>
-                                    
-                                    <div class="form-group col-md-6 "> 
+
+                                    <div class="form-group col-md-6 ">
                                       <button (click)="clear()" type="button"  class="form-control btn btn-danger btn-block">Clear</button>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                  
+
                           </div>
-                         
+
                         </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade" id="view" role="tabpanel" aria-labelledby="view-tab">
                         <div class="card card-default">
                           <form >
                             <div class="card-body">
@@ -209,15 +209,15 @@
                                     </div>
                             </div>
                             <div class="card-footer">
-                                <button (click)="onYearChange()" class="btn btn-success float-right"><span class="fas fa-search"></span> Search</button>
-                            </div> 
+                                <button (click)="onYearChange(student.id)" class="btn btn-success float-right"><span class="fas fa-search"></span> Search</button>
+                            </div>
                           </form>
                 </div>
 
                       <div *ngIf="subjects" >
 
                           <form name="form"  (ngSubmit)="updateResult(r)" #r="ngForm" novalidate >
-                                      
+
                               <input  type="hidden" name="studentId" #studentId="ngModel" [(ngModel)]="student.id"   >
                                 <div class="form-group  " >
                                     <select class="form-control" [(ngModel)]="Eresult.year" name="year" required #year="ngModel" >
@@ -249,7 +249,7 @@
                         <div class="form-group col-md-1">
                           <button  class="btn btn-primary btn-block">Edit</button>
                         </div>
-                      </div> 
+                      </div>
                             </form>
 
 
@@ -274,23 +274,23 @@
                                   <td>{{sub.ass2}}</td>
                                   <td>{{sub.cA1}}</td>
                                   <td>{{sub.cA2}}</td>
-                                  <td>{{sub.exam}}</td>  
-                                  <td>{{sub.total}}</td>   
+                                  <td>{{sub.exam}}</td>
+                                  <td>{{sub.total}}</td>
                                   <td><a class="btn btn-success" (click)="editResults(sub.id)"><span class="fas fa-edit "></span></a></td>
                                   <td><a class="btn btn-danger" (click)="setId(sub.id)" data-toggle="modal" data-target="#delModal" ><span class="fas fa-trash"></span></a></td>
                               </tr>
-                          </tbody> 
+                          </tbody>
                           <thead>
                             <tr>
                               <th colspan="6" >Average</th>
                               <th>{{average | number:'2.1-2'}}</th>
                             </tr>
-                          </thead> 
-                      </table> 
+                          </thead>
+                      </table>
                     </div>
 
                     </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                         <div class="row">
                           <div style="margin-top:20px;" class="col-md-4 offset-md-4" >
                               <form name="form" (ngSubmit)="changePassword(f)" #f="ngForm" novalidate>
@@ -300,15 +300,15 @@
                                   <div *ngIf="password.touched && password.invalid" class="validation-error">Password is required</div>
                               </div>
                               <div class="form-group">
-                                  <button [disabled]="!f.valid || loading" style="font-weight:bolder;"  class="btn btn-primary inp but form-control">Change Password</button>
+                                  <button [disabled]="!f.valid" style="font-weight:bolder;"  class="btn btn-primary inp but form-control">Change Password</button>
                                  </div>
                               </form>
                             </div>
                           </div>
                     </div>
                   </div>
-        
-       
+
+
 
 
 

@@ -143,7 +143,6 @@ namespace PROJECT.Repository
                                     .Include(g => g.GenoType)
                                     .Include(n => n.NKRelationship)
                                     .Include(r => r.Religion)
-                                    .Include(c => c.Results)
                                     .Include(c => c.Session).SingleOrDefaultAsync(x => x.Id == id);
         }
 

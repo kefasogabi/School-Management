@@ -85,22 +85,38 @@ namespace PROJECT.Controllers
             return Ok();
         }
 
-        [HttpGet("/api/getresult/{id}")]
-        public IActionResult GetById(int id)
-        { 
+        [HttpGet("/api/getResult/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
             var res = new ResultDto();
-
-            try
-            {
-                var result = resultService.GetById(id);
-                res = mapper.Map<ResultDto>(result);
+            try{
+                var result = await resultService.GetById(id);
+                res = mapper.Map<Result, ResultDto>(result);
             }
             catch(AppException ex)
             {
-                return BadRequest(ex.Message);
+                throw ex;
+            }
+
+            return Ok(res);
+        }
+
+        [HttpGet("/api/getResults/{id}")]
+        public async Task<List<ResultDto>> GetResultsById(int id)
+        { 
+            var res = new List<ResultDto>();
+
+            try
+            {
+                var result = await resultService.GetResultsById(id);
+                res = mapper.Map<List<Result>, List<ResultDto>>(result);
+            }
+            catch(AppException ex)
+            {
+                throw ex;
             }
            
-            return Ok(res);
+            return res;
         }
 
         [HttpDelete("/api/deleteresult/{id}")]

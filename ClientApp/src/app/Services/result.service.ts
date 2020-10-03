@@ -14,14 +14,17 @@ export class ResultService {
     return this.http.post('/api/PostStudentTerm', studentTerm);
  }
 
- postResult(){ 
+ postResult(){
      let data = JSON.stringify(this.res);
      return this.http.post('/api/PostResult', data);
  }
 
- getResult(id){
-     return this.http.get('/api/getresult/' + id);
+ getResults(id){
+     return this.http.get('/api/getResults/' + id);
  }
+ getResult(id){
+  return this.http.get('/api/getResult/' + id);
+}
 
  getStudent(name){
      return this.http.get('/api/Getstudent/' + name);

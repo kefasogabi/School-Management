@@ -1,8 +1,8 @@
 import { ChangePassword } from './user.model';
 
-export interface KeyValuePair { 
-    id: number; 
-    name: string; 
+export interface KeyValuePair {
+    id: number;
+    name: string;
   }
 
 export class Student {
@@ -28,8 +28,7 @@ export class Student {
     nkPhoneNumber: string;
     nkRelationship:KeyValuePair;
     nkAddress:string;
-    results:Result[];
-    terms:any[]
+    terms:KeyValuePair[]
 }
 
 export class SaveStudent {

@@ -37,8 +37,8 @@ namespace PROJECT.Models
         [ForeignKey("ReligionId")]
         public Religion Religion { get; set; }
         public string HairColor { get; set; }
-        public string NKName { get; set; }
         public ICollection<Result> Results { get; set; }
+        public string NKName { get; set; }
         public string NKPhoneNumber { get; set; }
         public int? NKRelationshipId { get; set; } 
         [ForeignKey("NKRelationshipId")]  
@@ -48,7 +48,7 @@ namespace PROJECT.Models
         public Student()
         {
             Terms = new Collection<StudentTerm>();
-            Results = new Collection<Result>();
+             Results = new Collection<Result>();
         }
         
     }

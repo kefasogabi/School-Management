@@ -18,7 +18,7 @@
           <div class="card">
             <div class="card-body login-card-body">
               <p class="login-box-msg">Sign in to start your session</p>
-              <div *ngIf="isLoginError" align="center" class="red-text glyphicon glyphicon-error">Incorrect Username or Password</div>
+              <div *ngIf="invalidLogin" align="center" class="red-text glyphicon glyphicon-error">Incorrect Username or Password</div>
               <form name="form" (ngSubmit)="login(f.value)" #f="ngForm" novalidate>
                 <div *ngIf="invalidLogin" class="alert alert-danger">
                   invalid Username and/or password
@@ -57,12 +57,12 @@
                   <!-- /.col -->
                 </div>
               </form>
-        
-              
+
+
             </div>
             <!-- /.login-card-body -->
           </div>
         </div>
         <!-- /.login-box -->
-       
+
       </div>

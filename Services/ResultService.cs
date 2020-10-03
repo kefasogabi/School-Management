@@ -38,9 +38,30 @@ namespace PROJECT.Services
             
         }
 
-        public Result GetById(int id)
+        public async Task<List<Result>> GetResultsById(int? id)
         {
-            return context.Results.SingleOrDefault(c => c.Id == id);
+            var results = new List<Result>();
+            try{
+                results = await context.Results.Where(c => c.StudentId == id).ToListAsync();
+            }
+            catch(AppException ex)
+            {
+                throw ex;
+            }
+            return results;
+        }
+
+        public async Task<Result> GetById(int id)
+        {
+            var result = new Result();
+            try{
+                result = await context.Results.SingleOrDefaultAsync(c => c.Id == id);
+            }
+            catch(AppException ex)
+            {
+                throw ex;
+            }
+            return result;
         }
 
         public void Update(Result result)
@@ -76,7 +97,6 @@ namespace PROJECT.Services
                                                 .ThenInclude(st => st.Term)
                                                 .OrderByDescending( x => x.Id)
                                                 .Include(c => c.Grade)
-                                                .Include(r => r.Results)
                                                 .SingleOrDefaultAsync(c => c.UserName == name);
             return student;
         }

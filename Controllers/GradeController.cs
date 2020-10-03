@@ -24,7 +24,18 @@ namespace PROJECT.Controllers
         [HttpGet("/api/grade")]
         public async Task<IEnumerable<GradeDto>> GetClass()
         {
-            var grade = await context.Grade.Include(c => c.Students).ThenInclude( c => c.Sex).ToListAsync();
+            var grade = await context.Grade.Include(c => c.Students)
+                                            .ThenInclude( c => c.Sex)
+                                            .Include(x =>x.Students)
+                                            .ThenInclude(c => c.Grade)
+                                            .Include(x =>x.Students)
+                                            .ThenInclude(c => c.BloodGroup)
+                                            .Include(x =>x.Students)
+                                            .ThenInclude(c => c.GenoType)
+                                            .Include(x =>x.Students)
+                                            .ThenInclude(c => c.Religion)
+                                            .Include(x =>x.Students)
+                                            .ThenInclude(c => c.Session).ToListAsync();
             return mapper.Map<List<Grade>, List<GradeDto>>(grade);
         } 
     }

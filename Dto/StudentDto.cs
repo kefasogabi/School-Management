@@ -38,9 +38,8 @@ namespace PROJECT.Dto
         public int NKRelationshipId { get; set; }   
         public Pair NKRelationship { get; set; }
         public string NKAddress { get; set; }
-        public ICollection<ResultDto> Results { get; set; }
-
         public ICollection<Pair> Terms { get; set; }
+        public ICollection<ResultDto> Results { get; set; }
 
         public StudentDto()
         {

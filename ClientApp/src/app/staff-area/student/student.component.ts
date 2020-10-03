@@ -18,7 +18,6 @@ import { Student } from '../../models/student.model';
 export class StudentComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  @ViewChild('studentTable', { read: ElementRef }) studentTable: ElementRef;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   grade:any = 0;
@@ -28,26 +27,26 @@ export class StudentComponent implements OnInit {
   filter:any = {};
   public id = '';
   constructor(private studentService: StudentService,
-              private authService:AuthenticationService, 
+              private authService:AuthenticationService,
               private spinner: NgxSpinnerService ) { }
 
   ngOnInit() {
-    
+
      this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-      
+
     };
     this.loadAllStudents();
 
-    
 
-   
+
+
     this.studentService.getGrade().subscribe( (grades:any) => {
       this.grades = grades;
     });
-      
+
 
   }
 
@@ -69,13 +68,13 @@ export class StudentComponent implements OnInit {
 
  onGradeChange(){
    var students = this.allStudents;
-  
+
    var selectedGrade = this.grades.find(m => m.id == this.filter.gradeId);
     students = selectedGrade ? selectedGrade.students  : students;
-   
+
     this.students = students;
 
-    
+
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -101,7 +100,7 @@ export class StudentComponent implements OnInit {
         // Call the dtTrigger to rerender again
         this.dtTrigger.next();
       });
-      
+
   });
 
 }

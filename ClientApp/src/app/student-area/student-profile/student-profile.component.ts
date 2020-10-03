@@ -12,54 +12,7 @@ import { Student } from '../../models/student.model';
 export class StudentProfileComponent implements OnInit {
   id: number;
 
-  student: Student = {
-    id:0,
-      firstName: "",
-      lastName: "",
-      userName: "",
-      dateOfBirth: "",
-      address: "",
-      fileName:"",
-      country:"",
-      state: "",
-      lga:"",
-      nkName:"",
-      nkAddress:"",
-      nkPhoneNumber:"",
-      hairColor:"",
-      password: "",
-      sex: {
-        id: 0,
-        name: ""
-      },
-      grade: {
-        id: 0,
-        name: ""
-      },
-      session:{
-        id:0,
-        name:""
-      },
-      genoType: {
-        id: 0,
-        name: ""
-      },
-      bloodGroup:{
-        id:0,
-        name:""
-      },
-      religion:{
-        id:0,
-        name:""
-      },
-      nkRelationship:{
-        id:0,
-        name:""
-      },
-      results:[],
-      terms:[]
-      
-  };
+  student: Student;
   constructor(private studentService: StudentService,  private route: ActivatedRoute) {
 
     // let token = JSON.parse(localStorage.getItem('token'));
@@ -73,9 +26,9 @@ export class StudentProfileComponent implements OnInit {
       this.student = data;
     });
 
-    
-    
-  
+
+
+
   }
 
 }

@@ -1,5 +1,3 @@
-import { Subject } from 'rxjs';
-import { Result } from './../../models/student.model';
 import { Component, OnInit } from '@angular/core';
 import { ResultService } from '../../Services/result.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,7 +7,6 @@ import { Term } from '../../models/user.model';
 import { Student } from '../../models/student.model';
 import { NgForm } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
-import { b1 } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-results',
@@ -26,13 +23,9 @@ export class ResultsComponent implements OnInit {
   uname:any = "";
   subjects: any[];
   average:number = 0;
-  obj ={
-    sum: 0
-  };
-  sum:any[] = [];
-  total:any;
   public i = 0;
   public id = "";
+  public t:any;
   result:any = {
     id: 0,
       name: "",
@@ -42,7 +35,7 @@ export class ResultsComponent implements OnInit {
       cA2: "",
       exam: "",
       year: "",
-      studentId: 0 
+      studentId: 0
   };
 
   Eresult:any = {
@@ -57,12 +50,12 @@ export class ResultsComponent implements OnInit {
       studentId: 0
   };
 
-  constructor(private resultService: ResultService, 
-              private spinner: NgxSpinnerService, 
+  constructor(private resultService: ResultService,
+              private spinner: NgxSpinnerService,
               private toastr: ToastrService,
               private userService: UserService,
               private studentService: StudentService,
-              
+
               ) { }
 
   ngOnInit() {
@@ -73,8 +66,8 @@ export class ResultsComponent implements OnInit {
   }
 
   addResult(form:NgForm){
-   
-    if(this.i){ 
+
+    if(this.i){
       this.resultService.res.splice(this.i, 1, form.value);
       this.i = 0;
       this.resetForm();
@@ -82,7 +75,7 @@ export class ResultsComponent implements OnInit {
       this.resultService.res.unshift(form.value);
       this.resetForm();
     }
-  
+
   }
 
 
@@ -124,6 +117,10 @@ getStudent(){
   });
 }
 
+setTerm(t){
+  this.t = t;
+}
+
 postTerm(body){
   this.spinner.show();
   this.resultService.create(body.value).subscribe( (data:any) => {
@@ -136,23 +133,32 @@ postTerm(body){
 });
 }
 
-onYearChange(){
+onYearChange(id){
   this.spinner.show();
-  let res = this.student.results.filter(m => m.year == this.yearId); 
+  this.resultService.getResults(id).subscribe((data:any) =>{
+    let res:any[];
+    res = data;
 
-   this.subjects = res.map(x => ({ id: x.id,
-                                     name: x.name,
-                                     ass1: parseInt(x.ass1),
-                                     ass2: parseInt(x.ass2),
-                                     cA1: parseInt(x.cA1), 
-                                     cA2: parseInt(x.cA2),
-                                     exam: parseInt(x.exam),
-                                     year: x.year, 
-                                     studentId: x.studentId,
-                                     total: parseInt(x.ass1) + parseInt(x.ass2) + parseInt(x.cA1) + parseInt(x.cA2) + parseInt(x.exam) }));
+   let result = res.filter(m => m.year == this.yearId);
 
-     this.average = this.getAverage(); 
-   this.spinner.hide(); 
+   this.subjects = result.map(x => ({ id: x.id,
+                                      name: x.name,
+                                      ass1: parseInt(x.ass1),
+                                      ass2: parseInt(x.ass2),
+                                      cA1: parseInt(x.cA1),
+                                      cA2: parseInt(x.cA2),
+                                      exam: parseInt(x.exam),
+                                      year: x.year,
+                                      studentId: x.studentId,
+                                      total: parseInt(x.ass1) + parseInt(x.ass2) + parseInt(x.cA1) + parseInt(x.cA2) + parseInt(x.exam) }));
+
+    this.average = this.getAverage();
+    this.spinner.hide();
+  }, error =>{
+    this.toastr.error(error, 'Error');
+    this.spinner.hide();
+  });
+
 }
 
 getAverage(){
@@ -161,13 +167,13 @@ getAverage(){
   let result = 0
   this.subjects.forEach( x => sum += x.total);
 
- 
+
   for(let obj in this.subjects){
     count++
   }
 
   result = sum / count;
-  
+
   return result;
 }
 
@@ -206,14 +212,18 @@ setId(id){
 deleteResult(id){
   this.spinner.show();
   this.resultService.deleteResult(id).subscribe(()=> {
-    this.subjects.splice(id, 1);
     this.toastr.success('Result Deleted Successfully', 'Success');
-    this.getStudent();
-    this.onYearChange();
     this.spinner.hide();
   }, error =>{
     this.toastr.error(error, 'Error');
     this.spinner.hide();
+  });
+}
+
+loadStudentResult(id)
+{
+  this.resultService.getResults(id).subscribe((data:any) => {
+
   });
 }
 
